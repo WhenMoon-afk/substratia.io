@@ -450,7 +450,8 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-              <Link href="/templates" className="hover:text-white transition-all">Tools</Link>
+              <Link href="/templates" className="hover:text-white transition-all">Memory</Link>
+              <Link href="/tools" className="hover:text-white transition-all">Tools</Link>
               <Link href="/builder" className="hover:text-white transition-all">Builder</Link>
               <Link href="/blog" className="hover:text-white transition-all">Blog</Link>
               <a href="https://skyceres.substack.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">Newsletter</a>
