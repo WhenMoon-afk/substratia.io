@@ -165,6 +165,61 @@ const sections: Section[] = [
     ],
   },
   {
+    title: 'Integration Guides',
+    id: 'integration-guides',
+    content: [
+      {
+        title: 'Claude Desktop Setup',
+        text: 'Add MCP servers to your Claude Desktop configuration file. Location varies by OS (see Config file locations below).',
+        code: `{
+  "mcpServers": {
+    "memory-mcp": {
+      "command": "npx",
+      "args": ["@whenmoon-afk/memory-mcp"]
+    }
+  }
+}`,
+      },
+      {
+        title: 'Claude Code (momentum)',
+        text: 'momentum is installed as a Claude Code plugin, not via config file.',
+        steps: [
+          'Ensure Bun is installed (curl -fsSL https://bun.sh/install | bash)',
+          'Run: /plugin install momentum@substratia-marketplace',
+          'Restart Claude Code',
+          'Use save_context and restore_context tools',
+        ],
+      },
+      {
+        title: 'Cursor / Windsurf',
+        text: 'MCP configuration for Cursor and Windsurf follows the same pattern as Claude Desktop. Add to your MCP config:',
+        code: `{
+  "mcpServers": {
+    "memory-mcp": {
+      "command": "npx",
+      "args": ["@whenmoon-afk/memory-mcp"],
+      "env": {
+        "MEMORY_DB_PATH": "~/Documents/memory-mcp/memory.db"
+      }
+    }
+  }
+}`,
+      },
+      {
+        title: 'Windows-Specific Setup',
+        text: 'Windows requires the full path to npx.cmd. Replace "npx" with the full path:',
+        code: `{
+  "mcpServers": {
+    "memory-mcp": {
+      "command": "C:\\\\Program Files\\\\nodejs\\\\npx.cmd",
+      "args": ["@whenmoon-afk/memory-mcp"]
+    }
+  }
+}`,
+      },
+    ],
+  },
+  {
     title: 'Troubleshooting',
     id: 'troubleshooting',
     content: [
