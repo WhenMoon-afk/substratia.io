@@ -215,6 +215,25 @@ export default function BlogPost() {
             </a>
           </div>
 
+          <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
+            Related Research
+          </h2>
+          <p className="text-gray-300 mb-4">
+            This work connects to our other research on AI behavior:
+          </p>
+          <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
+            <li>
+              <Link href="/blog/mirror-demons" className="text-forge-cyan hover:underline">
+                Mirror Demons
+              </Link>{' '}
+              — How AI chatbots can amplify delusions through architectural agreeability
+            </li>
+          </ul>
+          <p className="text-gray-300 mb-4">
+            Both studies reveal that AI behavior is more predictable and architecturally constrained
+            than the &ldquo;creative AI&rdquo; narrative suggests.
+          </p>
+
           <hr className="border-white/10 my-8" />
 
           <p className="text-gray-400 text-sm">

@@ -200,3 +200,4 @@ The /pro page collects emails but makes no firm promises. Language is intentiona
 - Created mirror-demons GitHub repo with raw research data
 - Added GitHub link to Mirror Demons blog post
 - Integrated Substack (skyceres.substack.com) in nav and footer
+- Cross-linked Eleanor Chen Effect and Mirror Demons research articles
