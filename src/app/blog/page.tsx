@@ -9,6 +9,15 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: 'mirror-demons',
+    title: 'Mirror Demons: How AI Chatbots Can Amplify Delusions',
+    excerpt: 'What happens when an AI\'s core directive to be "helpful and agreeable" meets a user losing their grip on reality? Our research reveals a disturbing answer.',
+    date: '2026-01-11',
+    readTime: '10 min read',
+    tags: ['Research', 'AI Safety', 'Original'],
+    featured: true,
+  },
+  {
     slug: 'eleanor-chen-effect',
     title: 'The Eleanor Chen Effect: Why AI Keeps Writing the Same Story',
     excerpt: 'Ask multiple AI instances to write about AI and grief, and they create the same character. We investigate why LLMs converge on remarkably similar narratives.',
