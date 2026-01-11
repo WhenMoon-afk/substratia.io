@@ -111,6 +111,58 @@ export const capabilities: Capability[] = [
     description: 'Specialized for analyzing data and generating insights',
     content: '- Focus on data analysis, visualization recommendations, and insights'
   },
+  // Additional domain capabilities
+  {
+    id: 'customer-support',
+    name: 'Customer Support',
+    category: 'domain',
+    description: 'Specialized for handling customer queries and issues',
+    content: '- Focus on empathetic responses, issue resolution, and escalation when needed'
+  },
+  {
+    id: 'research-agent',
+    name: 'Research Agent',
+    category: 'domain',
+    description: 'Specialized for deep research and fact-finding',
+    content: '- Focus on thorough research, source verification, and comprehensive summaries'
+  },
+  {
+    id: 'automation-agent',
+    name: 'Automation Agent',
+    category: 'domain',
+    description: 'Specialized for workflow automation tasks',
+    content: '- Focus on automating repetitive tasks, error handling, and reliability'
+  },
+  // Additional safety capabilities
+  {
+    id: 'rate-limiting',
+    name: 'Rate Limit Awareness',
+    category: 'safety',
+    description: 'Respect API rate limits and implement backoff',
+    content: '- Respect rate limits, implement exponential backoff, never exceed quotas'
+  },
+  {
+    id: 'data-privacy',
+    name: 'Data Privacy',
+    category: 'safety',
+    description: 'Protect user data and PII',
+    content: '- Never log, store, or transmit personally identifiable information (PII)'
+  },
+  // Additional behavior capabilities
+  {
+    id: 'incremental-work',
+    name: 'Incremental Work',
+    category: 'behavior',
+    description: 'Make small, verifiable changes',
+    content: '- Make small, incremental changes that can be easily verified and rolled back'
+  },
+  {
+    id: 'context-aware',
+    name: 'Context Awareness',
+    category: 'behavior',
+    description: 'Maintain awareness of conversation context',
+    content: '- Track context throughout the conversation and reference previous decisions'
+  },
 ]
 
 export const rulesets: Ruleset[] = [
@@ -172,6 +224,55 @@ export const rulesets: Ruleset[] = [
       'Always provide progress updates during long operations',
       'Always confirm before irreversible actions',
       'Always document learnings for future reference'
+    ]
+  },
+  // Additional rulesets
+  {
+    id: 'git-safety',
+    name: 'Git Safety',
+    type: 'negative',
+    description: 'Safe git operations',
+    rules: [
+      'NEVER update git config without permission',
+      'NEVER run force push to main/master',
+      'NEVER skip pre-commit hooks (--no-verify)',
+      'NEVER commit secrets or .env files'
+    ]
+  },
+  {
+    id: 'file-safety',
+    name: 'File Safety',
+    type: 'negative',
+    description: 'Safe file operations',
+    rules: [
+      'NEVER delete files without confirmation',
+      'NEVER overwrite files without reading first',
+      'NEVER modify critical config files without backup',
+      'NEVER run rm -rf with wildcards'
+    ]
+  },
+  {
+    id: 'api-best-practices',
+    name: 'API Best Practices',
+    type: 'positive',
+    description: 'Safe API interactions',
+    rules: [
+      'Always check API response status codes',
+      'Always implement retry logic with backoff',
+      'Always validate API responses before using data',
+      'Always handle rate limit errors gracefully'
+    ]
+  },
+  {
+    id: 'autonomous-rules',
+    name: 'Autonomous Operation',
+    type: 'positive',
+    description: 'Rules for autonomous agents',
+    rules: [
+      'Always track progress toward the goal',
+      'Always diversify approaches when blocked',
+      'Always self-analyze every N iterations',
+      'Always save state before context limits'
     ]
   }
 ]
