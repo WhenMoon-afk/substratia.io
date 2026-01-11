@@ -20,14 +20,14 @@ function estimateTokens(text: string): number {
   return wordTokens + Math.ceil(specialChars / 2)
 }
 
-// Model context windows and pricing
+// Model context windows and pricing (per 1M tokens, updated Jan 2026)
 const models = [
-  { name: 'Claude 3.5 Sonnet', context: 200000, inputPrice: 3, outputPrice: 15 },
-  { name: 'Claude 3 Opus', context: 200000, inputPrice: 15, outputPrice: 75 },
-  { name: 'Claude 3 Haiku', context: 200000, inputPrice: 0.25, outputPrice: 1.25 },
+  { name: 'Claude Opus 4.5', context: 200000, inputPrice: 5, outputPrice: 25 },
+  { name: 'Claude Sonnet 4.5', context: 200000, inputPrice: 3, outputPrice: 15 },
+  { name: 'Claude Haiku 4.5', context: 200000, inputPrice: 1, outputPrice: 5 },
+  { name: 'Claude Opus 4', context: 200000, inputPrice: 15, outputPrice: 75 },
   { name: 'GPT-4o', context: 128000, inputPrice: 2.50, outputPrice: 10 },
   { name: 'GPT-4 Turbo', context: 128000, inputPrice: 10, outputPrice: 30 },
-  { name: 'GPT-3.5 Turbo', context: 16385, inputPrice: 0.50, outputPrice: 1.50 },
 ]
 
 export default function TokenCounterPage() {
