@@ -33,7 +33,7 @@ git add -A && git commit -m "feat: description" && git push origin master
 
 ## Current Content (as of 2026-01-11)
 
-### Blog (11 posts)
+### Blog (10 posts)
 | Slug | Title | Type |
 |------|-------|------|
 | `mirror-demons` | Mirror Demons: How AI Chatbots Can Amplify Delusions | Original Research |
@@ -45,7 +45,7 @@ git add -A && git commit -m "feat: description" && git push origin master
 | `memory-mcp-vs-alternatives` | MCP Memory Servers Compared | Comparison |
 | `mastering-negative-prompts` | Mastering Negative Prompts | Best Practices |
 | `how-to-build-claude-agents` | How to Build Claude Agents | Tutorial |
-| ... | (3 additional SEO/marketing posts) | SEO/Marketing |
+| `agents-md-vs-claude-md` | AGENTS.md vs CLAUDE.md | Tutorial |
 
 ### Tools (4 tools)
 | Tool | Path | Description |
@@ -91,7 +91,7 @@ src/
 │   ├── pricing/page.tsx      # Subscription tiers
 │   ├── pro/page.tsx          # Pro waitlist
 │   ├── docs/page.tsx         # Documentation
-│   ├── blog/                  # Blog posts (8 posts)
+│   ├── blog/                  # Blog posts (10 posts)
 │   │   ├── page.tsx          # Blog index
 │   │   ├── mirror-demons/    # Original research
 │   │   ├── eleanor-chen-effect/
