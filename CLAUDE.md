@@ -51,7 +51,7 @@ git add -A && git commit -m "feat: description" && git push origin master
 | Tool | Path | Description |
 |------|------|-------------|
 | Token Counter | `/tools/token-counter` | Count tokens, estimate costs for Claude/GPT-4 |
-| Prompt Library | `/tools/prompts` | 16 curated prompts, click to copy |
+| Prompt Library | `/tools/prompts` | 20 curated prompts, click to copy |
 | Seed Maker | `/tools/seed-maker` | High-entropy random strings from mouse movements |
 | AgentForge Builder | `/builder` | Drag-and-drop CLAUDE.md builder |
 
@@ -211,6 +211,11 @@ The /pro page collects emails but makes no firm promises. Language is intentiona
 - Added missing pricing page to sitemap
 - Improved templates page SEO metadata (title, keywords)
 - Updated README with current features and Bun-based stack
+- Added 4 new prompts to library (now 20 total):
+  - Deep Reasoning Assistant: Structured problem-solving
+  - Writing Style Analyzer: Style extraction and replication
+  - Research Orchestrator: Research strategy and synthesis
+  - Reflection Framework: Iterative self-improvement
 
 **2026-01-11** (Session 3):
 - Added 3 new blog posts:
