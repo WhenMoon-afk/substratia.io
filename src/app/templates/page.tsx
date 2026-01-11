@@ -11,11 +11,11 @@ const tools = [
     id: 'momentum',
     name: 'momentum',
     tagline: 'Context Recovery',
-    description: 'Instant context recovery for Claude Code. Save snapshots as you work, restore in <5ms after /clear.',
+    description: 'Instant context recovery for Claude Code. Save snapshots as you work, restore in milliseconds after /clear.',
     stats: {
-      speed: '<5ms',
-      improvement: '46,000x faster',
-      tests: '67 passing',
+      restore: '<5ms',
+      storage: 'SQLite',
+      price: 'Free',
     },
     features: [
       'Snapshot-based context saving',
@@ -35,9 +35,9 @@ const tools = [
     tagline: 'Persistent Memory',
     description: 'Give your AI persistent memory across sessions. Store, recall, and search facts that survive conversation resets.',
     stats: {
-      version: 'v2.5.0',
       search: 'FTS5',
       storage: 'SQLite',
+      price: 'Free',
     },
     features: [
       'Store memories with auto-summarization',
@@ -56,7 +56,7 @@ const tools = [
     id: 'agentforge',
     name: 'AgentForge',
     tagline: 'Visual Builder',
-    description: 'Drag-and-drop builder for CLAUDE.md and agents.md files. 28 capabilities, 13 rulesets, instant export.',
+    description: 'Drag-and-drop builder for CLAUDE.md and agents.md files. Configure capabilities and guardrails visually.',
     stats: {
       capabilities: '28',
       rulesets: '13',

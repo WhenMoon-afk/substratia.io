@@ -153,13 +153,13 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-4">
-                Snapshot your context, restore in &lt;5ms. 46,000x faster than LLM compaction.
+                Snapshot your context, restore in milliseconds. Never lose your working state.
               </p>
               <div className="code-block text-xs mb-4">
                 <code className="text-forge-cyan">/plugin install momentum@whenmoon-afk</code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">67 tests passing</span>
+                <span className="text-xs text-gray-500">SQLite persistence</span>
                 <a
                   href="https://github.com/WhenMoon-afk/momentum"
                   target="_blank"
@@ -292,12 +292,12 @@ export default function Home() {
                 <div className="text-sm text-gray-400">Context restore</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-forge-purple mb-1">46K</div>
-                <div className="text-sm text-gray-400">Times faster</div>
+                <div className="text-4xl font-bold text-forge-purple mb-1">3</div>
+                <div className="text-sm text-gray-400">Free tools</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-forge-cyan mb-1">28</div>
-                <div className="text-sm text-gray-400">Capabilities</div>
+                <div className="text-4xl font-bold text-forge-cyan mb-1">FTS5</div>
+                <div className="text-sm text-gray-400">Search engine</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-forge-purple mb-1">MIT</div>
@@ -361,29 +361,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Community / Coverage */}
       <section className="relative z-10 py-24 bg-gradient-to-b from-transparent via-forge-dark-lighter/30 to-transparent">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12">
-            What <span className="text-forge-cyan">Developers</span> Say
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-4">
+            Listed on <span className="text-forge-cyan">9+ Directories</span>
           </h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <TestimonialCard
-              quote="momentum is a game-changer. I used to lose so much context with /clear. Now I snapshot before clearing and restore instantly."
-              author="Sarah K."
-              role="AI Engineer"
-            />
-            <TestimonialCard
-              quote="Finally my Claude actually remembers things between sessions. memory-mcp just works. No embeddings, no vector DB, just SQLite."
-              author="Mike T."
-              role="Startup Founder"
-            />
-            <TestimonialCard
-              quote="AgentForge saved me hours of writing CLAUDE.md files by hand. The Loop Guardian ruleset alone prevents so many headaches."
-              author="Alex R."
-              role="ML Engineer"
-            />
+          <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+            memory-mcp has been indexed by the MCP community with zero marketing spend.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+            {[
+              { name: 'PulseMCP', url: 'https://pulsemcp.com/servers/whenmoon-memory' },
+              { name: 'Glama.ai', url: 'https://glama.ai/mcp/servers/@WhenMoon-afk/claude-memory-mcp' },
+              { name: 'LobeHub', url: 'https://lobehub.com/mcp/whenmoon-afk-claude-memory-mcp' },
+              { name: 'mcp.so', url: 'https://mcp.so/server/claude-memory-mcp/WhenMoon-afk' },
+              { name: 'playbooks.com', url: 'https://playbooks.com/mcp/whenmoon-memory' },
+              { name: 'awesome-mcp-servers', url: 'https://github.com/TensorBlock/awesome-mcp-servers' },
+            ].map((dir) => (
+              <a
+                key={dir.name}
+                href={dir.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 glass hover:bg-white/10 rounded-lg text-sm text-gray-300 hover:text-white transition-all"
+              >
+                {dir.name}
+              </a>
+            ))}
           </div>
+          <p className="text-center text-gray-500 text-sm mt-8">
+            575+ npm downloads in the last 30 days
+          </p>
         </div>
       </section>
 
@@ -452,19 +461,3 @@ export default function Home() {
   )
 }
 
-function TestimonialCard({ quote, author, role }: { quote: string; author: string; role: string }) {
-  return (
-    <div className="glass rounded-2xl p-6">
-      <p className="text-gray-300 mb-4 italic">&ldquo;{quote}&rdquo;</p>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 bg-forge-purple/30 rounded-full flex items-center justify-center font-bold">
-          {author[0]}
-        </div>
-        <div>
-          <div className="font-semibold">{author}</div>
-          <div className="text-sm text-gray-400">{role}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
