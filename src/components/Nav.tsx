@@ -8,9 +8,9 @@ export default function Nav() {
   const pathname = usePathname()
 
   const links = [
-    { href: '/templates', label: 'Tools' },
+    { href: '/templates', label: 'Memory' },
+    { href: '/tools', label: 'Tools' },
     { href: '/builder', label: 'Builder' },
-    { href: '/pro', label: 'Pro' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/docs', label: 'Docs' },
   ]
