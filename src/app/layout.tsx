@@ -23,6 +23,19 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Substratia',
+  url: 'https://substratia.io',
+  logo: 'https://substratia.io/brand/logo-icon.png',
+  description: 'Memory infrastructure for AI - open source tools for persistent memory and context recovery',
+  sameAs: [
+    'https://github.com/WhenMoon-afk',
+    'https://skyceres.substack.com',
+  ],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -30,6 +43,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       {/* Analytics: Enable Cloudflare Web Analytics in dashboard (free) */}
       {/* Or add Plausible/Umami script here if using external analytics */}
       <body className="antialiased">
