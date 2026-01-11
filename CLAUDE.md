@@ -206,6 +206,9 @@ The /pro page collects emails but makes no firm promises. Language is intentiona
 - Aligned footer nav with header nav (added Tools link, fixed Memory label)
 - Updated ACTIVATION_GUIDE to reflect Formspree already configured
 - Fixed context-window-churn blog post with accurate benchmark numbers
+- Fixed "Claude 3.7 Sonnet" references in Eleanor Chen Effect (version never existed)
+- Removed unused Metadata import from token-counter
+- Added missing pricing page to sitemap
 
 **2026-01-11** (Session 3):
 - Added 3 new blog posts:
