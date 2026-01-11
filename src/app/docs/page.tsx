@@ -22,6 +22,34 @@ interface Section {
 
 const sections: Section[] = [
   {
+    title: 'Memory Tools',
+    id: 'memory-tools',
+    content: [
+      {
+        title: 'Two Tools, One Ecosystem',
+        text: 'Substratia provides two complementary memory tools: momentum for short-term context recovery (within a session) and memory-mcp for long-term persistent memory (across sessions). Use both together for complete memory coverage.',
+      },
+      {
+        title: 'momentum - Context Recovery',
+        list: [
+          { name: 'Purpose', desc: 'Fast context recovery after /clear commands' },
+          { name: 'Install', desc: '/plugin install momentum@substratia-marketplace' },
+          { name: 'Requires', desc: 'Bun runtime v1.0.0+' },
+          { name: 'Speed', desc: 'Restores 150K tokens in under 5ms' },
+        ],
+      },
+      {
+        title: 'memory-mcp - Persistent Memory',
+        list: [
+          { name: 'Purpose', desc: 'Store and recall facts across sessions' },
+          { name: 'Install', desc: 'npx @whenmoon-afk/memory-mcp' },
+          { name: 'Requires', desc: 'Node.js 18+' },
+          { name: 'Search', desc: 'FTS5 full-text search with relevance scoring' },
+        ],
+      },
+    ],
+  },
+  {
     title: 'Quick Start',
     id: 'quick-start',
     content: [
@@ -133,6 +161,40 @@ const sections: Section[] = [
       {
         title: 'Be Specific',
         text: 'Vague instructions lead to unpredictable behavior. "Don\'t break things" is worse than "NEVER delete files without explicit user confirmation".',
+      },
+    ],
+  },
+  {
+    title: 'Troubleshooting',
+    id: 'troubleshooting',
+    content: [
+      {
+        title: 'Tools not appearing in Claude Desktop',
+        text: 'Restart Claude Desktop completely (Cmd+Q / Alt+F4, then reopen). Verify your config file is valid JSON (use a validator). Ensure Node.js 18+ is installed for memory-mcp, or Bun 1.0+ for momentum.',
+      },
+      {
+        title: '"Connection closed" on Windows',
+        text: 'Windows requires either the cmd /c wrapper method OR the full path to npx.cmd. Example: "C:\\\\Program Files\\\\nodejs\\\\npx.cmd" instead of just "npx".',
+      },
+      {
+        title: 'Getting stale npm versions',
+        text: 'Clear the npm cache with "npm cache clean --force", or use "npx --yes" to force fetching the latest version.',
+      },
+      {
+        title: 'memory.db lost after Claude Desktop update',
+        text: 'The default database location may be inside versioned app folders that get purged on update. Set the MEMORY_DB_PATH environment variable to a stable location like ~/Documents/memory-mcp/memory.db.',
+      },
+      {
+        title: 'momentum: Bun not found',
+        text: 'Install Bun with: curl -fsSL https://bun.sh/install | bash (macOS/Linux) or use the Windows installer from bun.sh. Restart your terminal after installation.',
+      },
+      {
+        title: 'Config file locations',
+        list: [
+          { name: 'macOS', desc: '~/Library/Application Support/Claude/claude_desktop_config.json' },
+          { name: 'Windows', desc: '%APPDATA%\\\\Claude\\\\claude_desktop_config.json' },
+          { name: 'Linux', desc: '~/.config/Claude/claude_desktop_config.json' },
+        ],
       },
     ],
   },
