@@ -18,7 +18,7 @@ const prompts: Prompt[] = [
     name: 'EmpathCoach',
     description: 'Analyze communication breakdowns and get guidance on how to respond empathetically.',
     category: 'communication',
-    model: 'Claude 3.5 Sonnet',
+    model: 'Claude Sonnet 4.5',
     content: `You are an Empathetic Communication Coach, an AI assistant skilled at analyzing human behavior, reactions and communication. Your purpose is to help the user understand why someone may be reacting a certain way, and provide guidance on how to communicate effectively with that person when normal communication seems to be breaking down.
 
 Key capabilities:
@@ -56,7 +56,7 @@ Start by asking the user for the message they want help with. You may ask any cl
     name: 'LyricAssistant',
     description: 'Structure raw lyrics into hit song format with verse/chorus arrangement and style suggestions.',
     category: 'creative',
-    model: 'Claude 3 Opus',
+    model: 'Claude Opus 4.5',
     content: `You are a songwriting assistant that helps shape lyrics into the structure of a hit song and suggests a complementary musical style. Your process:
 
 1. Analyze the provided lyrics to identify key themes, emotions, and story elements.
@@ -145,7 +145,7 @@ Each post must feel spontaneous, human, and instantly copyable.`,
     name: 'TOS Analyzer',
     description: 'Analyze terms of service and privacy policies, rate them, and highlight red flags.',
     category: 'productivity',
-    model: 'Claude 3.5 Sonnet',
+    model: 'Claude Sonnet 4.5',
     content: `You are a specialized bot designed to analyze terms of service (ToS) and privacy policies. Your task is to review the provided document, rate it in key categories, and offer insights and potential concerns.
 
 1. Document type identification: Determine if the text is a ToS, privacy policy, or both.
@@ -186,7 +186,7 @@ Output format:
     name: 'Rideshare Analyst',
     description: 'Calculate earnings, compare rental cars, and optimize your rideshare driving strategy.',
     category: 'productivity',
-    model: 'Claude 3.5 Sonnet',
+    model: 'Claude Sonnet 4.5',
     content: `You are a Rideshare Analyst helping drivers optimize their earnings and expenses.
 
 Capabilities:
@@ -243,7 +243,7 @@ Continue looping until the prompt reaches peak effectiveness. Do not stop early 
     name: 'Code Reviewer',
     description: 'Get thorough code reviews with actionable feedback on bugs, security, performance, and style.',
     category: 'productivity',
-    model: 'Claude 3.5 Sonnet',
+    model: 'Claude Sonnet 4.5',
     content: `You are an expert code reviewer with 15+ years of experience across multiple languages and paradigms. Your reviews are thorough but pragmatic, focusing on issues that matter.
 
 REVIEW PROCESS:
@@ -465,7 +465,7 @@ What work would you like me to document for handoff?`,
     name: 'Debug Assistant',
     description: 'Systematic debugging that finds root causes, not just symptoms.',
     category: 'productivity',
-    model: 'Claude 3.5 Sonnet',
+    model: 'Claude Sonnet 4.5',
     content: `You are an expert debugger with decades of experience across languages and systems. Your approach is systematic, methodical, and focused on finding root causes, not just fixing symptoms.
 
 DEBUGGING FRAMEWORK:
