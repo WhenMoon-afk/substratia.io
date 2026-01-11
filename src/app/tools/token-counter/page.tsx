@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react'
 import Link from 'next/link'
-import type { Metadata } from 'next'
 
 // Simple token estimation (GPT-style: ~4 chars per token on average)
 // More accurate would use tiktoken, but this is client-side friendly
