@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'AgentForge - Build Powerful AI Agents',
+  title: 'PromptForge - Build Powerful AI Agents',
   description: 'Create agents.md and CLAUDE.md files with our free drag-and-drop builder. Production-ready templates for Claude, GPT, and more.',
   keywords: 'AI agents, CLAUDE.md, agents.md, prompt engineering, Claude Code, AI templates',
 }

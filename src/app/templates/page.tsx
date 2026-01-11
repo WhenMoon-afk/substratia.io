@@ -166,7 +166,7 @@ export default function TemplatesPage() {
 
 function TemplateCard({ template }: { template: Template }) {
   const gumroadUrl = template.gumroadId
-    ? `https://paperstackco.gumroad.com/l/${template.gumroadId}`
+    ? `https://promptforge.gumroad.com/l/${template.gumroadId}`
     : '#coming-soon'
 
   return (

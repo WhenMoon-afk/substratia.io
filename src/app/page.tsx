@@ -9,7 +9,7 @@ export default function Home() {
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="text-forge-cyan">Forge</span> Powerful AI Agents
+            <span className="text-forge-cyan">Prompt</span>Forge
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8">
             Build production-ready agents.md and CLAUDE.md files in minutes.

@@ -1,4 +1,4 @@
-# AgentForge
+# PromptForge
 
 Build powerful AI agents with drag-and-drop simplicity.
 
