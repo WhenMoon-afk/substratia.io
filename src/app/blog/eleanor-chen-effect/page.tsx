@@ -234,6 +234,24 @@ export default function BlogPost() {
             than the &ldquo;creative AI&rdquo; narrative suggests.
           </p>
 
+          <div className="mt-8 p-6 bg-white/5 border border-white/10 rounded-xl">
+            <h3 className="text-xl font-bold mb-3">Why This Matters for Memory Tools</h3>
+            <p className="text-gray-400 mb-4">
+              Understanding AI&apos;s convergent patterns helped us design memory systems that work
+              <em> with</em> how AI actually processes information, not against it. Our tools
+              (<Link href="/templates" className="text-forge-cyan hover:underline">momentum</Link> and{' '}
+              <Link href="/templates" className="text-forge-cyan hover:underline">memory-mcp</Link>) use
+              full-text search instead of embeddings because deterministic retrieval beats probabilistic
+              similarity for practical memory use cases.
+            </p>
+            <Link
+              href="/templates"
+              className="inline-block px-4 py-2 bg-forge-cyan text-forge-dark font-semibold rounded-lg hover:bg-forge-cyan/80 transition-all"
+            >
+              Explore Memory Tools
+            </Link>
+          </div>
+
           <hr className="border-white/10 my-8" />
 
           <p className="text-gray-400 text-sm">
