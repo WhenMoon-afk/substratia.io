@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { capabilities, rulesets, categoryLabels, Capability, Ruleset } from '@/data/presets'
+import AIAssistant from '@/components/AIAssistant'
 
 interface AgentConfig {
   name: string
@@ -182,9 +183,9 @@ export default function BuilderPage() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Panel - Selection */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 lg:col-span-1">
             {activeTab === 'capabilities' && (
               <>
                 <h2 className="text-xl font-semibold mb-4">Select Capabilities</h2>
@@ -309,7 +310,7 @@ export default function BuilderPage() {
             )}
           </div>
 
-          {/* Right Panel - Live Preview */}
+          {/* Middle Panel - Live Preview */}
           <div className="bg-forge-dark border border-white/10 rounded-xl p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <span className="text-forge-cyan">{'</>'}</span>
@@ -318,6 +319,11 @@ export default function BuilderPage() {
             <pre className="code-preview text-sm text-gray-300 whitespace-pre-wrap overflow-auto max-h-[600px]">
               {generatedMarkdown}
             </pre>
+          </div>
+
+          {/* Right Panel - AI Assistant */}
+          <div className="lg:col-span-1">
+            <AIAssistant />
           </div>
         </div>
       </div>
