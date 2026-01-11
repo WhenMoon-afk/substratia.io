@@ -1,224 +1,235 @@
-'use client'
-
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
-interface Template {
-  id: string
-  name: string
-  description: string
-  price: number
-  category: 'starter' | 'professional' | 'enterprise'
-  features: string[]
-  popular?: boolean
-  stripeLink?: string // Stripe Payment Link URL
+export const metadata: Metadata = {
+  title: 'Tools - Substratia',
+  description: 'Free, open-source memory tools for AI assistants. momentum for context recovery, memory-mcp for persistent memory, AgentForge for visual config building.',
 }
 
-const templates: Template[] = [
+const tools = [
   {
-    id: 'developer-agent-system',
-    name: 'Developer Agent System',
-    description: 'Complete system for building AI coding assistants. 5 production-ready agent configs with documentation.',
-    price: 49,
-    category: 'starter',
+    id: 'momentum',
+    name: 'momentum',
+    tagline: 'Context Recovery',
+    description: 'Instant context recovery for Claude Code. Save snapshots as you work, restore in <5ms after /clear.',
+    stats: {
+      speed: '<5ms',
+      improvement: '46,000x faster',
+      tests: '67 passing',
+    },
     features: [
-      '5 complete CLAUDE.md configs',
-      'Code review agent',
-      'Documentation agent',
-      'Testing agent',
-      'Refactoring agent',
-      'Security audit agent',
-      'Integration guide'
+      'Snapshot-based context saving',
+      'Instant restoration (<5ms)',
+      'Session management',
+      'Context search',
+      'Importance tagging',
+      'SQLite persistence',
     ],
-    popular: true,
-    stripeLink: undefined // Will be set once Stripe Payment Link is created
+    installCommand: '/plugin install momentum@whenmoon-afk',
+    githubUrl: 'https://github.com/WhenMoon-afk/momentum',
+    color: 'cyan',
   },
   {
-    id: 'autonomous-ops-system',
-    name: 'Autonomous Operations System',
-    description: 'Run AI agents continuously without human intervention. Self-analyze, self-correct, adapt.',
-    price: 79,
-    category: 'professional',
+    id: 'memory-mcp',
+    name: 'memory-mcp',
+    tagline: 'Persistent Memory',
+    description: 'Give your AI persistent memory across sessions. Store, recall, and search facts that survive conversation resets.',
+    stats: {
+      version: 'v2.5.0',
+      search: 'FTS5',
+      storage: 'SQLite',
+    },
     features: [
-      'Loop prevention guardrails',
-      'Self-analysis protocol',
-      'Progress tracking system',
-      'Error recovery patterns',
-      'Session handoff templates',
-      'Escalation procedures'
-    ]
+      'Store memories with auto-summarization',
+      'Full-text search (no embeddings)',
+      'Token budgeting for context',
+      'Entity extraction',
+      'Hybrid relevance scoring',
+      'Soft deletes with audit trail',
+    ],
+    installCommand: 'npx @whenmoon-afk/memory-mcp',
+    githubUrl: 'https://github.com/WhenMoon-afk/claude-memory-mcp',
+    npmUrl: 'https://www.npmjs.com/package/@whenmoon-afk/memory-mcp',
+    color: 'purple',
   },
   {
-    id: 'multi-agent-orchestrator',
-    name: 'Multi-Agent Orchestrator',
-    description: 'Coordinate multiple AI agents with hierarchical management. CEO/worker patterns.',
-    price: 99,
-    category: 'professional',
+    id: 'agentforge',
+    name: 'AgentForge',
+    tagline: 'Visual Builder',
+    description: 'Drag-and-drop builder for CLAUDE.md and agents.md files. 28 capabilities, 13 rulesets, instant export.',
+    stats: {
+      capabilities: '28',
+      rulesets: '13',
+      price: 'Free',
+    },
     features: [
-      'Hierarchical agent architecture',
-      'Inter-agent communication',
-      'Task delegation system',
-      'Performance metrics',
-      'Conflict resolution',
-      'Emergency protocols'
+      '28 battle-tested capabilities',
+      '13 guardrail rulesets',
+      'Drag-and-drop interface',
+      'Live preview',
+      'Export to clipboard/file',
+      'AI-assisted suggestions',
     ],
-    popular: true
+    installCommand: 'Visit substratia.io/builder',
+    internalUrl: '/builder',
+    color: 'cyan',
   },
-  {
-    id: 'complete-system',
-    name: 'Substratia Complete Bundle',
-    description: 'Everything we offer. All systems, all updates, priority support.',
-    price: 199,
-    category: 'enterprise',
-    features: [
-      'All current systems included',
-      'All future systems included',
-      'Priority email support',
-      'Private Discord access',
-      'Custom config review (1x)',
-      'Lifetime updates'
-    ],
-    popular: true
-  }
 ]
 
-export default function TemplatesPage() {
-  const starter = templates.filter(t => t.category === 'starter')
-  const professional = templates.filter(t => t.category === 'professional')
-  const enterprise = templates.filter(t => t.category === 'enterprise')
-
+export default function ToolsPage() {
   return (
     <main className="min-h-screen text-white">
       <div className="container mx-auto px-4 py-12">
         {/* Hero */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1 bg-forge-purple/20 border border-forge-purple/50 rounded-full text-sm text-forge-purple mb-4">
-            Production-ready agent systems
+          <div className="inline-block px-4 py-1 bg-forge-cyan/20 border border-forge-cyan/50 rounded-full text-sm text-forge-cyan mb-4">
+            Open Source / MIT Licensed
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            AI Agent <span className="text-forge-cyan">Systems</span>
+            Memory <span className="text-forge-cyan">Tools</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-            Complete, documented systems for building production AI agents. Not templates - full solutions.
+            Free, open-source tools that give your AI assistant a memory.
+            Install in minutes, use forever.
           </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-forge-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Lifetime access
+        </div>
+
+        {/* Tools Grid */}
+        <div className="space-y-12 max-w-5xl mx-auto mb-16">
+          {tools.map((tool) => (
+            <div
+              key={tool.id}
+              className={`bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-forge-${tool.color}/50 transition-all`}
+            >
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
+                <div>
+                  <div className={`inline-block px-2 py-1 text-xs rounded bg-forge-${tool.color}/20 text-forge-${tool.color} mb-2`}>
+                    {tool.tagline}
+                  </div>
+                  <h2 className="text-2xl font-bold mb-2">{tool.name}</h2>
+                  <p className="text-gray-400">{tool.description}</p>
+                </div>
+                <div className="flex flex-wrap gap-4 text-center">
+                  {Object.entries(tool.stats).map(([key, value]) => (
+                    <div key={key} className="bg-white/5 rounded-lg px-4 py-2">
+                      <div className={`text-lg font-bold text-forge-${tool.color}`}>{value}</div>
+                      <div className="text-xs text-gray-500 capitalize">{key}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-400 mb-3">Features</h3>
+                  <ul className="space-y-2">
+                    {tool.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm">
+                        <svg className={`w-4 h-4 text-forge-${tool.color} flex-shrink-0 mt-0.5`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-300">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-400 mb-3">Install</h3>
+                  <div className="bg-black/30 rounded-lg p-4 font-mono text-sm mb-4">
+                    <code className="text-forge-cyan">{tool.installCommand}</code>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {tool.githubUrl && (
+                      <a
+                        href={tool.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-all"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {tool.npmUrl && (
+                      <a
+                        href={tool.npmUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-all"
+                      >
+                        npm
+                      </a>
+                    )}
+                    {tool.internalUrl && (
+                      <Link
+                        href={tool.internalUrl}
+                        className={`px-4 py-2 bg-forge-${tool.color} text-forge-dark hover:bg-forge-${tool.color}/80 rounded-lg text-sm font-medium transition-all`}
+                      >
+                        Try Now
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-forge-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Free updates
+          ))}
+        </div>
+
+        {/* Pro Teaser */}
+        <div className="max-w-3xl mx-auto text-center bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 mb-16">
+          <h2 className="text-2xl font-bold mb-4">Want Cloud Sync?</h2>
+          <p className="text-gray-400 mb-6">
+            Pro tier adds cloud sync, memory dashboard, automatic backups, and team features.
+            Join the waitlist to get early access.
+          </p>
+          <Link
+            href="/pricing"
+            className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-semibold transition-all"
+          >
+            View Pricing
+          </Link>
+        </div>
+
+        {/* How They Work Together */}
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            How They <span className="text-forge-cyan">Work Together</span>
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+              <h3 className="font-semibold mb-2">Context Window Full?</h3>
+              <p className="text-gray-400 text-sm mb-3">
+                Use <span className="text-forge-cyan font-mono">momentum</span> to snapshot your work,
+                then /clear and restore instantly.
+              </p>
+              <div className="text-xs text-gray-500">Best for: Mid-session context management</div>
             </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-forge-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              30-day money-back
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+              <h3 className="font-semibold mb-2">New Session?</h3>
+              <p className="text-gray-400 text-sm mb-3">
+                Use <span className="text-forge-purple font-mono">memory-mcp</span> to recall facts
+                from past sessions automatically.
+              </p>
+              <div className="text-xs text-gray-500">Best for: Cross-session knowledge</div>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+              <h3 className="font-semibold mb-2">Building a New Agent?</h3>
+              <p className="text-gray-400 text-sm mb-3">
+                Use <span className="text-forge-cyan font-mono">AgentForge</span> to visually configure
+                capabilities and guardrails.
+              </p>
+              <div className="text-xs text-gray-500">Best for: CLAUDE.md creation</div>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+              <h3 className="font-semibold mb-2">All Three Together</h3>
+              <p className="text-gray-400 text-sm mb-3">
+                Build agent configs with AgentForge, manage sessions with momentum,
+                persist knowledge with memory-mcp.
+              </p>
+              <div className="text-xs text-gray-500">Best for: Complete AI workflow</div>
             </div>
           </div>
         </div>
-
-        {/* Starter */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-forge-cyan">Starter</span>
-            <span className="text-sm font-normal text-gray-400">Get started with AI agent development</span>
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {starter.map(template => (
-              <TemplateCard key={template.id} template={template} />
-            ))}
-          </div>
-        </section>
-
-        {/* Professional */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-forge-purple">Professional</span>
-            <span className="text-sm font-normal text-gray-400">Advanced systems for production use</span>
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {professional.map(template => (
-              <TemplateCard key={template.id} template={template} />
-            ))}
-          </div>
-        </section>
-
-        {/* Enterprise */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-yellow-400">Enterprise</span>
-            <span className="text-sm font-normal text-gray-400">Complete bundle with support</span>
-          </h2>
-          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {enterprise.map(template => (
-              <TemplateCard key={template.id} template={template} />
-            ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="text-center bg-white/5 border border-white/10 rounded-2xl p-8">
-          <h2 className="text-2xl font-bold mb-4">Not sure which to choose?</h2>
-          <p className="text-gray-300 mb-6">
-            Try our free Agent Builder to create your own custom configuration.
-          </p>
-          <Link
-            href="/builder"
-            className="inline-block px-8 py-4 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-semibold transition-all"
-          >
-            Try Free Builder
-          </Link>
-        </section>
       </div>
     </main>
-  )
-}
-
-function TemplateCard({ template }: { template: Template }) {
-  return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-forge-purple/50 transition-all relative">
-      {template.popular && (
-        <span className="absolute -top-2 -right-2 px-3 py-1 bg-forge-cyan text-forge-dark text-xs font-bold rounded-full">
-          POPULAR
-        </span>
-      )}
-      <h3 className="text-xl font-semibold mb-2">{template.name}</h3>
-      <p className="text-gray-400 text-sm mb-4">{template.description}</p>
-
-      <ul className="space-y-1 mb-6">
-        {template.features.map((feature, i) => (
-          <li key={i} className="text-sm text-gray-300 flex items-center gap-2">
-            <span className="text-forge-cyan">+</span>
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <div className="flex items-center justify-between">
-        <span className="text-2xl font-bold">${template.price}</span>
-        {template.stripeLink ? (
-          <a
-            href={template.stripeLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-medium transition-all"
-          >
-            Buy Now
-          </a>
-        ) : (
-          <button
-            disabled
-            className="px-4 py-2 bg-gray-600 cursor-not-allowed rounded-lg font-medium"
-          >
-            Coming Soon
-          </button>
-        )}
-      </div>
-    </div>
   )
 }
