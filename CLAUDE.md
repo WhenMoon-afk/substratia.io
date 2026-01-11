@@ -191,6 +191,14 @@ The /pro page collects emails but makes no firm promises. Language is intentiona
 
 ## Session Log
 
+**2026-01-11** (Session 4 - Continued from context compaction):
+- Added agents-md-vs-claude-md blog post to index (was missing)
+- Added Open Graph and Twitter social sharing images to metadata
+- Fixed waitlist anchor link on pricing page (/#waitlist now works)
+- Updated CLAUDE.md with accurate blog post count (10 posts)
+- Verified all blog posts are in sitemap and index
+- Cleaned up and verified codebase consistency
+
 **2026-01-11** (Session 3):
 - Added 3 new blog posts:
   - "Why We Chose FTS5 Over Embeddings" - technical credibility piece
