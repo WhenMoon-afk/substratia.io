@@ -51,6 +51,14 @@ const posts = [
     tags: ['Architecture', 'Design'],
   },
   {
+    slug: 'context-window-churn',
+    title: 'The Real Cost of Context Window Churn',
+    excerpt: 'Context window management is the hidden tax on AI-assisted development. We measured the cost and built a solution that restores in under 5ms.',
+    date: '2026-01-11',
+    readTime: '6 min read',
+    tags: ['Productivity', 'momentum', 'Developer Experience'],
+  },
+  {
     slug: 'memory-mcp-vs-alternatives',
     title: 'Best MCP Memory Servers Compared: memory-mcp vs Alternatives',
     excerpt: 'Compare the top MCP memory servers for Claude and AI assistants. Find the best persistent memory solution for your needs.',
