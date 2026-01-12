@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Documentation - Substratia | Memory Infrastructure for AI',
   description: 'Learn how to use Substratia tools: momentum for context recovery, memory-mcp for persistent memory, and AgentForge for visual agent configuration.',
+  keywords: ['Substratia docs', 'momentum documentation', 'memory-mcp guide', 'AgentForge tutorial', 'Claude Code plugins', 'MCP server setup'],
   openGraph: {
     title: 'Substratia Documentation',
     description: 'Learn how to use momentum, memory-mcp, and AgentForge tools.',

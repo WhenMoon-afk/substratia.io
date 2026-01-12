@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Pricing - Substratia',
   description: 'Free open-source memory tools. Pro tier with cloud sync, dashboard, and team features starting at $15/month.',
+  keywords: ['Substratia pricing', 'AI memory tools pricing', 'momentum free', 'memory-mcp free', 'Substratia Pro'],
   openGraph: {
     title: 'Substratia Pricing',
     description: 'Free open-source tools. Pro tier starting at $15/month.',
