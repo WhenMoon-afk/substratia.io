@@ -12,10 +12,82 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Best AI Coding Assistants 2026',
+  description: 'A comparison of the top AI coding assistants for developers.',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Claude Code',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: '9', bestRating: '10' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Cursor',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: '8', bestRating: '10' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'GitHub Copilot',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: '7', bestRating: '10' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Codeium',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: '7', bestRating: '10' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Windsurf',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        aggregateRating: { '@type': 'AggregateRating', ratingValue: '7', bestRating: '10' },
+      },
+    },
+  ],
+}
+
 export default function AICodingAssistantsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  )
 }

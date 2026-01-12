@@ -12,10 +12,77 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Best Markdown Editors 2026',
+  description: 'A comparison of the top markdown editors for writers and developers.',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Obsidian',
+        applicationCategory: 'ProductivityApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Notion',
+        applicationCategory: 'ProductivityApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Typora',
+        applicationCategory: 'ProductivityApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'VS Code',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'iA Writer',
+        applicationCategory: 'ProductivityApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+  ],
+}
+
 export default function MarkdownEditorsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  )
 }

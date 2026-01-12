@@ -12,10 +12,77 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Best AI Video Generators 2026',
+  description: 'A comparison of the top AI video generators for creators.',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Runway Gen-3',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Pika Labs',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Luma Dream Machine',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Kling AI',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Grok Video',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+  ],
+}
+
 export default function AIVideoGeneratorsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  )
 }

@@ -12,10 +12,77 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Best AI Image Generators 2026',
+  description: 'A comparison of the top AI image generators for artists and creators.',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Midjourney v6.1',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'DALL-E 3',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Stable Diffusion XL',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Grok',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Web',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: 'Flux',
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Cross-platform',
+      },
+    },
+  ],
+}
+
 export default function AIImageGeneratorsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  )
 }
