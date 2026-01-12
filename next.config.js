@@ -5,10 +5,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // GitHub Pages deployment
-  basePath: process.env.GITHUB_PAGES === 'true' ? '/agentforge' : '',
-  assetPrefix: process.env.GITHUB_PAGES === 'true' ? '/agentforge/' : '',
   trailingSlash: true,
+  // Cloudflare Pages handles routing automatically
 }
 
 module.exports = nextConfig
