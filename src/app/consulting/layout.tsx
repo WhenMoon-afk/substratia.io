@@ -17,10 +17,68 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Claude Code Consulting',
+  description: 'Expert consulting services for Claude Code including setup, training, and ongoing advisory.',
+  provider: {
+    '@type': 'Organization',
+    name: 'Substratia',
+    url: 'https://substratia.io',
+  },
+  serviceType: 'AI Development Consulting',
+  areaServed: 'Worldwide',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Claude Code Consulting Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Claude Code Audit',
+          description: '1-hour review of your setup, CLAUDE.md, and workflows with actionable recommendations.',
+        },
+        price: '150',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Setup Session',
+          description: '1.5-hour hands-on configuration of Claude Code for your specific needs.',
+        },
+        price: '200',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Team Workshop',
+          description: 'Half-day training for 5-15 developers covering fundamentals and team-specific workflows.',
+        },
+        price: '1500',
+        priceCurrency: 'USD',
+      },
+    ],
+  },
+}
+
 export default function ConsultingLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  )
 }
