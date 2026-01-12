@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import {
   categories,
@@ -20,6 +20,33 @@ export default function StackBuilderPage() {
   const [activeCategory, setActiveCategory] = useState(0)
   const [hoveredOption, setHoveredOption] = useState<TechOption | null>(null)
   const [copied, setCopied] = useState<string | null>(null)
+  const [shared, setShared] = useState(false)
+
+  // Load state from URL on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const stateParam = params.get('stack')
+    if (stateParam) {
+      try {
+        const decoded = JSON.parse(atob(stateParam))
+        if (decoded && typeof decoded === 'object') {
+          setSelections(decoded)
+        }
+      } catch {
+        // Invalid state param, ignore
+      }
+    }
+  }, [])
+
+  // Share via URL
+  const shareStack = useCallback(async () => {
+    const stateStr = btoa(JSON.stringify(selections))
+    const shareUrl = `${window.location.origin}${window.location.pathname}?stack=${stateStr}`
+    await navigator.clipboard.writeText(shareUrl)
+    setShared(true)
+    setTimeout(() => setShared(false), 2000)
+  }, [selections])
 
   const currentCategory = categories[activeCategory]
   const warnings = useMemo(() => getCompatibilityWarnings(selections), [selections])
@@ -346,6 +373,17 @@ export default function StackBuilderPage() {
                     className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     .json
+                  </button>
+                  <button
+                    onClick={shareStack}
+                    disabled={selectedCount === 0}
+                    className={`px-3 py-2 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                      shared
+                        ? 'bg-green-500 text-white'
+                        : 'bg-forge-cyan/30 hover:bg-forge-cyan/50 text-forge-cyan'
+                    }`}
+                  >
+                    {shared ? 'Link Copied!' : 'Share URL'}
                   </button>
                 </div>
               </div>
