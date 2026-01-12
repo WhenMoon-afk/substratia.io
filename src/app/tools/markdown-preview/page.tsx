@@ -168,6 +168,83 @@ export default function MarkdownPreviewPage() {
     setMarkdown(defaultMarkdown)
   }, [])
 
+  // Download as .md file
+  const downloadMarkdown = useCallback(() => {
+    const blob = new Blob([markdown], { type: 'text/markdown' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'document.md'
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [markdown])
+
+  // Download as .html file
+  const downloadHtml = useCallback(() => {
+    const fullHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Document</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.7; color: #333; }
+    h1, h2 { border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+    code { background: #f4f4f4; padding: 0.2em 0.4em; border-radius: 4px; font-family: monospace; }
+    pre { background: #f4f4f4; padding: 1em; border-radius: 8px; overflow-x: auto; }
+    pre code { background: none; padding: 0; }
+    blockquote { border-left: 4px solid #ddd; padding-left: 1em; margin: 1em 0; color: #666; }
+    a { color: #0066cc; }
+    hr { border: none; border-top: 1px solid #eee; margin: 2em 0; }
+    ul, ol { padding-left: 2em; }
+  </style>
+</head>
+<body>
+${html}
+</body>
+</html>`
+    const blob = new Blob([fullHtml], { type: 'text/html' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'document.html'
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [html])
+
+  // Export as PDF (via print dialog)
+  const exportPdf = useCallback(() => {
+    const printWindow = window.open('', '_blank')
+    if (!printWindow) {
+      alert('Please allow popups to export PDF')
+      return
+    }
+    printWindow.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Document</title>
+  <style>
+    @media print {
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 100%; margin: 0; padding: 20px; line-height: 1.7; color: #000; }
+      h1, h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.3em; }
+      code { background: #eee; padding: 0.2em 0.4em; border-radius: 4px; font-family: monospace; }
+      pre { background: #f5f5f5; padding: 1em; border-radius: 8px; overflow-x: auto; border: 1px solid #ddd; }
+      pre code { background: none; padding: 0; }
+      blockquote { border-left: 4px solid #999; padding-left: 1em; margin: 1em 0; color: #555; }
+      a { color: #0066cc; text-decoration: underline; }
+      hr { border: none; border-top: 1px solid #ccc; margin: 2em 0; }
+      ul, ol { padding-left: 2em; }
+    }
+  </style>
+</head>
+<body>
+${html}
+<script>window.onload = function() { window.print(); window.close(); }</script>
+</body>
+</html>`)
+    printWindow.document.close()
+  }, [html])
+
   return (
     <main className="min-h-screen text-white">
       <div className="container mx-auto px-4 py-8">
@@ -216,7 +293,28 @@ export default function MarkdownPreviewPage() {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={downloadMarkdown}
+              disabled={!markdown}
+              className="px-3 py-1 text-xs bg-white/10 hover:bg-white/20 rounded-lg transition-all disabled:opacity-50"
+            >
+              Download .md
+            </button>
+            <button
+              onClick={downloadHtml}
+              disabled={!markdown}
+              className="px-3 py-1 text-xs bg-white/10 hover:bg-white/20 rounded-lg transition-all disabled:opacity-50"
+            >
+              Download .html
+            </button>
+            <button
+              onClick={exportPdf}
+              disabled={!markdown}
+              className="px-3 py-1 text-xs bg-forge-purple/30 hover:bg-forge-purple/50 text-forge-purple rounded-lg transition-all disabled:opacity-50"
+            >
+              Export PDF
+            </button>
             <button
               onClick={loadExample}
               className="px-3 py-1 text-xs bg-white/10 hover:bg-white/20 rounded-lg transition-all"
