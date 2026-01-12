@@ -1,10 +1,7 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Documentation - Substratia | Memory Infrastructure for AI',
-  description: 'Learn how to use Substratia tools: momentum for context recovery, memory-mcp for persistent memory, and AgentForge for visual agent configuration.',
-}
+import { useState, useCallback, useEffect } from 'react'
+import Link from 'next/link'
 
 interface ContentItem {
   title: string
@@ -256,6 +253,34 @@ const sections: Section[] = [
 ]
 
 export default function DocsPage() {
+  const [copiedCode, setCopiedCode] = useState<string | null>(null)
+  const [sharedSection, setSharedSection] = useState<string | null>(null)
+
+  // Handle URL hash navigation on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const hash = window.location.hash.slice(1)
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash)
+        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
+    }
+  }, [])
+
+  const copyCode = useCallback(async (code: string, id: string) => {
+    await navigator.clipboard.writeText(code)
+    setCopiedCode(id)
+    setTimeout(() => setCopiedCode(null), 2000)
+  }, [])
+
+  const shareSection = useCallback(async (sectionId: string) => {
+    const shareUrl = `${window.location.origin}${window.location.pathname}#${sectionId}`
+    await navigator.clipboard.writeText(shareUrl)
+    setSharedSection(sectionId)
+    setTimeout(() => setSharedSection(null), 2000)
+  }, [])
+
   return (
     <main className="min-h-screen text-white py-12">
       <div className="container mx-auto px-4">
@@ -295,7 +320,19 @@ export default function DocsPage() {
 
             {sections.map((section) => (
               <section key={section.id} id={section.id} className="mb-16 scroll-mt-24">
-                <h2 className="text-2xl font-bold mb-6 text-forge-cyan">{section.title}</h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-forge-cyan">{section.title}</h2>
+                  <button
+                    onClick={() => shareSection(section.id)}
+                    className={`px-3 py-1 text-xs rounded-lg transition-all ${
+                      sharedSection === section.id
+                        ? 'bg-green-500 text-white'
+                        : 'bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan'
+                    }`}
+                  >
+                    {sharedSection === section.id ? 'Link Copied!' : 'Share'}
+                  </button>
+                </div>
                 <div className="space-y-8">
                   {section.content.map((item, idx) => (
                     <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-6">
@@ -314,9 +351,21 @@ export default function DocsPage() {
                       )}
 
                       {item.code && (
-                        <pre className="mt-4 bg-forge-dark border border-white/10 rounded-lg p-4 overflow-x-auto text-sm">
-                          {item.code}
-                        </pre>
+                        <div className="mt-4 relative">
+                          <pre className="bg-forge-dark border border-white/10 rounded-lg p-4 overflow-x-auto text-sm pr-16">
+                            {item.code}
+                          </pre>
+                          <button
+                            onClick={() => copyCode(item.code!, `${section.id}-${idx}`)}
+                            className={`absolute top-2 right-2 px-2 py-1 text-xs rounded transition-all ${
+                              copiedCode === `${section.id}-${idx}`
+                                ? 'bg-green-500 text-white'
+                                : 'bg-white/10 hover:bg-white/20'
+                            }`}
+                          >
+                            {copiedCode === `${section.id}-${idx}` ? 'Copied!' : 'Copy'}
+                          </button>
+                        </div>
                       )}
 
                       {item.list && (

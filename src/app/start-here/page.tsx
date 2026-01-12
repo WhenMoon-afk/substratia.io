@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 
 interface Step {
@@ -71,8 +71,45 @@ export default function StartHerePage() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set())
+  const [sharedProgress, setSharedProgress] = useState(false)
 
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mreezwlv'
+
+  // Load progress from localStorage on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const saved = localStorage.getItem('substratia-start-here-progress')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed)) {
+          setCompletedSteps(new Set(parsed))
+        }
+      } catch {
+        // Invalid data, ignore
+      }
+    }
+  }, [])
+
+  // Save progress to localStorage when it changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    localStorage.setItem('substratia-start-here-progress', JSON.stringify(Array.from(completedSteps)))
+  }, [completedSteps])
+
+  const shareProgress = useCallback(async () => {
+    const progress = `${completedSteps.size}/${learningPath.length}`
+    const shareUrl = `${window.location.origin}${window.location.pathname}`
+    const shareText = `I've completed ${progress} steps of the Claude Code learning path! ${shareUrl}`
+    await navigator.clipboard.writeText(shareText)
+    setSharedProgress(true)
+    setTimeout(() => setSharedProgress(false), 2000)
+  }, [completedSteps.size])
+
+  const resetProgress = useCallback(() => {
+    setCompletedSteps(new Set())
+    localStorage.removeItem('substratia-start-here-progress')
+  }, [])
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -218,11 +255,31 @@ export default function StartHerePage() {
               <div className="text-4xl font-bold text-forge-cyan mb-2">
                 {completedSteps.size} / {learningPath.length}
               </div>
-              <p className="text-gray-400">
+              <p className="text-gray-400 mb-4">
                 {completedSteps.size === learningPath.length
                   ? 'You\'re a Claude Code power user!'
                   : 'Steps completed'}
               </p>
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={shareProgress}
+                  className={`px-4 py-2 text-sm rounded-lg transition-all ${
+                    sharedProgress
+                      ? 'bg-green-500 text-white'
+                      : 'bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan'
+                  }`}
+                >
+                  {sharedProgress ? 'Copied!' : 'Share Progress'}
+                </button>
+                {completedSteps.size > 0 && (
+                  <button
+                    onClick={resetProgress}
+                    className="px-4 py-2 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-all text-gray-400"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
