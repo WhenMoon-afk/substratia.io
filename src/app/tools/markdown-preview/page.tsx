@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
+import ShareButton from '@/components/ShareButton'
 
 // Simple markdown to HTML converter (no dependencies)
 function markdownToHtml(text: string): string {
@@ -250,9 +251,12 @@ ${html}
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-6">
-          <Link href="/tools" className="text-forge-cyan hover:underline text-sm mb-4 inline-block">
-            &larr; Back to Tools
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+              &larr; Back to Tools
+            </Link>
+            <ShareButton title="Markdown Preview - Substratia" />
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
             Markdown <span className="text-forge-cyan">Preview</span>
           </h1>

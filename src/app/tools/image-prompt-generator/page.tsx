@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
+import ShareButton from '@/components/ShareButton'
 import {
   platforms,
   stylePresets,
@@ -187,9 +188,12 @@ export default function ImagePromptGeneratorPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/tools" className="text-forge-cyan hover:underline text-sm mb-4 inline-block">
-            &larr; Back to Tools
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+              &larr; Back to Tools
+            </Link>
+            <ShareButton title="Image Prompt Generator - Substratia" />
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
             Image <span className="text-forge-cyan">Prompt Generator</span>
           </h1>

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import ShareButton from '@/components/ShareButton'
 
 export default function SeedMakerPage() {
   const [entropyProgress, setEntropyProgress] = useState(0)
@@ -158,9 +159,12 @@ export default function SeedMakerPage() {
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="max-w-4xl mx-auto mb-8">
-          <Link href="/tools" className="text-forge-cyan hover:underline text-sm mb-4 inline-block">
-            ← Back to Tools
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+              ← Back to Tools
+            </Link>
+            <ShareButton title="Seed Maker - Substratia" />
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
             Seed <span className="text-forge-purple">Maker</span>
           </h1>

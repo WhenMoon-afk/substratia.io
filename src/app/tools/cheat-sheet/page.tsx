@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
+import ShareButton from '@/components/ShareButton'
 
 export default function CheatSheetPage() {
   const [email, setEmail] = useState('')
@@ -98,9 +99,12 @@ Downloaded from substratia.io/tools/cheat-sheet
       {/* Header */}
       <section className="relative z-10 py-12">
         <div className="container mx-auto px-4">
-          <Link href="/tools" className="text-forge-cyan hover:underline text-sm mb-4 inline-block">
-            ← Back to Tools
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+              ← Back to Tools
+            </Link>
+            <ShareButton title="Claude Code Cheat Sheet - Substratia" />
+          </div>
           <div className="max-w-4xl">
             <div className="inline-block px-3 py-1 bg-green-500/20 border border-green-500/50 rounded-full text-xs text-green-400 mb-4">
               Free Resource

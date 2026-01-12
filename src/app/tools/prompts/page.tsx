@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
+import ShareButton from '@/components/ShareButton'
 
 interface Prompt {
   id: string
@@ -1199,9 +1200,12 @@ export default function PromptsPage() {
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="max-w-4xl mx-auto mb-8">
-          <Link href="/tools" className="text-forge-cyan hover:underline text-sm mb-4 inline-block">
-            ← Back to Tools
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+              ← Back to Tools
+            </Link>
+            <ShareButton title="Prompt Library - Substratia" />
+          </div>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl md:text-4xl font-bold">
               Prompt <span className="text-forge-purple">Library</span>
