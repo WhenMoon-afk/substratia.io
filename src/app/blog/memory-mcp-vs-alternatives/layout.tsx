@@ -1,3 +1,22 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'MCP Memory Servers Compared | Substratia',
+  description: 'Comprehensive comparison of MCP memory servers including memory-mcp, mem0, Basic Memory, and Obsidian MCP.',
+  keywords: ['MCP memory', 'memory-mcp', 'mem0', 'Basic Memory', 'MCP comparison'],
+  openGraph: {
+    title: 'MCP Memory Servers Compared',
+    description: 'Compare memory-mcp, mem0, Basic Memory, and Obsidian MCP.',
+    type: 'article',
+    url: 'https://substratia.io/blog/memory-mcp-vs-alternatives',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MCP Memory Server Comparison',
+    description: 'memory-mcp vs mem0 vs Basic Memory vs Obsidian MCP.',
+  },
+}
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',

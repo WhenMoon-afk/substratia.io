@@ -1,3 +1,22 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'How to Build Claude Agents: A Practical Guide | Substratia',
+  description: 'Step-by-step guide to building effective Claude Code agents with CLAUDE.md configuration.',
+  keywords: ['Claude agents', 'CLAUDE.md', 'AI agents', 'Claude Code tutorial', 'agent building'],
+  openGraph: {
+    title: 'How to Build Claude Agents',
+    description: 'Step-by-step guide to building effective Claude Code agents.',
+    type: 'article',
+    url: 'https://substratia.io/blog/how-to-build-claude-agents',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'How to Build Claude Agents',
+    description: 'Practical guide to building Claude Code agents.',
+  },
+}
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',

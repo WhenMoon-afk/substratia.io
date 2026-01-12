@@ -1,3 +1,22 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'AGENTS.md vs CLAUDE.md: Complete Guide | Substratia',
+  description: 'Learn the differences between AGENTS.md and CLAUDE.md files, when to use each, and best practices for configuring AI coding agents.',
+  keywords: ['AGENTS.md', 'CLAUDE.md', 'AI agent configuration', 'Claude Code', 'agent setup'],
+  openGraph: {
+    title: 'AGENTS.md vs CLAUDE.md: Complete Guide',
+    description: 'Learn the differences between AGENTS.md and CLAUDE.md files.',
+    type: 'article',
+    url: 'https://substratia.io/blog/agents-md-vs-claude-md',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AGENTS.md vs CLAUDE.md Guide',
+    description: 'When to use each file for AI agent configuration.',
+  },
+}
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',

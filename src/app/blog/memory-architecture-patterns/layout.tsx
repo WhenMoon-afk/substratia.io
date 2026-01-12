@@ -1,3 +1,22 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Memory Architecture Patterns for AI Assistants | Substratia',
+  description: 'Explore different memory architecture patterns for building AI systems with persistent context.',
+  keywords: ['memory architecture', 'AI memory', 'persistent context', 'Claude memory', 'MCP patterns'],
+  openGraph: {
+    title: 'Memory Architecture Patterns for AI',
+    description: 'Memory architecture patterns for building AI with persistent context.',
+    type: 'article',
+    url: 'https://substratia.io/blog/memory-architecture-patterns',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Memory Architecture Patterns',
+    description: 'Building AI systems with persistent context.',
+  },
+}
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
