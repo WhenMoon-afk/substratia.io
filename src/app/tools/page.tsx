@@ -252,7 +252,7 @@ export default function ToolsIndexPage() {
               You&apos;re in! We&apos;ll let you know when new tools drop.
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
                 value={email}
