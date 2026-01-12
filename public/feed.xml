@@ -6,7 +6,15 @@
     <link>https://substratia.io/blog</link>
     <atom:link href="https://substratia.io/feed.xml" rel="self" type="application/rss+xml"/>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Jan 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jan 2026 00:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>The Ultimate Guide to Claude Code Context Management</title>
+      <link>https://substratia.io/blog/context-management-guide/</link>
+      <guid>https://substratia.io/blog/context-management-guide/</guid>
+      <pubDate>Sat, 11 Jan 2026 00:00:00 GMT</pubDate>
+      <description>Master context window management in Claude Code. Learn techniques for preserving context, avoiding compaction issues, and maximizing your AI coding sessions.</description>
+    </item>
 
     <item>
       <title>Mirror Demons: How AI Chatbots Can Amplify Delusions</title>
