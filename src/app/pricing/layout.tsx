@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/pricing',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Substratia Pricing',
+    description: 'Free tools. Pro tier from $15/month.',
+  },
 }
 
 const jsonLd = {

@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/image-prompt-generator',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Image Prompt Generator',
+    description: '50+ style presets for Midjourney, DALL-E, Stable Diffusion. Free.',
+  },
 }
 
 const jsonLd = {

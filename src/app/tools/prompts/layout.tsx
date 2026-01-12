@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/prompts',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free AI Prompt Library',
+    description: '24 battle-tested prompts. Click to copy. Works with Claude, GPT-4, and more.',
+  },
 }
 
 const jsonLd = {

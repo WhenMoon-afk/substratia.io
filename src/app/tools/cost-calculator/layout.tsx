@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/cost-calculator',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Claude Code Cost Calculator',
+    description: 'Compare API pricing vs subscription plans. Find the most cost-effective option.',
+  },
 }
 
 const jsonLd = {

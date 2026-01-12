@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free AI Tools for Developers',
+    description: '12 free tools: stack builder, cost calculator, prompt optimizer, and more.',
+  },
 }
 
 const jsonLd = {

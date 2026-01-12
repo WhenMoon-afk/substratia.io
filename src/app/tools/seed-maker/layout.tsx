@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/seed-maker',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Seed Maker - Random String Generator',
+    description: 'Cryptographically strong random strings from mouse movements. 100% private.',
+  },
 }
 
 const jsonLd = {

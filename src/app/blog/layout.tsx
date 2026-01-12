@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/blog',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Substratia Blog',
+    description: 'Tutorials and best practices for AI memory tools and Claude Code.',
+  },
 }
 
 const jsonLd = {

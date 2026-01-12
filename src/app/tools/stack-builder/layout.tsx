@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/stack-builder',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Stack Builder - Full-Stack Tech Selector',
+    description: 'Visual tech stack builder with compatibility checks and AI analysis.',
+  },
 }
 
 const jsonLd = {

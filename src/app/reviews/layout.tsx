@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/reviews',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Tool Reviews & Comparisons',
+    description: 'Honest reviews of AI coding assistants, image generators, video generators.',
+  },
 }
 
 const jsonLd = {

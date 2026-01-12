@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/faq',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FAQ - Claude Code & Memory Tools',
+    description: 'Answers to common questions about Claude Code, momentum, and memory-mcp.',
+  },
 }
 
 const jsonLd = {

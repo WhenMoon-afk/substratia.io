@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/markdown-stripper',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Markdown Stripper',
+    description: 'Strip markdown formatting instantly. Paste markdown, get plain text.',
+  },
 }
 
 const jsonLd = {

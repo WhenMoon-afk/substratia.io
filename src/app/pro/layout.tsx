@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/pro',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Substratia Pro - Coming Soon',
+    description: 'Cloud sync, memory dashboard, automatic backups. Join the waitlist.',
+  },
 }
 
 const jsonLd = {

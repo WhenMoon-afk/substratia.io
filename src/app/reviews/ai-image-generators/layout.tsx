@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'article',
     url: 'https://substratia.io/reviews/ai-image-generators',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Best AI Image Generators 2026',
+    description: 'Midjourney vs DALL-E 3 vs Stable Diffusion vs Grok comparison.',
+  },
 }
 
 const jsonLd = {

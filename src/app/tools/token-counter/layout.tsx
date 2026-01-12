@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/token-counter',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Token Counter for Claude & GPT-4',
+    description: 'Count tokens and estimate costs for AI models. 100% free, no signup.',
+  },
 }
 
 const jsonLd = {

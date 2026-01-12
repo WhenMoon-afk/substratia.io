@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/prompt-optimizer',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Claude Code Prompt Optimizer',
+    description: 'Build prompts with ultrathink, autonomous loops, and parallel execution.',
+  },
 }
 
 const jsonLd = {

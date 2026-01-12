@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/builder',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AgentForge - Visual AI Agent Builder',
+    description: 'Drag-and-drop builder for CLAUDE.md files. 28 capabilities, 13 rulesets. Free.',
+  },
 }
 
 const jsonLd = {

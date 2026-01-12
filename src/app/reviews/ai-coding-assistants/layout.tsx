@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'article',
     url: 'https://substratia.io/reviews/ai-coding-assistants',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Best AI Coding Assistants 2026',
+    description: 'Compare Claude Code, Cursor, GitHub Copilot, Codeium, and Windsurf.',
+  },
 }
 
 const jsonLd = {

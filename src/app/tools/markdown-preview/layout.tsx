@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/markdown-preview',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Markdown Preview - Live Editor',
+    description: 'Obsidian-style dual panel markdown editor with instant preview.',
+  },
 }
 
 const jsonLd = {

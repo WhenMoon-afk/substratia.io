@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/templates',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Memory Tools for AI',
+    description: 'Open-source: momentum, memory-mcp, AgentForge.',
+  },
 }
 
 const jsonLd = {

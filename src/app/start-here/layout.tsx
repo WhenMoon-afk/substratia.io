@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/start-here',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Claude Code Getting Started Guide',
+    description: 'A curated learning path from beginner to power user.',
+  },
 }
 
 const jsonLd = {

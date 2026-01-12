@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'article',
     url: 'https://substratia.io/reviews/markdown-editors',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Best Markdown Editors 2026',
+    description: 'Compare Obsidian, Notion, Typora, VS Code, and iA Writer.',
+  },
 }
 
 const jsonLd = {

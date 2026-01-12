@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/docs',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Substratia Documentation',
+    description: 'Learn how to use momentum, memory-mcp, and AgentForge.',
+  },
 }
 
 const jsonLd = {

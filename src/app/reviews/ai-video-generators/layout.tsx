@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'article',
     url: 'https://substratia.io/reviews/ai-video-generators',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Best AI Video Generators 2026',
+    description: 'Runway Gen-3 vs Pika vs Luma vs Kling vs Grok comparison.',
+  },
 }
 
 const jsonLd = {

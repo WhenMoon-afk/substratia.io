@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/testimonials',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Claude Code Consulting Testimonials',
+    description: 'Success stories from Claude Code consulting clients.',
+  },
 }
 
 const jsonLd = {

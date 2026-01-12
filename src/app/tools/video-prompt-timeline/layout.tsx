@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://substratia.io/tools/video-prompt-timeline',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Video Prompt Timeline',
+    description: 'Visual storyboard for Grok, Runway, Pika, Luma video generation.',
+  },
 }
 
 const jsonLd = {
