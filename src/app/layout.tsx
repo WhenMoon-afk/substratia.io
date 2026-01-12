@@ -113,8 +113,13 @@ export default function RootLayout({
       {/* Analytics: Enable Cloudflare Web Analytics in dashboard (free) */}
       {/* Or add Plausible/Umami script here if using external analytics */}
       <body className="antialiased">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Nav />
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   )
