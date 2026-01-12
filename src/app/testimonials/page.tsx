@@ -178,7 +178,7 @@ export default function TestimonialsPage() {
                   You&apos;re subscribed! We&apos;ll keep you posted.
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="flex gap-3 max-w-md mx-auto">
+                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input
                     type="email"
                     value={email}
