@@ -11,7 +11,8 @@ export default function Nav() {
 
   const links = [
     { href: '/start-here', label: 'Start Here' },
-    { href: '/cloud', label: 'Cloud', badge: 'Soon' },
+    { href: '/cloud', label: 'Cloud', badge: 'New' },
+    { href: '/dashboard', label: 'Dashboard' },
     { href: '/tools', label: 'Tools' },
     { href: '/reviews', label: 'Reviews' },
     { href: '/consulting', label: 'Consulting' },
