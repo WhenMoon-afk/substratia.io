@@ -1,7 +1,14 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import Nav from '@/components/Nav'
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#1a1a2e' },
+    { media: '(prefers-color-scheme: light)', color: '#1a1a2e' },
+  ],
+}
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -9,10 +16,6 @@ export const metadata: Metadata = {
     icon: '/brand/logo-icon.png',
     apple: '/brand/logo-icon.png',
   },
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#1a1a2e' },
-    { media: '(prefers-color-scheme: light)', color: '#1a1a2e' },
-  ],
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
