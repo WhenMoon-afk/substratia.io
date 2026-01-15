@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useUser, UserButton } from "@clerk/nextjs";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import Link from "next/link";
 
@@ -28,11 +29,55 @@ interface Stats {
   memberSince: number;
 }
 
+interface ApiKey {
+  _id: string;
+  keyPrefix: string;
+  name: string;
+  lastUsed?: number;
+  createdAt: number;
+}
+
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
   const stats = useQuery(api.users.getStats) as Stats | undefined;
   const recentSnapshots = useQuery(api.snapshots.getRecent, { limit: 5 }) as Snapshot[] | undefined;
   const recentMemories = useQuery(api.memories.getRecent, { limit: 5 }) as Memory[] | undefined;
+  const apiKeys = useQuery(api.apiKeys.list) as ApiKey[] | undefined;
+
+  const createApiKey = useMutation(api.apiKeys.create);
+  const revokeApiKey = useMutation(api.apiKeys.revoke);
+
+  const [newKeyName, setNewKeyName] = useState("");
+  const [newKeyValue, setNewKeyValue] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [showApiSection, setShowApiSection] = useState(false);
+
+  const handleCreateKey = async () => {
+    if (!newKeyName.trim()) return;
+    setIsCreating(true);
+    try {
+      const result = await createApiKey({ name: newKeyName.trim() });
+      setNewKeyValue(result.key);
+      setNewKeyName("");
+    } catch (error) {
+      console.error("Failed to create API key:", error);
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const handleRevokeKey = async (keyId: string) => {
+    if (!confirm("Are you sure you want to revoke this API key? This cannot be undone.")) return;
+    try {
+      await revokeApiKey({ keyId: keyId as any });
+    } catch (error) {
+      console.error("Failed to revoke API key:", error);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
 
   if (!isLoaded) {
     return (
@@ -229,6 +274,137 @@ export default function DashboardPage() {
             </code>
           </div>
         </div>
+      </div>
+
+      {/* API Keys Section */}
+      <div className="mt-8 bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-white">API Keys</h2>
+          <button
+            onClick={() => setShowApiSection(!showApiSection)}
+            className="text-gray-400 hover:text-white transition-colors text-sm"
+          >
+            {showApiSection ? "Hide" : "Show"} API Keys
+          </button>
+        </div>
+
+        {showApiSection && (
+          <>
+            <p className="text-gray-400 text-sm mb-4">
+              API keys allow momentum and memory-mcp to sync data to Substratia Cloud.
+            </p>
+
+            {/* New Key Created - Show Once */}
+            {newKeyValue && (
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-green-400 font-medium">API Key Created</h3>
+                    <p className="text-green-300/70 text-sm mt-1">
+                      Copy this key now. You won&apos;t be able to see it again.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setNewKeyValue(null)}
+                    className="text-green-400 hover:text-green-300"
+                  >
+                    ×
+                  </button>
+                </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <code className="bg-gray-900 px-3 py-2 rounded text-cyan-400 font-mono text-sm flex-1 overflow-x-auto">
+                    {newKeyValue}
+                  </code>
+                  <button
+                    onClick={() => copyToClipboard(newKeyValue)}
+                    className="px-3 py-2 bg-cyan-500/20 text-cyan-400 rounded hover:bg-cyan-500/30 transition-colors text-sm"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Create New Key */}
+            <div className="flex gap-2 mb-6">
+              <input
+                type="text"
+                placeholder="Key name (e.g., 'work-laptop')"
+                value={newKeyName}
+                onChange={(e) => setNewKeyName(e.target.value)}
+                className="flex-1 bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-none"
+                onKeyDown={(e) => e.key === "Enter" && handleCreateKey()}
+              />
+              <button
+                onClick={handleCreateKey}
+                disabled={isCreating || !newKeyName.trim()}
+                className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isCreating ? "Creating..." : "Create Key"}
+              </button>
+            </div>
+
+            {/* Existing Keys */}
+            <div className="space-y-2">
+              {apiKeys === undefined ? (
+                <div className="animate-pulse space-y-2">
+                  {[1, 2].map((i) => (
+                    <div key={i} className="h-12 bg-gray-700/50 rounded-lg" />
+                  ))}
+                </div>
+              ) : apiKeys.length === 0 ? (
+                <p className="text-gray-500 text-sm text-center py-4">
+                  No API keys yet. Create one to enable cloud sync.
+                </p>
+              ) : (
+                apiKeys.map((key) => (
+                  <div
+                    key={key._id}
+                    className="flex items-center justify-between bg-gray-700/30 rounded-lg px-4 py-3"
+                  >
+                    <div>
+                      <span className="text-white font-medium">{key.name}</span>
+                      <span className="text-gray-500 ml-2 font-mono text-sm">
+                        {key.keyPrefix}...
+                      </span>
+                      <span className="text-gray-600 text-xs ml-2">
+                        Created {new Date(key.createdAt).toLocaleDateString()}
+                        {key.lastUsed && (
+                          <> · Last used {new Date(key.lastUsed).toLocaleDateString()}</>
+                        )}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleRevokeKey(key._id)}
+                      className="text-red-400 hover:text-red-300 text-sm"
+                    >
+                      Revoke
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Setup Instructions */}
+            {apiKeys && apiKeys.length > 0 && (
+              <div className="mt-6 bg-gray-700/20 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-2">Configure momentum for cloud sync</h3>
+                <p className="text-gray-400 text-sm mb-3">
+                  Add this to your <code className="text-cyan-400">~/.config/momentum/config.json</code>:
+                </p>
+                <pre className="bg-gray-900 rounded p-3 text-sm text-gray-300 overflow-x-auto">
+{`{
+  "cloudSync": {
+    "enabled": true,
+    "apiKey": "YOUR_API_KEY",
+    "endpoint": "https://agreeable-chameleon-83.convex.site/api/snapshots/sync"
+  }
+}`}
+                </pre>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

@@ -80,4 +80,17 @@ export default defineSchema({
   })
     .index("by_email", ["email"])
     .index("by_tier", ["tier"]),
+
+  // API keys for external tool sync (momentum, memory-mcp)
+  apiKeys: defineTable({
+    userId: v.id("users"),
+    key: v.string(), // hashed API key
+    keyPrefix: v.string(), // first 8 chars for identification
+    name: v.string(), // user-provided name
+    lastUsed: v.optional(v.number()),
+    createdAt: v.number(),
+    revokedAt: v.optional(v.number()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_key", ["key"]),
 });

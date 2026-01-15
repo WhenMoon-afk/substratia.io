@@ -8,8 +8,13 @@
  * @module
  */
 
+import type * as apiKeys from "../apiKeys.js";
+import type * as apiKeysInternal from "../apiKeysInternal.js";
+import type * as http from "../http.js";
 import type * as memories from "../memories.js";
+import type * as memoriesInternal from "../memoriesInternal.js";
 import type * as snapshots from "../snapshots.js";
+import type * as snapshotsInternal from "../snapshotsInternal.js";
 import type * as users from "../users.js";
 import type * as waitlist from "../waitlist.js";
 
@@ -20,8 +25,13 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  apiKeys: typeof apiKeys;
+  apiKeysInternal: typeof apiKeysInternal;
+  http: typeof http;
   memories: typeof memories;
+  memoriesInternal: typeof memoriesInternal;
   snapshots: typeof snapshots;
+  snapshotsInternal: typeof snapshotsInternal;
   users: typeof users;
   waitlist: typeof waitlist;
 }>;
