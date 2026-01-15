@@ -141,7 +141,7 @@ const defaultInstance = defaultApiKey
  *
  * @example
  * ```typescript
- * import { memory } from '@substratia/memory'
+ * import { memory } from '@substratia-io/memory'
  * await memory.search("user preferences")
  * ```
  */
@@ -153,7 +153,7 @@ export const memory = defaultInstance;
  *
  * @example
  * ```typescript
- * import { remember } from '@substratia/memory'
+ * import { remember } from '@substratia-io/memory'
  * await remember("User prefers dark mode")
  * ```
  *
@@ -183,7 +183,7 @@ export async function remember(
  *
  * @example
  * ```typescript
- * import { recall } from '@substratia/memory'
+ * import { recall } from '@substratia-io/memory'
  * const memories = await recall("diet preferences")
  * ```
  */
@@ -208,7 +208,7 @@ export async function recall(
  *
  * @example
  * ```typescript
- * import { forget } from '@substratia/memory'
+ * import { forget } from '@substratia-io/memory'
  * await forget("memory_id_here")
  * ```
  */

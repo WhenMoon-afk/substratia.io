@@ -1,7 +1,7 @@
 {
-  "name": "@substratia/memory",
+  "name": "@substratia-io/memory",
   "version": "0.1.0",
-  "description": "Memory for AI - 3 lines of code to add persistent memory to any AI system",
+  "description": "Memory for AI - 2 lines of code to add persistent memory to any AI system",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,7 +35,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WhenMoon-afk/substratia.git"
+    "url": "git+https://github.com/substratia-io/memory.git"
   },
   "homepage": "https://substratia.io",
   "engines": {

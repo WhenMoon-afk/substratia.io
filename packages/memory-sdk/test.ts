@@ -1,5 +1,5 @@
 /**
- * Test script for @substratia/memory SDK
+ * Test script for @substratia-io/memory SDK
  *
  * Usage:
  *   SUBSTRATIA_API_KEY=sk_xxx npx tsx test.ts
@@ -9,7 +9,7 @@
 import { remember, recall, forget, memory } from "./src/index.js";
 
 async function test() {
-  console.log("Testing @substratia/memory SDK (2-line API)\n");
+  console.log("Testing @substratia-io/memory SDK (2-line API)\n");
 
   try {
     // Test 1: remember (the 2-line pattern!)
@@ -42,7 +42,7 @@ async function test() {
 
     console.log("\n✅ All tests passed!");
     console.log("\n📝 The 2-line pattern works:");
-    console.log('   import { remember } from "@substratia/memory"');
+    console.log('   import { remember } from "@substratia-io/memory"');
     console.log('   await remember("User prefers dark mode")');
   } catch (error) {
     console.error("\n❌ Test failed:", error);
