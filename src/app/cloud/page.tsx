@@ -503,8 +503,8 @@ export default function CloudPage() {
               <Link href="/tools" className="hover:text-white transition-all">
                 Free Tools
               </Link>
-              <Link href="/consulting" className="hover:text-white transition-all">
-                Get Expert Help
+              <Link href="/docs" className="hover:text-white transition-all">
+                Documentation
               </Link>
             </div>
           </div>
@@ -530,8 +530,8 @@ export default function CloudPage() {
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
               <Link href="/" className="hover:text-white transition-all">Home</Link>
               <Link href="/tools" className="hover:text-white transition-all">Tools</Link>
-              <Link href="/consulting" className="hover:text-white transition-all">Consulting</Link>
               <Link href="/blog" className="hover:text-white transition-all">Blog</Link>
+              <Link href="/docs" className="hover:text-white transition-all">Docs</Link>
               <a href="https://github.com/WhenMoon-afk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">GitHub</a>
             </div>
           </div>

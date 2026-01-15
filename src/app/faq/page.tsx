@@ -9,7 +9,7 @@ interface FAQItem {
   question: string
   answer: string | React.ReactNode
   answerText: string  // Plain text version for copying
-  category: 'general' | 'tools' | 'consulting' | 'technical'
+  category: 'general' | 'tools' | 'technical'
 }
 
 const faqs: FAQItem[] = [
@@ -25,8 +25,8 @@ const faqs: FAQItem[] = [
     id: 'what-is-substratia',
     category: 'general',
     question: 'What is Substratia?',
-    answer: 'Substratia is a collection of free, open-source tools for Claude Code and AI memory management. We also offer consulting services to help individuals and teams get the most out of Claude Code.',
-    answerText: 'Substratia is a collection of free, open-source tools for Claude Code and AI memory management. We also offer consulting services to help individuals and teams get the most out of Claude Code.',
+    answer: 'Substratia is a collection of free, open-source tools for Claude Code and AI memory management. Our tools help developers manage context, persist memory, and build better AI workflows.',
+    answerText: 'Substratia is a collection of free, open-source tools for Claude Code and AI memory management. Our tools help developers manage context, persist memory, and build better AI workflows.',
   },
   {
     id: 'are-tools-free',
@@ -79,50 +79,6 @@ const faqs: FAQItem[] = [
     answer: 'All data is stored locally on your machine in SQLite databases. momentum stores snapshots in ~/.local/share/momentum/ (Linux/macOS) or %LOCALAPPDATA%/momentum (Windows). memory-mcp stores memories in a similar location. Nothing is sent to the cloud.',
     answerText: 'All data is stored locally on your machine in SQLite databases. momentum stores snapshots in ~/.local/share/momentum/ (Linux/macOS) or %LOCALAPPDATA%/momentum (Windows). memory-mcp stores memories in a similar location. Nothing is sent to the cloud.',
   },
-  // Consulting
-  {
-    id: 'offer-consulting',
-    category: 'consulting',
-    question: 'Do you offer consulting?',
-    answer: (
-      <span>
-        Yes! We offer Claude Code consulting services including setup sessions, team workshops, and ongoing advisory. <Link href="/consulting" className="text-forge-cyan hover:underline">View all services and pricing →</Link>
-      </span>
-    ),
-    answerText: 'Yes! We offer Claude Code consulting services including setup sessions, team workshops, and ongoing advisory. View all services and pricing at substratia.io/consulting',
-  },
-  {
-    id: 'setup-session-included',
-    category: 'consulting',
-    question: 'What\'s included in a Setup Session?',
-    answer: 'A 1.5-hour hands-on session where we configure Claude Code for your specific needs. You\'ll leave with a working setup including a custom CLAUDE.md file, MCP tools configured, and best practices guidance. Price: $200.',
-    answerText: 'A 1.5-hour hands-on session where we configure Claude Code for your specific needs. You\'ll leave with a working setup including a custom CLAUDE.md file, MCP tools configured, and best practices guidance. Price: $200.',
-  },
-  {
-    id: 'team-training',
-    category: 'consulting',
-    question: 'Can you train my team?',
-    answer: 'Yes! The Team Workshop is a half-day training for 5-15 developers covering Claude Code fundamentals, team-specific workflows, and hands-on exercises. Price: $1,500. For larger teams or full-day training, contact us.',
-    answerText: 'Yes! The Team Workshop is a half-day training for 5-15 developers covering Claude Code fundamentals, team-specific workflows, and hands-on exercises. Price: $1,500. For larger teams or full-day training, contact us.',
-  },
-  {
-    id: 'ongoing-support',
-    category: 'consulting',
-    question: 'Do you offer ongoing support?',
-    answer: 'Yes, we have three advisory tiers: Light ($500/mo, 2 hrs), Standard ($1,200/mo, 5 hrs + weekly calls), and Premium ($2,500/mo, 10 hrs + on-call support). These include email support, async questions, and regular check-ins.',
-    answerText: 'Yes, we have three advisory tiers: Light ($500/mo, 2 hrs), Standard ($1,200/mo, 5 hrs + weekly calls), and Premium ($2,500/mo, 10 hrs + on-call support). These include email support, async questions, and regular check-ins.',
-  },
-  {
-    id: 'how-to-book',
-    category: 'consulting',
-    question: 'How do I book a session?',
-    answer: (
-      <span>
-        Fill out the contact form on the <Link href="/consulting#contact" className="text-forge-cyan hover:underline">consulting page</Link>. I&apos;ll respond within 24 hours to discuss your needs and schedule a time.
-      </span>
-    ),
-    answerText: 'Fill out the contact form on the consulting page. I\'ll respond within 24 hours to discuss your needs and schedule a time.',
-  },
   // Technical
   {
     id: 'context-window',
@@ -165,7 +121,6 @@ const categories = [
   { id: 'all', label: 'All' },
   { id: 'general', label: 'General' },
   { id: 'tools', label: 'Tools' },
-  { id: 'consulting', label: 'Consulting' },
   { id: 'technical', label: 'Technical' },
 ]
 
@@ -236,7 +191,7 @@ export default function FAQPage() {
               Frequently Asked <span className="text-forge-cyan">Questions</span>
             </h1>
             <p className="text-gray-400 text-center mb-12">
-              Everything you need to know about Claude Code, our tools, and consulting services.
+              Everything you need to know about Claude Code and our tools.
             </p>
 
             {/* Category Filter */}
@@ -338,12 +293,14 @@ export default function FAQPage() {
                 Can&apos;t find what you&apos;re looking for? Get in touch.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Link
-                  href="/consulting#contact"
+                <a
+                  href="https://github.com/WhenMoon-afk"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:bg-forge-cyan/90 transition-all"
                 >
-                  Contact Us
-                </Link>
+                  GitHub
+                </a>
                 <Link
                   href="/docs"
                   className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-semibold transition-all"

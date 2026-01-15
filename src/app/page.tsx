@@ -464,45 +464,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Consulting CTA */}
-      <section id="consulting" className="relative z-10 py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="gradient-border rounded-2xl p-8 md:p-12 text-center">
-              <div className="inline-block px-4 py-1 bg-forge-cyan/20 border border-forge-cyan/50 rounded-full text-sm text-forge-cyan mb-6">
-                Expert Help Available
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">
-                Need Help with <span className="text-forge-cyan">Claude Code</span>?
-              </h2>
-              <p className="text-gray-300 mb-6 max-w-xl mx-auto">
-                From initial setup to team training, get expert guidance from someone who uses
-                Claude Code daily and builds tools for the community.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm text-gray-400">
-                <span className="px-3 py-1 bg-white/5 rounded-full">Setup Sessions</span>
-                <span className="px-3 py-1 bg-white/5 rounded-full">Team Workshops</span>
-                <span className="px-3 py-1 bg-white/5 rounded-full">Ongoing Advisory</span>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/consulting"
-                  className="px-8 py-4 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:bg-forge-cyan/90 transition-all glow-cyan"
-                >
-                  View Services
-                </Link>
-                <Link
-                  href="/tools/cheat-sheet"
-                  className="px-8 py-4 glass hover:bg-white/10 rounded-xl font-semibold transition-all"
-                >
-                  Free Cheat Sheet
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Newsletter */}
       <section id="waitlist" className="relative z-10 py-16">
         <div className="container mx-auto px-4">
@@ -627,7 +588,6 @@ export default function Home() {
               <Link href="/templates" className="hover:text-white transition-all">Memory</Link>
               <Link href="/tools" className="hover:text-white transition-all">Tools</Link>
               <Link href="/reviews" className="hover:text-white transition-all">Reviews</Link>
-              <Link href="/consulting" className="hover:text-white transition-all">Consulting</Link>
               <Link href="/blog" className="hover:text-white transition-all">Blog</Link>
               <Link href="/docs" className="hover:text-white transition-all">Docs</Link>
               <a href="https://github.com/WhenMoon-afk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">GitHub</a>

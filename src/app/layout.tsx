@@ -63,7 +63,7 @@ const organizationLd = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    url: 'https://substratia.io/consulting',
+    url: 'https://github.com/WhenMoon-afk',
   },
 }
 

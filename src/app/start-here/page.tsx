@@ -328,18 +328,6 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      {/* Need More Help */}
-      <section className="relative z-10 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-400 mb-4">Need personalized help?</p>
-          <Link
-            href="/consulting"
-            className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-xl font-semibold transition-all"
-          >
-            Book a Consulting Session
-          </Link>
-        </div>
-      </section>
     </main>
   )
 }
