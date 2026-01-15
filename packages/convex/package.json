@@ -1,0 +1,20 @@
+{
+  "name": "@substratia/convex",
+  "private": true,
+  "version": "0.0.0",
+  "main": "./_generated/api.js",
+  "types": "./_generated/api.d.ts",
+  "exports": {
+    ".": "./_generated/api.js",
+    "./*": "./*"
+  },
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "generate": "convex dev --once"
+  },
+  "dependencies": {
+    "convex": "^1.31.4",
+    "@convex-dev/auth": "^0.0.90"
+  }
+}

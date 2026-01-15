@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { api } from "@substratia/convex";
 import Link from "next/link";
 
 // Types for Convex data (matches schema)

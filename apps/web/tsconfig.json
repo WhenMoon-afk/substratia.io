@@ -18,9 +18,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@substratia/convex": ["../../packages/convex/_generated/api"],
+      "@substratia/convex/*": ["../../packages/convex/*"],
+      "@substratia/shared": ["../../packages/shared/src"],
+      "@substratia/shared/*": ["../../packages/shared/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "convex/*.ts"]
+  "exclude": ["node_modules"]
 }

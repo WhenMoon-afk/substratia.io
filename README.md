@@ -2,6 +2,65 @@
 
 **Memory infrastructure for AI** — Intelligence is substrate-agnostic.
 
+## Monorepo Structure
+
+This is a TurboRepo monorepo containing:
+
+```
+substratia/
+├── apps/
+│   ├── web/          # Next.js 14 web app (substratia.io)
+│   └── mobile/       # Expo React Native app (Android)
+├── packages/
+│   ├── convex/       # Shared Convex backend
+│   └── shared/       # Shared types and utilities
+├── turbo.json        # TurboRepo configuration
+└── package.json      # Workspace root
+```
+
+## Quick Start
+
+```bash
+# Install all dependencies
+bun install
+
+# Run web app (localhost:3000)
+bun run dev:web
+
+# Run mobile app
+bun run dev:mobile
+# Press 'a' for Android emulator
+
+# Run Convex dev server
+cd packages/convex && bun run dev
+
+# Build all
+bun run build
+```
+
+## Tech Stack
+
+### Web (apps/web)
+- Next.js 14 (App Router, SSR)
+- TypeScript
+- Tailwind CSS 3.4
+- Clerk (auth)
+- Convex (backend)
+- Vercel (hosting)
+
+### Mobile (apps/mobile)
+- Expo SDK 54
+- React Native 0.81
+- Expo Router 6
+- NativeWind (Tailwind for RN)
+- Clerk + Convex (shared auth/backend)
+- Android-focused
+
+### Backend (packages/convex)
+- Convex real-time database
+- Shared between web and mobile
+- Schema: users, snapshots, memories, apiKeys
+
 ## Live Site
 
 [https://substratia.io](https://substratia.io)
@@ -11,61 +70,30 @@
 ### Memory Tools
 - **momentum** - Fast context recovery (<5ms restore time)
 - **memory-mcp** - Persistent memory across sessions
-- **AgentForge** - Visual drag-and-drop builder for CLAUDE.md files
+- **Substratia Cloud** - Sync snapshots and memories across devices
 
 ### Free Tools (12 total)
-- **Claude Code Cheat Sheet** - Commands, shortcuts, CLAUDE.md patterns
-- **Claude Code Cost Calculator** - Track session costs, compare pricing
-- **Claude Code Prompt Optimizer** - Build prompts with thinking modes
-- **Stack Builder** - Full-stack tech selector with compatibility checks
-- **Token Counter** - Estimate costs for Claude, GPT-4, and other models
-- **Prompt Library** - 20 curated prompts for productivity
-- **Seed Maker** - High-entropy random string generator
-- **Image Prompt Generator** - Visual builder for AI image prompts
-- **Video Prompt Timeline** - Frame-by-frame video storyboard
-- **Markdown Preview** - Live dual-panel markdown editor
-- **Markdown Stripper** - Remove all markdown formatting
+- Claude Code Cheat Sheet, Cost Calculator, Prompt Optimizer
+- Stack Builder, Token Counter, Prompt Library
+- Seed Maker, Image/Video Prompt Generators
+- Markdown Preview, Markdown Stripper
 
-### Reviews
-- AI Coding Assistants (Claude Code, Cursor, Copilot, Codeium, Windsurf)
-- AI Image Generators (Midjourney, DALL-E 3, Stable Diffusion, Grok, Flux)
-- AI Video Generators (Runway, Pika, Luma, Kling, Grok)
-- Markdown Editors (Obsidian, Notion, Typora, VS Code, iA Writer)
+### Mobile App
+- Dashboard with snapshot/memory stats
+- View all synced snapshots
+- View all synced memories
+- Cross-device sync via Convex
 
-### Blog
-11 posts including original research on AI behavior:
-- The Eleanor Chen Effect (AI creativity convergence)
-- Mirror Demons (AI delusion amplification)
-- Context Management Guide (featured)
-- Technical architecture deep-dives
+## Environment Setup
 
-### Consulting
-Expert Claude Code setup, training, and advisory services.
+Copy `.env.example` to `.env` and configure:
 
-## Getting Started
-
-```bash
-bun install
-bun run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
-## Tech Stack
-
-- Next.js 14 (App Router, Static Export)
-- TypeScript
-- Tailwind CSS 3.4
-- @dnd-kit (drag and drop)
-- Bun (package manager and runtime)
-- Cloudflare Pages (hosting)
-
-## Deployment
-
-Push to master → Cloudflare Pages auto-deploys in ~90s
-
-```bash
-git add -A && git commit -m "feat: description" && git push origin master
+```env
+CONVEX_URL=https://your-deployment.convex.cloud
+NEXT_PUBLIC_CONVEX_URL=...
+EXPO_PUBLIC_CONVEX_URL=...
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=...
 ```
 
 ## Related Projects

@@ -11,6 +11,20 @@ coverage
 out/
 build
 
+# expo
+.expo/
+dist/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# turbo
+.turbo
+
 # misc
 .DS_Store
 *.pem
@@ -35,3 +49,12 @@ next-env.d.ts
 
 # worktrees
 .worktrees/
+
+# bun
+bun.lock
+
+# android
+apps/mobile/android/
+
+# ios (not needed for Android-only)
+apps/mobile/ios/
