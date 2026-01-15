@@ -17,17 +17,20 @@ Memory infrastructure for AI - persistence, context, and knowledge management to
 ```bash
 bun install        # Install dependencies
 bun run dev        # Dev server at localhost:3000
-bun run build      # Production build (static export to /out)
+bun run build      # Production build for Vercel
 bun run lint       # ESLint
+npx convex dev     # Run Convex dev server (for backend changes)
 ```
 
 ## Deployment
 
-Push to master → Cloudflare Pages auto-deploys in ~90s
+Push to master → Vercel auto-deploys in ~60s
 
 ```bash
 git add -A && git commit -m "feat: description" && git push origin master
 ```
+
+Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 
 ---
 
@@ -74,10 +77,12 @@ git add -A && git commit -m "feat: description" && git push origin master
 | AI Video Generators | `/reviews/ai-video-generators` | Runway, Pika, Luma, Kling, Grok |
 
 ### Pages
-- `/` - Landing page (memory infrastructure + consulting CTA + Cloud waitlist)
-- `/cloud` - **Substratia Cloud** landing page (waitlist, features, pricing preview)
-- `/consulting` - **Consulting services** (setup, training, advisory)
-- `/faq` - Frequently asked questions (15 questions, 4 categories)
+- `/` - Landing page (memory infrastructure + Cloud CTA)
+- `/cloud` - **Substratia Cloud** landing page (Early Access, features, pricing)
+- `/dashboard` - **Cloud dashboard** (requires auth, shows snapshots/memories)
+- `/sign-in` - Clerk authentication (Google OAuth)
+- `/sign-up` - Clerk registration
+- `/faq` - Frequently asked questions (10 questions, 3 categories)
 - `/testimonials` - Client success stories (coming soon)
 - `/templates` - Memory tools (momentum, memory-mcp)
 - `/tools` - Free AI tools index (12 tools, with email capture)
@@ -85,20 +90,23 @@ git add -A && git commit -m "feat: description" && git push origin master
 - `/builder` - AgentForge drag-and-drop builder
 - `/blog` - Blog index (12 posts, with email capture)
 - `/docs` - Documentation
-- `/pro` - Pro tier waitlist (de-emphasized)
-- `/pricing` - Pricing page (de-emphasized)
+- `/start-here` - Getting started guide
+- `/pricing` - Pricing page
 
 ---
 
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Next.js 14 (App Router, Static Export)
+- **Framework**: Next.js 14 (App Router, SSR)
 - **Styling**: Tailwind CSS 3.4
 - **Drag-and-Drop**: @dnd-kit (core + sortable)
+- **Backend**: Convex (real-time database)
+- **Auth**: Clerk (custom domain: clerk.substratia.io)
 - **Package Manager**: Bun
-- **Hosting**: Cloudflare Pages
-- **Domain**: substratia.io (Cloudflare)
+- **Hosting**: Vercel (SSR required for auth)
+- **DNS**: Cloudflare
+- **Domain**: substratia.io
 - **Email Capture**: Formspree (https://formspree.io/f/mreezwlv)
 
 ### Path Alias
@@ -142,9 +150,9 @@ src/
 
 ### Build Configuration (next.config.js)
 
-- `output: 'export'` - Static HTML export to `/out` directory
-- `images.unoptimized: true` - Required for static export
-- `trailingSlash: true` - URL formatting for Cloudflare Pages
+- `images.unoptimized: true` - Using Vercel image optimization
+- `trailingSlash: true` - URL consistency
+- **No static export** - SSR required for Clerk auth pages
 
 ### Client vs Server Components
 - **Client** ('use client'): builder/page.tsx, landing page, Nav.tsx, tools
@@ -171,41 +179,37 @@ forge-cyan:   #00d9ff / #00d4ff (brand accent)
 ## Navigation Structure
 
 Current nav links (src/components/Nav.tsx):
-1. Memory (/templates)
-2. Tools (/tools)
-3. Reviews (/reviews)
-4. Reviews (/reviews) - AI tool comparisons
-5. Consulting (/consulting) - **Primary monetization path**
+1. Start Here (/start-here)
+2. Cloud (/cloud) - **Primary monetization path** [Badge: New]
+3. Dashboard (/dashboard) - Requires auth
+4. Tools (/tools)
+5. Reviews (/reviews)
 6. Blog (/blog)
 7. Docs (/docs)
 8. GitHub (external)
 
 Footer links:
-- Memory, Tools, Reviews, Consulting, Blog, Docs, GitHub
+- Memory, Tools, Reviews, Blog, Docs, GitHub
 
 ---
 
-## Business Strategy (Updated 2026-01-11)
+## Business Strategy (Updated 2026-01-15)
 
-**Pivot Complete**: From "Pro tier SaaS" to "Consulting + Free Tools"
+**Current Focus**: Free Tools + Substratia Cloud SaaS
 
-**Why the pivot:**
-- Mem0 has $24M funding and 41K GitHub stars (we have 48)
-- Pro tier features (cloud sync, backups) are easily DIY-able
-- Course market is saturated (Udemy, Coursera, Anthropic official)
-- Consulting can start immediately with no infrastructure
+**Why Cloud SaaS:**
+- Infrastructure is defensible (AI can't replace hosting)
+- Recurring revenue compounds
+- Consulting doesn't scale and is AI-vulnerable
+- Cloud sync is the #1 requested feature
 
 **Revenue Model:**
 - Free tools drive traffic and establish authority
-- Consulting generates revenue ($150-500/hr)
+- Cloud subscription for sync, backup, cross-device access
+- Pro ($9/mo) / Team ($19/seat/mo) / Enterprise (custom)
 - Memory tools (momentum, memory-mcp) remain free forever as lead generation
 
-**Consulting Services (live at /consulting):**
-- Individual: Audit ($150), Setup ($200), Deep Dive ($350)
-- Team: Workshop ($1,500), Bootcamp ($3,000)
-- Advisory: Light ($500/mo), Standard ($1,200/mo), Premium ($2,500/mo)
-
-**Strategic Documents:** See `/planning/ACTION_PLAN_FINAL.md` for 90-day execution plan.
+**Break-even:** 23 Pro subscribers OR 11 Team seats
 
 ---
 
@@ -223,29 +227,32 @@ Footer links:
 
 ## Next Tasks (Session Continuity)
 
-### Immediate Priority (Community Outreach)
-1. **Execute community posts** - See `/marketing/COMMUNITY_POSTS.md` for ready-to-post content
-2. **First consulting conversation** - Target 1 paid consultation within 2 weeks
-3. **Reddit presence** - Post helpful content to r/ClaudeAI (not promotional)
+### Immediate Priority (Cloud Sync)
+1. **Connect momentum to Convex** - Sync local snapshots to cloud
+2. **Connect memory-mcp to Convex** - Sync local memories to cloud
+3. **Add Stripe** - Payment integration for Pro/Team tiers
 
-### Content & Marketing
-4. **Product Hunt launch** - Submit substratia.io/tools
-5. **Twitter/X presence** - Daily Claude Code tips (see COMMUNITY_POSTS.md)
-6. **Discord presence** - Join Claude Code server, be helpful
+### Marketing
+4. **Product Hunt launch** - Submit substratia.io with cloud features
+5. **Community posts** - See `/marketing/COMMUNITY_POSTS.md`
+6. **Reddit/Twitter presence** - Share helpful Claude Code content
 
-### Future Tool Enhancements
-**Video Prompt Timeline**: Drag-and-drop reordering, JSON export, URL sharing
-**Markdown Preview**: Bidirectional HTML→MD conversion, PDF export
-
-### Infrastructure
-7. Performance optimization pass (target: Lighthouse >90) - PWA, preconnect, dns-prefetch added
-8. Mobile responsiveness audit - theme-color, Apple Web App support added
-
-See `/planning/ACTION_PLAN_FINAL.md` for 90-day strategic plan.
+### Future Enhancements
+- **Dashboard**: Show real synced data from momentum/memory-mcp
+- **Team features**: Shared knowledge bases, collaboration
 
 ---
 
 ## Session Log
+
+**2026-01-15** (Session 15 - Production Launch):
+- **Vercel Deployment**: Migrated from Cloudflare Pages to Vercel (SSR required)
+- **Clerk Production**: Set up production instance with custom domain clerk.substratia.io
+- **Google OAuth**: Configured and working
+- **DNS Configuration**: Added 5 CNAME records for Clerk in Cloudflare
+- **Consulting Removed**: Deleted /consulting page, removed all references
+- **Dashboard Working**: /dashboard loads with user data after sign-in
+- **API Access**: Configured Vercel CLI token and Cloudflare API token
 
 **2026-01-12** (Session 11 - Substratia Cloud Launch):
 - **Strategic Pivot**: From "Consulting + Free Tools" to "Hybrid - Free Tools + Cloud SaaS + Consulting"
