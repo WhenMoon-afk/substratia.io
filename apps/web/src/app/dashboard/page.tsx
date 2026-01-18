@@ -272,10 +272,10 @@ export default function DashboardPage() {
             <h3 className="text-white font-medium">1. Install momentum</h3>
             <div className="mt-2 space-y-1">
               <code className="text-cyan-400 text-sm block">
-                /plugin marketplace add WhenMoon-afk/momentum
+                /plugin marketplace add whenmoon-afk/substratia-marketplace
               </code>
               <code className="text-cyan-400 text-sm block">
-                /plugin install momentum
+                /plugin install momentum@substratia-marketplace
               </code>
             </div>
           </div>
