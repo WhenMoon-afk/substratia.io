@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Pricing - Substratia',
-  description: 'Free open-source memory tools. Pro tier with cloud sync, dashboard, and team features starting at $15/month.',
+  description: 'Free open-source memory tools. Pro tier with cloud sync, dashboard, and team features starting at $9/month.',
   keywords: ['Substratia pricing', 'AI memory tools pricing', 'momentum free', 'memory-mcp free', 'Substratia Pro'],
   openGraph: {
     title: 'Substratia Pricing',
-    description: 'Free open-source tools. Pro tier starting at $15/month.',
+    description: 'Free open-source tools. Pro tier starting at $9/month.',
     type: 'website',
     url: 'https://substratia.io/pricing',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Substratia Pricing',
-    description: 'Free tools. Pro tier from $15/month.',
+    description: 'Free tools. Pro tier from $9/month.',
   },
 }
 
@@ -46,11 +46,11 @@ const jsonLd = {
     {
       '@type': 'Offer',
       name: 'Pro Tier',
-      price: '15',
+      price: '9',
       priceCurrency: 'USD',
       priceSpecification: {
         '@type': 'UnitPriceSpecification',
-        price: '15',
+        price: '9',
         priceCurrency: 'USD',
         billingDuration: 'P1M',
       },

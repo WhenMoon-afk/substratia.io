@@ -24,7 +24,7 @@ const tiers = [
   },
   {
     name: 'Pro',
-    price: '$15',
+    price: '$9',
     period: '/month',
     description: 'Cloud sync and dashboard for serious users',
     features: [
@@ -41,8 +41,8 @@ const tiers = [
   },
   {
     name: 'Teams',
-    price: '$35',
-    period: '/user/month',
+    price: '$19',
+    period: '/seat/month',
     description: 'Shared memory for teams building AI at scale',
     features: [
       'Everything in Pro',

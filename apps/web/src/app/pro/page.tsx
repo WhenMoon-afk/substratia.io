@@ -258,7 +258,7 @@ export default function ProPage() {
                 Most Popular
               </div>
               <h3 className="text-xl font-bold mb-2">Pro</h3>
-              <div className="text-3xl font-bold text-forge-cyan mb-4">$15<span className="text-lg text-gray-400">/mo</span></div>
+              <div className="text-3xl font-bold text-forge-cyan mb-4">$9<span className="text-lg text-gray-400">/mo</span></div>
               <p className="text-gray-400 text-sm mb-4">For serious users</p>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>+ Everything in Free</li>
