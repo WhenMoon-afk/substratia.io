@@ -14,7 +14,10 @@ const isAuthRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
   // Protect dashboard routes - redirect to sign-in if not authenticated
   if (isProtectedRoute(req)) {
-    await auth.protect()
+    await auth.protect({
+      // Explicit redirect for unauthenticated users
+      unauthenticatedUrl: new URL('/sign-in', req.url).toString(),
+    })
   }
 })
 
