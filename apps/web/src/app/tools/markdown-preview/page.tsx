@@ -4,6 +4,17 @@ import { useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 
+// Sanitize URLs to prevent javascript: and other dangerous protocols
+function sanitizeUrl(url: string): string {
+  const trimmed = url.trim().toLowerCase()
+  if (trimmed.startsWith('javascript:') ||
+      trimmed.startsWith('vbscript:') ||
+      trimmed.startsWith('data:')) {
+    return '#'
+  }
+  return url
+}
+
 // Simple markdown to HTML converter (no dependencies)
 function markdownToHtml(text: string): string {
   if (!text) return ''
@@ -35,11 +46,15 @@ function markdownToHtml(text: string): string {
   // Horizontal rules
   html = html.replace(/^[-*_]{3,}\s*$/gm, '<hr />')
 
-  // Images ![alt](url)
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="markdown-img" />')
+  // Images ![alt](url) - sanitize URLs
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
+    return `<img src="${sanitizeUrl(url)}" alt="${alt}" class="markdown-img" />`
+  })
 
-  // Links [text](url)
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="markdown-link">$1</a>')
+  // Links [text](url) - sanitize URLs
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, url) => {
+    return `<a href="${sanitizeUrl(url)}" target="_blank" rel="noopener noreferrer" class="markdown-link">${text}</a>`
+  })
 
   // Bold and italic combined (***text*** or ___text___)
   html = html.replace(/(\*\*\*|___)(.*?)\1/g, '<strong><em>$2</em></strong>')
