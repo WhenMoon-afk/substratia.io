@@ -1,25 +1,9 @@
 "use client";
 
-import { SignUp } from "@clerk/nextjs";
+import { SignUp, ClerkProvider } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function SignUpPage() {
-  const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
-  if (!clerkPubKey) {
-    return (
-      <div className="min-h-screen bg-forge-dark flex items-center justify-center">
-        <div className="text-center text-white">
-          <h1 className="text-2xl font-bold mb-4">Authentication Not Configured</h1>
-          <p className="text-gray-400">Clerk is not set up yet.</p>
-          <Link href="/" className="text-cyan-400 hover:underline mt-4 inline-block">
-            ← Back to home
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
+function SignUpContent() {
   return (
     <div className="min-h-screen bg-forge-dark flex items-center justify-center p-8">
       <SignUp
@@ -39,5 +23,29 @@ export default function SignUpPage() {
         signInUrl="/sign-in"
       />
     </div>
+  );
+}
+
+export default function SignUpPage() {
+  const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  if (!clerkPubKey) {
+    return (
+      <div className="min-h-screen bg-forge-dark flex items-center justify-center">
+        <div className="text-center text-white">
+          <h1 className="text-2xl font-bold mb-4">Authentication Not Configured</h1>
+          <p className="text-gray-400">Clerk is not set up yet.</p>
+          <Link href="/" className="text-cyan-400 hover:underline mt-4 inline-block">
+            ← Back to home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <ClerkProvider publishableKey={clerkPubKey}>
+      <SignUpContent />
+    </ClerkProvider>
   );
 }
