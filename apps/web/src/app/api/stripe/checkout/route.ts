@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get authenticated user
-    const { userId } = await auth();
+    const { userId, sessionClaims } = await auth();
     if (!userId) {
       return NextResponse.json(
         { error: "You must be signed in to subscribe" },
@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user email from Clerk (needed for Stripe customer)
-    const { sessionClaims } = await auth();
     const email = sessionClaims?.email as string | undefined;
 
     // Create Stripe checkout session
