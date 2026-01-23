@@ -183,40 +183,36 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {/* momentum */}
-            <div className="tool-card gradient-border p-6 rounded-2xl">
+            {/* Interactive Demo */}
+            <Link href="/tools/memory-demo" className="tool-card gradient-border p-6 rounded-2xl block hover:border-forge-cyan/50 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-forge-cyan/20 flex items-center justify-center">
                   <svg className="w-6 h-6 text-forge-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold font-mono">momentum</h3>
-                  <span className="text-xs text-forge-cyan">Context Recovery</span>
+                  <h3 className="text-xl font-bold">Try Demo</h3>
+                  <span className="text-xs text-forge-cyan">See Memory in Action</span>
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-4">
-                Snapshot your context, restore in milliseconds. Never lose your working state.
+                Experience how Claude remembers decisions, preferences, and learnings across sessions.
               </p>
               <div className="code-block text-xs mb-4">
-                <code className="text-forge-cyan">/plugin install momentum@substratia-marketplace</code>
+                <code className="text-forge-cyan">Interactive • No signup</code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">SQLite persistence</span>
-                <a
-                  href="https://github.com/WhenMoon-afk/momentum"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-forge-cyan hover:underline"
-                >
-                  GitHub
-                </a>
+                <span className="text-xs text-gray-500">3 demo scenarios</span>
+                <span className="text-sm text-forge-cyan">
+                  Try Now →
+                </span>
               </div>
-            </div>
+            </Link>
 
             {/* memory-mcp */}
-            <div className="tool-card gradient-border p-6 rounded-2xl">
+            <div className="tool-card gradient-border p-6 rounded-2xl border-2 border-forge-purple/30">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-forge-purple/20 flex items-center justify-center">
                   <svg className="w-6 h-6 text-forge-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -229,20 +225,20 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-4">
-                Store, recall, search facts across sessions. Full-text search, no embeddings needed.
+                Store decisions, preferences, learnings. Automatic hooks save important context.
               </p>
               <div className="code-block text-xs mb-4">
-                <code className="text-forge-purple">npx @whenmoon-afk/memory-mcp</code>
+                <code className="text-forge-purple">/plugin install memory-mcp@substratia-marketplace</code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">v2.5.0 on npm</span>
+                <span className="text-xs text-gray-500">Cloud sync available</span>
                 <a
-                  href="https://www.npmjs.com/package/@whenmoon-afk/memory-mcp"
+                  href="https://github.com/WhenMoon-afk/claude-memory-mcp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-forge-purple hover:underline"
                 >
-                  npm
+                  GitHub
                 </a>
               </div>
             </div>
@@ -292,10 +288,10 @@ export default function Home() {
               <div className="glass-strong rounded-2xl p-6 flex gap-6 items-start">
                 <div className="w-12 h-12 rounded-full bg-forge-purple/30 flex items-center justify-center flex-shrink-0 text-xl font-bold">1</div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Context window full?</h3>
+                  <h3 className="text-xl font-semibold mb-2">Repeating yourself every session?</h3>
                   <p className="text-gray-400">
-                    Use <span className="text-forge-cyan font-mono">momentum</span> to snapshot your work,
-                    then /clear and restore in &lt;5ms. No context lost.
+                    Use <span className="text-forge-purple font-mono">memory-mcp</span> to store decisions and preferences.
+                    Claude remembers automatically next time.
                   </p>
                 </div>
               </div>
