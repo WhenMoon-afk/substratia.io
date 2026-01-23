@@ -1,392 +1,343 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-interface Memory {
-  id: string
-  content: string
-  summary: string
-  type: 'decision' | 'preference' | 'learning' | 'pattern' | 'fact'
-  importance: number
-  createdAt: Date
-  entities: string[]
-}
-
-interface Message {
-  role: 'user' | 'assistant' | 'system'
-  content: string
-  memory?: Memory
-}
-
-const EXAMPLE_MEMORIES: Memory[] = [
+// Realistic memories that feel like they came from actual dev work
+const REALISTIC_MEMORIES = [
   {
     id: 'mem_1',
-    content: 'User prefers Tailwind CSS over styled-components for this project. They value utility-first CSS for rapid prototyping and consistent styling.',
-    summary: 'Prefers Tailwind CSS over styled-components',
-    type: 'preference',
-    importance: 8,
-    createdAt: new Date(Date.now() - 86400000 * 3),
-    entities: ['Tailwind CSS', 'styled-components', 'CSS']
+    content: 'Use Bun instead of npm - this project uses bun.lock',
+    context: 'Project setup',
+    importance: 9,
+    timesUsed: 12,
   },
   {
     id: 'mem_2',
-    content: 'Auth implementation uses JWT tokens with 24h expiry. Tokens stored in httpOnly cookies to prevent XSS attacks. Refresh tokens have 7-day expiry.',
-    summary: 'Auth uses JWT with httpOnly cookies',
-    type: 'decision',
-    importance: 9,
-    createdAt: new Date(Date.now() - 86400000 * 7),
-    entities: ['JWT', 'auth', 'cookies', 'security']
+    content: "Don't add comments to unchanged code",
+    context: 'Code style preference',
+    importance: 8,
+    timesUsed: 23,
   },
   {
     id: 'mem_3',
-    content: 'Fixed CORS issue by adding specific origin headers. The issue occurred because browser was blocking preflight OPTIONS requests. Solution: explicitly list allowed origins.',
-    summary: 'CORS fix: explicit origin headers needed',
-    type: 'learning',
+    content: 'Auth tokens stored in httpOnly cookies, not localStorage',
+    context: 'Security decision',
+    importance: 10,
+    timesUsed: 8,
+  },
+  {
+    id: 'mem_4',
+    content: 'Tests go in __tests__ folder, not alongside components',
+    context: 'Project structure',
     importance: 7,
-    createdAt: new Date(Date.now() - 86400000 * 2),
-    entities: ['CORS', 'security', 'debugging']
-  }
+    timesUsed: 15,
+  },
+  {
+    id: 'mem_5',
+    content: "Always run 'bun test' before committing",
+    context: 'Workflow',
+    importance: 8,
+    timesUsed: 31,
+  },
 ]
 
-const DEMO_SCENARIOS = [
-  {
-    name: 'Quick Start',
-    description: 'See how memory works in action',
-    messages: [
-      { role: 'user', content: 'What CSS framework should I use for this project?' },
-      { role: 'assistant', content: "Let me check what we've discussed before...\n\n*Searching memories...*\n\nI found that you **prefer Tailwind CSS** for this project. You mentioned valuing utility-first CSS for rapid prototyping.\n\nShould I set up Tailwind for you?" },
-    ]
-  },
-  {
-    name: 'Store Decision',
-    description: 'Save an architectural decision',
-    messages: [
-      { role: 'user', content: "Let's use PostgreSQL with Prisma for the database layer" },
-      { role: 'assistant', content: "Great choice! PostgreSQL with Prisma gives you type-safe database access.\n\n*Storing this decision...*\n\nI've saved this as an **architectural decision** for future reference. Next time you ask about the database, I'll remember this." }
-    ]
-  },
-  {
-    name: 'Recall Learning',
-    description: 'Find past debugging solutions',
-    messages: [
-      { role: 'user', content: "I'm getting CORS errors again, how did we fix this before?" },
-      { role: 'assistant', content: "Let me search our past sessions...\n\n*Found relevant memory from 2 days ago:*\n\nWe fixed CORS by adding **explicit origin headers** to the server config. The issue was that the browser blocked preflight OPTIONS requests.\n\nWant me to show you the exact configuration we used?" }
-    ]
-  }
+// What you'd have to say WITHOUT memory
+const WITHOUT_MEMORY_EXCHANGE = [
+  { role: 'claude', text: "I'll help you set up the test. Should I put it in a `__tests__` folder or next to the component?" },
+  { role: 'user', text: "Tests go in __tests__ folder" },
+  { role: 'claude', text: "Got it. I'll use npm to install the testing library—" },
+  { role: 'user', text: "No, use Bun. This project uses bun.lock" },
+  { role: 'claude', text: "Right, Bun it is. I'll add some helpful comments—" },
+  { role: 'user', text: "Please don't add comments to unchanged code" },
+  { role: 'claude', text: "Understood. For the auth test, should tokens be in localStorage or cookies?" },
+  { role: 'user', text: "httpOnly cookies. We decided this for security." },
+]
+
+// What happens WITH memory
+const WITH_MEMORY_EXCHANGE = [
+  { role: 'claude', text: "I'll create the test in `__tests__/` using Bun, no comments on unchanged code. Testing the httpOnly cookie auth flow." },
+  { role: 'user', text: "Perfect." },
 ]
 
 export default function MemoryDemoPage() {
-  const [memories, setMemories] = useState<Memory[]>(EXAMPLE_MEMORIES)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [activeScenario, setActiveScenario] = useState<number | null>(null)
+  const [activeTab, setActiveTab] = useState<'without' | 'with'>('without')
+  const [visibleMessages, setVisibleMessages] = useState(0)
+  const [showComparison, setShowComparison] = useState(false)
+  const [highlightedMemory, setHighlightedMemory] = useState<string | null>(null)
 
-  const filteredMemories = memories.filter(m =>
-    searchQuery === '' ||
-    m.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    m.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    m.entities.some(e => e.toLowerCase().includes(searchQuery.toLowerCase()))
-  )
-
-  const runScenario = useCallback((index: number) => {
-    setActiveScenario(index)
-    const scenario = DEMO_SCENARIOS[index]
-    setMessages([])
-    setIsTyping(true)
-
-    let messageIndex = 0
-    const addNextMessage = () => {
-      if (messageIndex < scenario.messages.length) {
-        const msg = scenario.messages[messageIndex]
-        setMessages(prev => [...prev, {
-          role: msg.role as 'user' | 'assistant',
-          content: msg.content
-        }])
-        messageIndex++
-        setTimeout(addNextMessage, msg.role === 'user' ? 500 : 1500)
-      } else {
-        setIsTyping(false)
-      }
+  // Animate messages appearing
+  useEffect(() => {
+    const messages = activeTab === 'without' ? WITHOUT_MEMORY_EXCHANGE : WITH_MEMORY_EXCHANGE
+    if (visibleMessages < messages.length) {
+      const timer = setTimeout(() => {
+        setVisibleMessages(v => v + 1)
+      }, activeTab === 'without' ? 800 : 1200)
+      return () => clearTimeout(timer)
     }
+  }, [visibleMessages, activeTab])
 
-    setTimeout(addNextMessage, 300)
-  }, [])
-
-  const handleStore = useCallback(() => {
-    if (!input.trim()) return
-
-    const newMemory: Memory = {
-      id: `mem_${Date.now()}`,
-      content: input,
-      summary: input.slice(0, 50) + (input.length > 50 ? '...' : ''),
-      type: 'learning',
-      importance: 7,
-      createdAt: new Date(),
-      entities: input.match(/\b[A-Z][a-z]+\b/g) || []
-    }
-
-    setMemories(prev => [newMemory, ...prev])
-    setMessages(prev => [
-      ...prev,
-      { role: 'user', content: `Remember: ${input}` },
-      { role: 'system', content: `Memory stored: "${newMemory.summary}"`, memory: newMemory }
-    ])
-    setInput('')
-  }, [input])
-
-  const handleRecall = useCallback(() => {
-    if (!input.trim()) return
-
-    const query = input.toLowerCase()
-    const found = memories.filter(m =>
-      m.content.toLowerCase().includes(query) ||
-      m.summary.toLowerCase().includes(query) ||
-      m.entities.some(e => e.toLowerCase().includes(query))
-    )
-
-    setMessages(prev => [
-      ...prev,
-      { role: 'user', content: `Search: ${input}` },
-      {
-        role: 'system',
-        content: found.length > 0
-          ? `Found ${found.length} memor${found.length === 1 ? 'y' : 'ies'}:\n${found.map(m => `- ${m.summary}`).join('\n')}`
-          : 'No memories found matching your query.'
-      }
-    ])
-    setInput('')
-  }, [input, memories])
-
-  const formatDate = (date: Date) => {
-    const now = new Date()
-    const diff = now.getTime() - date.getTime()
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-    if (days === 0) return 'Today'
-    if (days === 1) return 'Yesterday'
-    return `${days} days ago`
+  // Reset animation when switching tabs
+  const switchTab = (tab: 'without' | 'with') => {
+    setActiveTab(tab)
+    setVisibleMessages(0)
+    setShowComparison(false)
   }
 
-  const getTypeColor = (type: Memory['type']) => {
-    switch (type) {
-      case 'decision': return 'bg-purple-500/20 text-purple-300 border-purple-500/30'
-      case 'preference': return 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30'
-      case 'learning': return 'bg-green-500/20 text-green-300 border-green-500/30'
-      case 'pattern': return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
-      case 'fact': return 'bg-blue-500/20 text-blue-300 border-blue-500/30'
-    }
-  }
+  const messages = activeTab === 'without' ? WITHOUT_MEMORY_EXCHANGE : WITH_MEMORY_EXCHANGE
+
+  // Calculate time wasted (4 corrections × 30 seconds each)
+  const correctionsCount = WITHOUT_MEMORY_EXCHANGE.filter(m => m.role === 'user').length - 1
+  const timeWasted = correctionsCount * 30 // seconds
 
   return (
     <main className="min-h-screen text-white bg-[#0a0a14]">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
           <Link href="/tools" className="text-forge-cyan hover:underline text-sm mb-4 inline-block">
             ← Back to Tools
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Memory <span className="text-forge-cyan">Demo</span>
+            Stop Repeating <span className="text-forge-cyan">Yourself</span>
           </h1>
-          <p className="text-gray-400 max-w-2xl">
-            Experience how AI memory works. Claude remembers decisions, preferences, and learnings across sessions - no more repeating yourself.
+          <p className="text-gray-400 max-w-2xl text-lg">
+            See what happens when Claude actually remembers your preferences.
           </p>
         </div>
 
-        {/* Demo Scenarios */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4 text-gray-300">Try a scenario:</h2>
-          <div className="flex flex-wrap gap-3">
-            {DEMO_SCENARIOS.map((scenario, index) => (
+        {/* Main Demo */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Chat Comparison */}
+          <div className="lg:col-span-2">
+            {/* Tab Switcher */}
+            <div className="flex gap-2 mb-4">
               <button
-                key={index}
-                onClick={() => runScenario(index)}
-                className={`px-4 py-2 rounded-xl transition-all duration-200 border ${
-                  activeScenario === index
-                    ? 'bg-forge-cyan/20 border-forge-cyan text-forge-cyan'
-                    : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                onClick={() => switchTab('without')}
+                className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
+                  activeTab === 'without'
+                    ? 'bg-red-500/20 border-2 border-red-500/50 text-red-300'
+                    : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10'
                 }`}
               >
-                <span className="font-medium">{scenario.name}</span>
-                <span className="text-gray-400 text-sm ml-2">{scenario.description}</span>
+                <span className="block text-lg">😤 Without Memory</span>
+                <span className="text-sm opacity-70">Every session starts fresh</span>
               </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid lg:grid-cols-5 gap-6">
-          {/* Chat Panel */}
-          <div className="lg:col-span-3 bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-            <div className="p-4 border-b border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
-                <span className="font-medium">Claude with Memory</span>
-              </div>
               <button
-                onClick={() => { setMessages([]); setActiveScenario(null) }}
-                className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-white/10"
+                onClick={() => switchTab('with')}
+                className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
+                  activeTab === 'with'
+                    ? 'bg-green-500/20 border-2 border-green-500/50 text-green-300'
+                    : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10'
+                }`}
               >
-                Clear Chat
+                <span className="block text-lg">✨ With Memory</span>
+                <span className="text-sm opacity-70">Claude remembers</span>
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="h-[400px] overflow-y-auto p-4 space-y-4">
-              {messages.length === 0 && (
-                <div className="text-center text-gray-500 py-12">
-                  <p className="mb-2">Click a scenario above to see memory in action</p>
-                  <p className="text-sm">Or type below to store/recall your own memories</p>
+            {/* Chat Window */}
+            <div className={`rounded-xl border overflow-hidden ${
+              activeTab === 'without'
+                ? 'bg-red-500/5 border-red-500/20'
+                : 'bg-green-500/5 border-green-500/20'
+            }`}>
+              <div className={`p-3 border-b flex items-center gap-2 ${
+                activeTab === 'without' ? 'border-red-500/20' : 'border-green-500/20'
+              }`}>
+                <div className={`w-3 h-3 rounded-full ${
+                  activeTab === 'without' ? 'bg-red-400' : 'bg-green-400'
+                }`}></div>
+                <span className="text-sm text-gray-400">
+                  {activeTab === 'without' ? 'Standard Claude Code' : 'Claude Code + memory-mcp'}
+                </span>
+              </div>
+
+              {/* Messages */}
+              <div className="p-4 min-h-[350px] space-y-3">
+                <div className="text-center text-gray-500 text-sm mb-4">
+                  New session: "Help me write a test for the auth component"
                 </div>
-              )}
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+
+                {messages.slice(0, visibleMessages).map((msg, i) => (
                   <div
-                    className={`max-w-[80%] rounded-xl px-4 py-3 ${
+                    key={i}
+                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                  >
+                    <div className={`max-w-[85%] rounded-xl px-4 py-3 ${
                       msg.role === 'user'
                         ? 'bg-forge-cyan/20 border border-forge-cyan/30'
-                        : msg.role === 'system'
-                        ? 'bg-green-500/10 border border-green-500/30'
                         : 'bg-white/10 border border-white/10'
-                    }`}
-                  >
-                    <div className="text-xs text-gray-400 mb-1">
-                      {msg.role === 'user' ? 'You' : msg.role === 'system' ? 'Memory System' : 'Claude'}
-                    </div>
-                    <div className="whitespace-pre-wrap text-sm">{msg.content}</div>
-                    {msg.memory && (
-                      <div className={`mt-2 px-2 py-1 rounded text-xs ${getTypeColor(msg.memory.type)}`}>
-                        Type: {msg.memory.type} | Importance: {msg.memory.importance}/10
+                    }`}>
+                      <div className="text-xs text-gray-500 mb-1">
+                        {msg.role === 'user' ? 'You (correcting again...)' : 'Claude'}
                       </div>
+                      <div className="text-sm">{msg.text}</div>
+                    </div>
+                  </div>
+                ))}
+
+                {visibleMessages < messages.length && (
+                  <div className="flex justify-start">
+                    <div className="bg-white/10 rounded-xl px-4 py-3 border border-white/10">
+                      <div className="flex gap-1">
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></span>
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Summary when done */}
+                {visibleMessages >= messages.length && (
+                  <div className={`mt-6 p-4 rounded-xl ${
+                    activeTab === 'without'
+                      ? 'bg-red-500/10 border border-red-500/30'
+                      : 'bg-green-500/10 border border-green-500/30'
+                  }`}>
+                    {activeTab === 'without' ? (
+                      <>
+                        <div className="text-red-300 font-semibold mb-2">
+                          {correctionsCount} corrections needed
+                        </div>
+                        <div className="text-gray-400 text-sm">
+                          ~{Math.round(timeWasted / 60)} minutes wasted this session.
+                          Multiply by every session, every project...
+                        </div>
+                        <button
+                          onClick={() => switchTab('with')}
+                          className="mt-3 px-4 py-2 bg-green-500/20 border border-green-500/30 text-green-300 rounded-lg text-sm hover:bg-green-500/30 transition-colors"
+                        >
+                          See it with memory →
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-green-300 font-semibold mb-2">
+                          0 corrections needed
+                        </div>
+                        <div className="text-gray-400 text-sm">
+                          Claude remembered everything. One message, done.
+                        </div>
+                      </>
                     )}
                   </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-white/10 rounded-xl px-4 py-3 border border-white/10">
-                    <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
-                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></span>
-                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Input */}
-            <div className="p-4 border-t border-white/10">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type a memory to store or query to search..."
-                  className="flex-1 px-4 py-3 bg-black/30 border border-white/10 rounded-xl focus:outline-none focus:border-forge-cyan text-white text-sm"
-                  onKeyDown={(e) => e.key === 'Enter' && handleStore()}
-                />
-                <button
-                  onClick={handleStore}
-                  className="px-4 py-3 bg-purple-500/20 border border-purple-500/30 text-purple-300 rounded-xl hover:bg-purple-500/30 transition-colors text-sm"
-                >
-                  Store
-                </button>
-                <button
-                  onClick={handleRecall}
-                  className="px-4 py-3 bg-forge-cyan/20 border border-forge-cyan/30 text-forge-cyan rounded-xl hover:bg-forge-cyan/30 transition-colors text-sm"
-                >
-                  Recall
-                </button>
+                )}
               </div>
             </div>
+
+            {/* Stats Comparison */}
+            {activeTab === 'with' && visibleMessages >= messages.length && (
+              <div className="mt-6 grid grid-cols-3 gap-4">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                  <div className="text-3xl font-bold text-red-400 line-through opacity-50">{correctionsCount}</div>
+                  <div className="text-sm text-gray-500">Corrections</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                  <div className="text-3xl font-bold text-green-400">89</div>
+                  <div className="text-sm text-gray-500">Memories stored</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                  <div className="text-3xl font-bold text-forge-cyan">2.5h</div>
+                  <div className="text-sm text-gray-500">Saved/month</div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Memory Bank */}
-          <div className="lg:col-span-2 bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+          <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
             <div className="p-4 border-b border-white/10">
-              <h2 className="font-medium mb-3">Memory Bank</h2>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Filter memories..."
-                className="w-full px-3 py-2 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
-              />
+              <h2 className="font-semibold">What Claude Remembers</h2>
+              <p className="text-xs text-gray-500 mt-1">
+                {activeTab === 'with' ? 'Active memories from past sessions' : 'Nothing - every session starts fresh'}
+              </p>
             </div>
 
-            <div className="h-[450px] overflow-y-auto p-4 space-y-3">
-              {filteredMemories.map((memory) => (
-                <div
-                  key={memory.id}
-                  className="bg-black/20 border border-white/5 rounded-lg p-3 hover:border-white/20 transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <span className={`px-2 py-0.5 rounded text-xs border ${getTypeColor(memory.type)}`}>
-                      {memory.type}
-                    </span>
-                    <span className="text-xs text-gray-500">{formatDate(memory.createdAt)}</span>
-                  </div>
-                  <p className="text-sm text-gray-300 mb-2">{memory.summary}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {memory.entities.slice(0, 3).map((entity, i) => (
-                      <span key={i} className="px-1.5 py-0.5 bg-white/5 rounded text-xs text-gray-400">
-                        {entity}
-                      </span>
-                    ))}
-                    {memory.entities.length > 3 && (
-                      <span className="text-xs text-gray-500">+{memory.entities.length - 3}</span>
-                    )}
-                  </div>
-                  <div className="mt-2 flex items-center gap-2">
-                    <div className="flex-1 h-1 bg-white/10 rounded">
-                      <div
-                        className="h-1 bg-forge-cyan rounded"
-                        style={{ width: `${memory.importance * 10}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-xs text-gray-500">{memory.importance}/10</span>
-                  </div>
+            <div className="p-4 space-y-3 max-h-[450px] overflow-y-auto">
+              {activeTab === 'without' ? (
+                <div className="text-center py-12 text-gray-500">
+                  <div className="text-4xl mb-3 opacity-50">🧠</div>
+                  <p>No memories</p>
+                  <p className="text-sm mt-1">Claude starts fresh every time</p>
                 </div>
-              ))}
+              ) : (
+                REALISTIC_MEMORIES.map((memory) => (
+                  <div
+                    key={memory.id}
+                    className={`p-3 rounded-lg border transition-all cursor-pointer ${
+                      highlightedMemory === memory.id
+                        ? 'bg-forge-cyan/10 border-forge-cyan/30'
+                        : 'bg-black/20 border-white/5 hover:border-white/20'
+                    }`}
+                    onMouseEnter={() => setHighlightedMemory(memory.id)}
+                    onMouseLeave={() => setHighlightedMemory(null)}
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <span className="text-xs text-gray-500">{memory.context}</span>
+                      <span className={`text-xs px-1.5 py-0.5 rounded ${
+                        memory.importance >= 9 ? 'bg-red-500/20 text-red-300' :
+                        memory.importance >= 7 ? 'bg-yellow-500/20 text-yellow-300' :
+                        'bg-gray-500/20 text-gray-400'
+                      }`}>
+                        {memory.importance}/10
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-300">{memory.content}</p>
+                    <div className="mt-2 text-xs text-gray-600">
+                      Used {memory.timesUsed} times
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
-            <div className="p-4 border-t border-white/10 bg-black/20">
-              <div className="text-center text-sm text-gray-400">
-                {memories.length} memories stored
+            {activeTab === 'with' && (
+              <div className="p-4 border-t border-white/10 bg-black/20">
+                <div className="text-xs text-gray-500 text-center">
+                  Memories persist across sessions
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
-          <div className="glass rounded-2xl p-8 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Ready to give Claude memory?</h2>
-            <p className="text-gray-400 mb-6">
-              Install memory-mcp and never repeat yourself again. Free for local use, cloud sync available.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="https://github.com/whenmoon-afk/claude-memory-mcp"
-                className="px-6 py-3 bg-forge-cyan text-forge-dark font-medium rounded-xl hover:opacity-90 transition-opacity"
-              >
-                View on GitHub
-              </Link>
-              <Link
-                href="/dashboard"
-                className="px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
-              >
-                Get Cloud Access
-              </Link>
-            </div>
+        <div className="mt-12 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 text-center">
+          <h2 className="text-2xl font-bold mb-3">Ready to stop repeating yourself?</h2>
+          <p className="text-gray-400 mb-6 max-w-xl mx-auto">
+            Install memory-mcp and Claude will remember your preferences, decisions, and project context forever.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="https://github.com/whenmoon-afk/claude-memory-mcp"
+              className="px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:opacity-90 transition-opacity"
+            >
+              Install Free Plugin
+            </Link>
+            <Link
+              href="/pricing#pro"
+              className="px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
+            >
+              Get Cloud Sync ($9/mo)
+            </Link>
           </div>
+          <p className="text-xs text-gray-500 mt-4">
+            Local storage is free forever. Cloud sync for cross-device access.
+          </p>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+      `}</style>
     </main>
   )
 }
