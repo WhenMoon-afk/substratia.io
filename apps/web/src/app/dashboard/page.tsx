@@ -51,6 +51,7 @@ export default function DashboardPage() {
   const getOrCreateUser = useMutation(api.users.getOrCreate);
   const createApiKey = useMutation(api.apiKeys.create);
   const revokeApiKey = useMutation(api.apiKeys.revoke);
+  const forgetMemory = useMutation(api.memories.forget);
 
   const [newKeyName, setNewKeyName] = useState("");
   const [newKeyValue, setNewKeyValue] = useState<string | null>(null);
@@ -108,6 +109,15 @@ export default function DashboardPage() {
       await revokeApiKey({ keyId: keyId as any });
     } catch (error) {
       console.error("Failed to revoke API key:", error);
+    }
+  };
+
+  const handleDeleteMemory = async (memoryId: string) => {
+    if (!confirm("Delete this memory?")) return;
+    try {
+      await forgetMemory({ memoryId: memoryId as any });
+    } catch (error) {
+      console.error("Failed to delete memory:", error);
     }
   };
 
@@ -342,9 +352,20 @@ export default function DashboardPage() {
               {recentMemories.map((memory) => (
                 <div
                   key={memory._id}
-                  className="bg-gray-700/30 rounded-lg p-4"
+                  className="bg-gray-700/30 rounded-lg p-4 group"
                 >
-                  <p className="text-white line-clamp-2">{memory.content}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-white line-clamp-2 flex-1">{memory.content}</p>
+                    <button
+                      onClick={() => handleDeleteMemory(memory._id)}
+                      className="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 transition-all p-1 -mt-1 -mr-1"
+                      title="Delete memory"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
                   <div className="flex items-center gap-2 mt-2">
                     <span
                       className={`px-2 py-0.5 text-xs rounded ${
