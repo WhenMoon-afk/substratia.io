@@ -447,4 +447,229 @@ Waitlist: substratia.io/cloud
 
 ---
 
+---
+
+## Memory Plugin Posts (Product Focus)
+
+### r/ClaudeAI - Memory Demo Announcement
+
+**Title:** Built a free memory system for Claude - try the interactive demo
+
+**Body:**
+```
+Claude Code doesn't remember anything between sessions. Every new conversation starts from scratch.
+
+I built memory-mcp to fix this. It gives Claude persistent memory that survives across sessions:
+- Stores decisions, patterns, preferences
+- Recalls relevant context automatically
+- Full-text search across all memories
+
+**Try it without installing anything:**
+https://substratia.io/tools/memory-demo
+
+The demo simulates the memory system so you can see how it works. Three scenarios:
+1. Quick Start - basic store/recall
+2. Decisions - save a technical choice and why
+3. Learning - capture insights that persist
+
+If you like it, the actual plugin is free:
+`/plugin install memory-mcp@substratia-marketplace`
+
+GitHub: https://github.com/WhenMoon-afk/claude-memory-mcp
+
+What do you forget most between Claude sessions?
+```
+
+---
+
+### r/ClaudeAI - Problem/Solution Post
+
+**Title:** How I stopped re-explaining everything to Claude every session
+
+**Body:**
+```
+The most frustrating thing about Claude Code: it doesn't remember anything.
+
+Every new session:
+- "We're using Bun, not npm"
+- "The auth is in src/lib/auth.ts"
+- "Don't add comments to unchanged code"
+
+**My solution:** I built a memory plugin.
+
+When Claude makes a decision or learns something important, it stores it:
+`memory_store "Use Bun for this project - faster than npm, matches lockfile"`
+
+Next session, it can recall:
+`memory_recall "package manager preference"`
+
+The memories persist forever. Claude can search them with FTS5 full-text search. No embeddings, no API calls, just fast local SQLite.
+
+**Free to try:**
+- Interactive demo: https://substratia.io/tools/memory-demo
+- Install: `/plugin install memory-mcp@substratia-marketplace`
+
+Optional cloud sync if you use multiple devices ($9/mo).
+
+What patterns do you wish Claude would remember?
+```
+
+---
+
+### Twitter/X - Memory Demo Thread
+
+```
+Your Claude Code doesn't remember anything between sessions.
+
+Every conversation starts fresh. You explain the same things over and over.
+
+I built a memory system to fix this. Try it in 30 seconds:
+
+🧪 substratia.io/tools/memory-demo
+
+1/4
+```
+
+```
+How it works:
+
+1. Claude learns something → stores as memory
+2. New session starts → recalls relevant memories
+3. You never re-explain your preferences again
+
+Local SQLite, no API calls, instant search.
+
+2/4
+```
+
+```
+What memories would help?
+
+- "Use Bun, not npm"
+- "Tests go in __tests__ directories"
+- "This project uses Tailwind v4"
+- "Don't auto-commit, I'll review first"
+
+Things you've said 100 times.
+
+3/4
+```
+
+```
+The plugin is free:
+/plugin install memory-mcp@substratia-marketplace
+
+Optional: $9/mo cloud sync for multi-device
+
+Try the demo first:
+substratia.io/tools/memory-demo
+
+4/4
+```
+
+---
+
+### Single Tweet - Memory Demo
+
+```
+Claude Code forgets everything between sessions.
+
+I built a memory system. Try the demo (no install):
+substratia.io/tools/memory-demo
+
+Store decisions. Recall context. Never re-explain.
+
+Free plugin, optional cloud sync.
+```
+
+---
+
+### Single Tweet - Pain Point
+
+```
+Things I've told Claude 100+ times:
+
+- "Use Bun, not npm"
+- "Don't add docstrings to unchanged code"
+- "The config is in src/config.ts"
+
+Built a memory plugin so it remembers forever.
+
+Free demo: substratia.io/tools/memory-demo
+```
+
+---
+
+### Discord - Memory Plugin Introduction
+
+```
+Built a memory plugin for Claude Code. Solves the "Claude forgets everything" problem.
+
+**What it does:**
+- Stores decisions/preferences permanently
+- Recalls relevant context each session
+- Fast local search (no API calls)
+
+**Try without installing:**
+https://substratia.io/tools/memory-demo
+
+**Install (free):**
+`/plugin install memory-mcp@substratia-marketplace`
+
+Optional cloud sync ($9/mo) for multi-device users.
+
+What do you wish Claude would remember?
+```
+
+---
+
+### Hacker News - Show HN
+
+**Title:** Show HN: Memory system for Claude Code - persistent context across sessions
+
+**Body:**
+```
+I built memory-mcp, a free plugin that gives Claude Code persistent memory.
+
+Problem: Claude forgets everything between sessions. You re-explain your project setup, coding preferences, and decisions constantly.
+
+Solution: A local SQLite database with FTS5 full-text search that Claude can store to and recall from.
+
+Demo (no install): https://substratia.io/tools/memory-demo
+
+How it works:
+1. Claude stores important context: "Use Bun for this project, not npm"
+2. Next session, it can recall: "What package manager for this project?"
+3. Memories persist forever, searchable instantly
+
+Technical details:
+- Pure SQLite (better-sqlite3), no embeddings or vector DB
+- FTS5 for fast full-text search
+- Token-aware loading (fits context window)
+- Local-first, your data stays on your machine
+- Optional cloud sync for multi-device ($9/mo)
+
+The plugin is MIT licensed: https://github.com/WhenMoon-afk/claude-memory-mcp
+
+Install in Claude Code: /plugin install memory-mcp@substratia-marketplace
+
+Looking for feedback on what memories would be most valuable to store automatically.
+```
+
+---
+
+## Posting Schedule (Memory Focus - Week 2)
+
+| Day | Platform | Type | Content |
+|-----|----------|------|---------|
+| Mon | r/ClaudeAI | Demo | "Built a free memory system" |
+| Tue | Twitter/X | Thread | Memory demo thread |
+| Wed | Discord | Intro | Memory plugin introduction |
+| Thu | Twitter/X | Single | Pain point tweet |
+| Fri | r/ClaudeAI | Discussion | "How I stopped re-explaining" |
+| Sat | HN | Show HN | Memory system announcement |
+| Sun | - | Rest | Engage with comments |
+
+---
+
 *Last Updated: January 2026*
