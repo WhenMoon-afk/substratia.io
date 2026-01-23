@@ -425,11 +425,11 @@ export default function DashboardPage() {
           <>
             {apiKeys && apiKeys.length === 0 ? (
               <div className="text-cyan-300/80 text-sm mb-4">
-                <strong>Next step:</strong> Create an API key to connect momentum and memory-mcp to cloud sync.
+                <strong>Next step:</strong> Create an API key to connect memory-mcp to cloud sync.
               </div>
             ) : (
               <p className="text-gray-400 text-sm mb-4">
-                API keys allow momentum and memory-mcp to sync data to Substratia Cloud.
+                API keys allow memory-mcp to sync your memories to Substratia Cloud.
               </p>
             )}
 
@@ -560,12 +560,12 @@ export default function DashboardPage() {
             {/* Setup Instructions */}
             {apiKeys && apiKeys.length > 0 && (
               <div className="mt-6 bg-gray-700/20 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-2">Connect momentum to cloud</h3>
+                <h3 className="text-white font-medium mb-2">Connect memory-mcp to cloud</h3>
                 <p className="text-gray-400 text-sm mb-3">
                   Create a new API key above, then paste the copied command into Claude Code.
                 </p>
                 <p className="text-gray-500 text-sm">
-                  Claude will automatically configure momentum to sync your snapshots to Substratia Cloud.
+                  Claude will automatically configure memory-mcp to sync your memories to Substratia Cloud.
                   Config is saved to <code className="text-cyan-400">~/.config/substratia/credentials.json</code>
                 </p>
               </div>
