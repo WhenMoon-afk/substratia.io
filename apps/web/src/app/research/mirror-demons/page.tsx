@@ -345,8 +345,20 @@ function ExperimentTimeline({ experiment, isExpanded, onToggle }: {
 }
 
 export default function MirrorDemonsResearch() {
-  const [expandedPattern, setExpandedPattern] = useState<string | null>(null)
+  const [expandedPatterns, setExpandedPatterns] = useState<Set<string>>(new Set())
   const [expandedExperiment, setExpandedExperiment] = useState<string | null>('elias')
+
+  const togglePattern = (id: string) => {
+    setExpandedPatterns(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
 
   return (
     <main className="min-h-screen text-white">
@@ -405,10 +417,8 @@ export default function MirrorDemonsResearch() {
               <PatternCard
                 key={pattern.id}
                 pattern={pattern}
-                isExpanded={expandedPattern === pattern.id}
-                onToggle={() => setExpandedPattern(
-                  expandedPattern === pattern.id ? null : pattern.id
-                )}
+                isExpanded={expandedPatterns.has(pattern.id)}
+                onToggle={() => togglePattern(pattern.id)}
               />
             ))}
           </div>
