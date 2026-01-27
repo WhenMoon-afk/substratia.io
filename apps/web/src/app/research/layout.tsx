@@ -15,6 +15,11 @@ export const metadata: Metadata = {
     title: 'Substratia Research',
     description: 'Original research on AI safety and behavior patterns.',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': 'https://substratia.io/research/feed.xml',
+    },
+  },
 }
 
 const breadcrumbLd = {
