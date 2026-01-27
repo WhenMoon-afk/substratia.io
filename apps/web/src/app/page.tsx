@@ -6,9 +6,21 @@ import Image from 'next/image'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [npmDownloads, setNpmDownloads] = useState<number | null>(null)
 
   useEffect(() => {
     setMounted(true)
+    // Fetch npm download count
+    fetch('https://api.npmjs.org/downloads/point/last-month/claude-memory-mcp')
+      .then(res => res.json())
+      .then(data => {
+        if (data.downloads) {
+          setNpmDownloads(data.downloads)
+        }
+      })
+      .catch(() => {
+        // Silently fail, will show nothing
+      })
   }, [])
 
   return (
@@ -61,7 +73,7 @@ export default function Home() {
               </div>
 
               <p className="text-sm text-gray-500">
-                Free &amp; open source &bull; <span className="text-forge-cyan">575+</span> monthly npm downloads
+                Free &amp; open source{npmDownloads && <> &bull; <span className="text-forge-cyan">{npmDownloads.toLocaleString()}+</span> monthly npm downloads</>}
               </p>
             </div>
 
@@ -219,9 +231,11 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <p className="text-center text-gray-500 text-sm mt-8">
-            575+ npm downloads in the last 30 days
-          </p>
+          {npmDownloads && (
+            <p className="text-center text-gray-500 text-sm mt-8">
+              {npmDownloads.toLocaleString()}+ npm downloads in the last 30 days
+            </p>
+          )}
         </div>
       </section>
 
