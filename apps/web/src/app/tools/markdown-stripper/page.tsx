@@ -159,7 +159,7 @@ This is **bold** and *italic* text.
 [Link text](https://example.com)
 
 `inline code`"
-              className="w-full h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-forge-cyan text-white font-mono text-sm resize-none"
+              className="w-full h-64 sm:h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-forge-cyan text-white font-mono text-sm resize-none"
             />
             <div className="mt-2 text-xs text-gray-500">
               {input.length.toLocaleString()} characters
@@ -181,13 +181,13 @@ This is **bold** and *italic* text.
                 <button
                   onClick={downloadText}
                   disabled={!strippedText}
-                  className="px-3 py-1 text-xs bg-white/10 hover:bg-white/20 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Download
                 </button>
               </div>
             </div>
-            <div className="w-full h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg overflow-auto">
+            <div className="w-full h-64 sm:h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg overflow-auto">
               {strippedText ? (
                 <pre className="text-white text-sm whitespace-pre-wrap break-words font-sans">
                   {strippedText}

@@ -342,7 +342,7 @@ export default function PromptOptimizerPage() {
             </div>
 
             {/* Snippets Grid */}
-            <div className="space-y-2 max-h-[450px] overflow-y-auto">
+            <div className="space-y-2 max-h-64 sm:max-h-[450px] overflow-y-auto">
               {filteredSnippets.map(snippet => (
                 <button
                   key={snippet.id}

@@ -562,7 +562,7 @@ export default function VideoPromptTimelinePage() {
                   <select
                     value={selectedKeyframe?.motion || 'static'}
                     onChange={(e) => setKeyframe(selectedSlot, { motion: e.target.value as Motion })}
-                    className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+                    className="w-full px-3 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
                   >
                     {motionOptions.map(m => (
                       <option key={m.id} value={m.id} className="bg-forge-dark">
