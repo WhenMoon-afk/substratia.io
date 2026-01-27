@@ -167,6 +167,21 @@ export default function PromptOptimizerPage() {
     }
   }, [])
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl+K: Clear all
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setUserPrompt('')
+        setSelectedSnippets([])
+        setThinkingMode('normal')
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   const toggleSnippet = useCallback((snippetId: string) => {
     setSelectedSnippets(prev =>
       prev.includes(snippetId)
@@ -374,9 +389,10 @@ export default function PromptOptimizerPage() {
                 <h3 className="text-sm font-medium text-gray-400">Generated Prompt</h3>
                 <button
                   onClick={clearAll}
-                  className="text-xs text-red-400 hover:text-red-300"
+                  className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1"
                 >
                   Clear All
+                  <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">⌘K</kbd>
                 </button>
               </div>
 

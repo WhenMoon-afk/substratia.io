@@ -136,6 +136,20 @@ export default function VideoPromptTimelinePage() {
     }
   }, [])
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl+K: Clear timeline
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setTimeline(createEmptyTimeline())
+        setSelectedSlot(null)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   // Get keyframe for a slot, or create empty placeholder
   const getKeyframeForSlot = useCallback((timestamp: number): VideoKeyframe | undefined => {
     return timeline.keyframes.find(k => k.timestamp === timestamp)
@@ -376,9 +390,10 @@ export default function VideoPromptTimelinePage() {
               </button>
               <button
                 onClick={clearTimeline}
-                className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all"
+                className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all flex items-center gap-1"
               >
                 Clear
+                <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">⌘K</kbd>
               </button>
             </div>
           </div>
