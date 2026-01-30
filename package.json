@@ -29,5 +29,9 @@
     "react-markdown": "^10.1.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1"
+  },
+  "overrides": {
+    "tar": ">=7.5.3",
+    "lodash": ">=4.17.23"
   }
 }

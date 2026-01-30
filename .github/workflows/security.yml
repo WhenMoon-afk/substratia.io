@@ -30,10 +30,18 @@ jobs:
 
       - name: Check for high/critical vulnerabilities
         run: |
-          VULNS=$(bun audit 2>&1 | grep -E "high|critical" | wc -l)
-          if [ "$VULNS" -gt "0" ]; then
-            echo "::warning::Found $VULNS high/critical vulnerabilities"
-            bun audit
+          AUDIT_OUTPUT=$(bun audit 2>&1 || true)
+          echo "$AUDIT_OUTPUT"
+          # Count individual high/critical vulnerability lines (format: "  high: ..." or "  critical: ...")
+          HIGH_CRIT=$(echo "$AUDIT_OUTPUT" | grep -cE "^\s+(high|critical):" || true)
+          if [ "$HIGH_CRIT" -gt "0" ]; then
+            echo "::error::Found $HIGH_CRIT high/critical vulnerabilities — these must be resolved"
+            exit 1
+          fi
+          # Warn on moderate but don't fail the build
+          MODERATE=$(echo "$AUDIT_OUTPUT" | grep -cE "^\s+moderate:" || true)
+          if [ "$MODERATE" -gt "0" ]; then
+            echo "::warning::Found $MODERATE moderate vulnerabilities (non-blocking)"
           fi
 
   secrets-scan:
