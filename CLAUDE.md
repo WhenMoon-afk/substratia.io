@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **GitHub**: https://github.com/WhenMoon-afk/substratia
 **Philosophy**: Intelligence is substrate-agnostic
 
-Memory infrastructure for AI - persistence, context, and knowledge management tools.
+Open-source developer tools for Claude Code - context management, productivity tools, and AI-powered development resources.
 
 ---
 
@@ -77,7 +77,7 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 | AI Video Generators | `/reviews/ai-video-generators` | Runway, Pika, Luma, Kling, Grok |
 
 ### Pages
-- `/` - Landing page (memory infrastructure + Cloud CTA)
+- `/` - Landing page (developer tools overview + Cloud CTA)
 - `/cloud` - **Substratia Cloud** landing page (Early Access, features, pricing)
 - `/dashboard` - **Cloud dashboard** (requires auth, shows snapshots/memories)
 - `/sign-in` - Clerk authentication (Google OAuth)
@@ -164,9 +164,9 @@ src/
 
 ## Branding
 
-- **Parent Brand**: Substratia (memory infrastructure for AI)
+- **Parent Brand**: Substratia (open-source developer tools for Claude Code)
 - **Products**: momentum, memory-mcp, AgentForge
-- **Tagline**: "Memory Infrastructure for AI"
+- **Tagline**: "Open-Source Developer Tools for Claude Code"
 - **Philosophy**: "Intelligence is substrate-agnostic"
 
 ### Colors (tailwind.config.js)
