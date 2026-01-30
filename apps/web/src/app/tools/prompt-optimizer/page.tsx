@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import RelatedTools from '@/components/RelatedTools'
 
 type ThinkingMode = 'normal' | 'thinkhard' | 'ultrathink'
 
@@ -456,6 +457,9 @@ export default function PromptOptimizerPage() {
             </div>
           </div>
         </div>
+
+        {/* Related Tools */}
+        <RelatedTools currentPath="/tools/prompt-optimizer" />
 
         {/* CTA */}
         <div className="mt-12 text-center">

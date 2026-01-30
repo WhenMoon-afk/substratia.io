@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import RelatedTools from '@/components/RelatedTools'
 import {
   categories,
   getCompatibilityWarnings,
@@ -414,6 +415,9 @@ export default function StackBuilderPage() {
             </div>
           </div>
         </div>
+
+        {/* Related Tools */}
+        <RelatedTools currentPath="/tools/stack-builder" />
 
         {/* CTA */}
         <div className="mt-12 text-center">

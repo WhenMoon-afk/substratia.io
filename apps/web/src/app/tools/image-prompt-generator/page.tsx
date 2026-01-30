@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import RelatedTools from '@/components/RelatedTools'
 import {
   platforms,
   stylePresets,
@@ -497,6 +498,9 @@ export default function ImagePromptGeneratorPage() {
             </div>
           </div>
         </div>
+
+        {/* Related Tools */}
+        <RelatedTools currentPath="/tools/image-prompt-generator" />
 
         {/* CTA */}
         <div className="mt-12 text-center">

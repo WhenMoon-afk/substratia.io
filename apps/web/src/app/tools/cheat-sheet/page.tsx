@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import RelatedTools from '@/components/RelatedTools'
 
 export default function CheatSheetPage() {
   const [email, setEmail] = useState('')
@@ -441,6 +442,13 @@ Save this to CLAUDE.md under ## Session Notes`}
             </CheatSection>
 
           </div>
+        </div>
+      </section>
+
+      {/* Related Tools */}
+      <section className="relative z-10 py-12 print:hidden">
+        <div className="container mx-auto px-4">
+          <RelatedTools currentPath="/tools/cheat-sheet" />
         </div>
       </section>
 

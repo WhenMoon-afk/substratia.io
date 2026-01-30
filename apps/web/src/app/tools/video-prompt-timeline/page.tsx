@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import RelatedTools from '@/components/RelatedTools'
 import {
   DndContext,
   DragOverlay,
@@ -743,6 +744,9 @@ export default function VideoPromptTimelinePage() {
             </ul>
           </div>
         </div>
+
+        {/* Related Tools */}
+        <RelatedTools currentPath="/tools/video-prompt-timeline" />
 
         {/* CTA */}
         <div className="mt-12 text-center">

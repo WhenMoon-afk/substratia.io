@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import RelatedTools from '@/components/RelatedTools'
 
 interface Model {
   id: string
@@ -491,6 +492,9 @@ export default function CostCalculatorPage() {
             </div>
           </div>
         </div>
+
+        {/* Related Tools */}
+        <RelatedTools currentPath="/tools/cost-calculator" />
 
         {/* CTA */}
         <div className="mt-12 text-center">
