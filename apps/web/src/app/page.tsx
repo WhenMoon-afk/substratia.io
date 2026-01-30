@@ -180,7 +180,7 @@ export default function Home() {
                 <code className="text-forge-purple">/plugin install memory-mcp@substratia-marketplace</code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">Cloud sync available</span>
+                <span className="text-xs text-gray-500">MIT licensed</span>
                 <a
                   href="https://github.com/WhenMoon-afk/claude-memory-mcp"
                   target="_blank"

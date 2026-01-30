@@ -1,226 +1,65 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useAuth } from '@clerk/nextjs'
 import ShareButton from '@/components/ShareButton'
 
-const tiers = [
-  {
-    name: 'Free',
-    price: '$0',
-    period: 'forever',
-    description: 'Full local memory - no cloud, no limits',
-    features: [
-      'memory-mcp plugin - Store & recall memories',
-      'Unlimited local memories',
-      'Automatic memory via hooks',
-      'Local SQLite storage',
-      'Export to .md files',
-      'Community support on GitHub',
-    ],
-    cta: 'Get Started',
-    href: '/docs',
-    tier: 'free',
-    featured: false,
-  },
-  {
-    name: 'Pro',
-    price: '$9',
-    period: '/month',
-    description: 'Cloud sync, dashboard, access anywhere',
-    features: [
-      'Everything in Free',
-      'Cloud sync across devices',
-      'Web dashboard with search',
-      'Automatic daily backups',
-      'API access',
-      'Priority support',
-    ],
-    cta: 'Subscribe',
-    href: '/api/stripe/checkout',
-    tier: 'pro',
-    featured: true,
-  },
-  {
-    name: 'Teams',
-    price: '$19',
-    period: '/seat/month',
-    description: 'Shared memory for teams building AI at scale',
-    features: [
-      'Everything in Pro',
-      'Shared team memory',
-      'Admin controls & permissions',
-      'SSO integration',
-      'API access',
-      'SLA guarantee',
-      'Dedicated support',
-    ],
-    cta: 'Contact Us',
-    href: 'mailto:hello@substratia.io',
-    tier: 'team',
-    featured: false,
-  },
-]
-
 export default function PricingPage() {
-  const { isSignedIn, isLoaded } = useAuth()
-  const [loading, setLoading] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [autoCheckoutTriggered, setAutoCheckoutTriggered] = useState(false)
-
-  // Function to start checkout process
-  const startCheckout = async (tier: string) => {
-    setLoading(tier)
-    setError(null)
-
-    try {
-      const response = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create checkout session')
-      }
-
-      // Redirect to Stripe checkout
-      if (data.url) {
-        window.location.href = data.url
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
-      setLoading(null)
-    }
-  }
-
-  // Auto-trigger checkout if user just signed in with subscribe intent
-  useEffect(() => {
-    if (!isLoaded || !isSignedIn || autoCheckoutTriggered) return
-
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('intent') === 'subscribe') {
-      // Remove intent from URL to prevent re-triggering
-      window.history.replaceState({}, '', '/pricing')
-      // Mark as triggered and start checkout
-      setAutoCheckoutTriggered(true)
-      startCheckout('pro')
-    }
-  }, [isLoaded, isSignedIn, autoCheckoutTriggered])
-
-  const handleSubscribe = async (tier: string) => {
-    if (!isLoaded) return
-
-    if (!isSignedIn) {
-      // Redirect to sign in with return URL including subscribe intent
-      window.location.href = `/sign-in?redirect_url=${encodeURIComponent('/pricing?intent=subscribe')}`
-      return
-    }
-
-    startCheckout(tier)
-  }
-
   return (
     <main className="min-h-screen text-white py-16">
       <div className="container mx-auto px-4">
         <div className="flex justify-end mb-4">
-          <ShareButton title="Pricing - Substratia" />
+          <ShareButton title="Substratia - Open Source Developer Tools" />
         </div>
+
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Open Source <span className="text-forge-cyan">+ Pro</span>
+            100% <span className="text-forge-cyan">Free &amp; Open Source</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Core memory tools are free and open source forever.
-            Pro adds cloud sync, dashboard, and team features.
+            All Substratia tools are free, open source, and MIT licensed. No paid tiers, no sign-up required.
           </p>
         </div>
 
-        {/* Error message */}
-        {error && (
-          <div className="max-w-md mx-auto mb-8 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-center">
-            <p className="text-red-400">{error}</p>
-          </div>
-        )}
-
-        {/* Subscription Tiers */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-24">
-          {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              id={tier.name.toLowerCase()}
-              className={`rounded-2xl p-8 scroll-mt-24 ${
-                tier.featured
-                  ? 'bg-gradient-to-b from-forge-purple/30 to-forge-dark border-2 border-forge-purple relative'
-                  : 'bg-white/5 border border-white/10'
-              }`}
-            >
-              {tier.featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-forge-purple rounded-full text-sm font-medium">
-                  Most Popular
-                </div>
-              )}
-              <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-4xl font-bold">{tier.price}</span>
-                {tier.period && <span className="text-gray-400">{tier.period}</span>}
-              </div>
-              <p className="text-gray-400 mb-6">{tier.description}</p>
-
-              {/* Button - different behavior based on tier */}
-              {tier.tier === 'pro' ? (
-                <button
-                  onClick={() => handleSubscribe('pro')}
-                  disabled={loading === 'pro'}
-                  className={`w-full text-center py-3 rounded-lg font-semibold transition-all mb-8 ${
-                    tier.featured
-                      ? 'bg-forge-purple hover:bg-forge-purple/80 disabled:opacity-50'
-                      : 'bg-white/10 hover:bg-white/20 disabled:opacity-50'
-                  }`}
-                >
-                  {loading === 'pro' ? 'Loading...' : tier.cta}
-                </button>
-              ) : tier.tier === 'team' ? (
-                <a
-                  href={tier.href}
-                  className={`block text-center py-3 rounded-lg font-semibold transition-all mb-8 ${
-                    tier.featured
-                      ? 'bg-forge-purple hover:bg-forge-purple/80'
-                      : 'bg-white/10 hover:bg-white/20'
-                  }`}
-                >
-                  {tier.cta}
-                </a>
-              ) : (
-                <Link
-                  href={tier.href}
-                  className={`block text-center py-3 rounded-lg font-semibold transition-all mb-8 ${
-                    tier.featured
-                      ? 'bg-forge-purple hover:bg-forge-purple/80'
-                      : 'bg-white/10 hover:bg-white/20'
-                  }`}
-                >
-                  {tier.cta}
-                </Link>
-              )}
-
-              <ul className="space-y-3">
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-forge-cyan flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-300">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+        {/* Single Free Tier */}
+        <div className="max-w-lg mx-auto mb-24">
+          <div className="bg-gradient-to-b from-forge-cyan/10 to-forge-dark border-2 border-forge-cyan/30 rounded-2xl p-8 relative">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-forge-cyan text-forge-dark rounded-full text-sm font-bold">
+              Everything Included
             </div>
-          ))}
+            <h3 className="text-2xl font-bold mb-2 text-center">Free Forever</h3>
+            <div className="flex items-baseline justify-center gap-1 mb-4">
+              <span className="text-5xl font-bold">$0</span>
+              <span className="text-gray-400">forever</span>
+            </div>
+            <p className="text-gray-400 mb-6 text-center">All tools, no limits, no catch.</p>
+
+            <Link
+              href="/start-here"
+              className="block w-full text-center py-3 rounded-lg font-semibold transition-all mb-8 bg-forge-cyan hover:bg-forge-cyan/80 text-forge-dark"
+            >
+              Get Started
+            </Link>
+
+            <ul className="space-y-3">
+              {[
+                'memory-mcp - Persistent memory for Claude Code',
+                'momentum - Context recovery across sessions',
+                'AgentForge - Visual CLAUDE.md builder',
+                'All developer tools and utilities',
+                'Unlimited local memories (SQLite)',
+                'Automatic memory via hooks',
+                'Export to .md files',
+                'MIT licensed - use however you want',
+                'Community support on GitHub',
+              ].map((feature) => (
+                <li key={feature} className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-forge-cyan flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-300">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Open Source Commitment */}
@@ -229,9 +68,8 @@ export default function PricingPage() {
             <span className="text-forge-cyan">Open Source</span> Commitment
           </h2>
           <p className="text-gray-400 text-lg mb-8">
-            memory-mcp is MIT licensed and will remain free forever.
-            We believe AI memory should be accessible to everyone. Pro features fund continued development
-            while keeping the foundation open.
+            All Substratia tools are MIT licensed and will remain free forever.
+            We believe AI developer tools should be accessible to everyone.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -260,28 +98,23 @@ export default function PricingPage() {
             {[
               {
                 id: 'faq-free',
-                q: 'Are the free tools actually free?',
-                a: 'Yes! memory-mcp is open source under MIT license. You can use, modify, and distribute it freely. Local memory is unlimited and free forever.',
-              },
-              {
-                id: 'faq-pro',
-                q: 'What does Pro add over Free?',
-                a: 'Pro adds cloud sync so your memories follow you across devices. You also get a web dashboard to search and manage memories, automatic daily backups, API access, and priority support.',
-              },
-              {
-                id: 'faq-cancel',
-                q: 'Can I cancel anytime?',
-                a: 'Yes! You can cancel your Pro subscription anytime. You\'ll keep Pro features until the end of your billing period, then revert to Free tier.',
+                q: 'Are all the tools really free?',
+                a: 'Yes! Every tool on Substratia is open source under MIT license. You can use, modify, and distribute them freely. No hidden costs.',
               },
               {
                 id: 'faq-selfhost',
-                q: 'Can I self-host instead of using Pro?',
-                a: 'Absolutely! All tools are open source. Pro is a convenience layer for those who want cloud sync and managed infrastructure without self-hosting.',
+                q: 'Can I self-host everything?',
+                a: 'Absolutely. All tools run locally on your machine. Your data stays on your device. No server required.',
               },
               {
-                id: 'faq-payment',
-                q: 'What payment methods do you accept?',
-                a: 'We accept all major credit cards via Stripe. Enterprise/Teams customers can pay via invoice.',
+                id: 'faq-support',
+                q: 'How do I get support?',
+                a: 'Open an issue on GitHub or join the community discussions. We actively maintain all repositories.',
+              },
+              {
+                id: 'faq-contribute',
+                q: 'Can I contribute?',
+                a: 'Yes! We welcome contributions. Check the GitHub repos for contribution guidelines and open issues.',
               },
             ].map((faq) => (
               <div key={faq.id} id={faq.id} className="bg-white/5 border border-white/10 rounded-xl p-6 scroll-mt-24">
@@ -294,8 +127,8 @@ export default function PricingPage() {
 
         {/* CTA */}
         <div className="text-center mt-16 py-12 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl">
-          <h2 className="text-3xl font-bold mb-4">Give Your AI a Memory</h2>
-          <p className="text-gray-400 mb-8">Free local memory forever. Pro adds cloud sync so your memories follow you everywhere.</p>
+          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <p className="text-gray-400 mb-8">Free, open source, and built for Claude Code developers.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/tools/memory-demo"
@@ -304,10 +137,10 @@ export default function PricingPage() {
               Try Memory Demo
             </Link>
             <Link
-              href="/dashboard"
+              href="/start-here"
               className="px-8 py-4 border border-white/30 hover:bg-white/10 rounded-lg font-semibold text-lg transition-all"
             >
-              Get Started Free
+              Get Started
             </Link>
           </div>
         </div>

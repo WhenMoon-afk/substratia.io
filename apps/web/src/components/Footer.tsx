@@ -72,7 +72,7 @@ export default function Footer() {
               className="rounded-lg"
             />
             <span className="font-semibold">Substratia</span>
-            <span className="text-gray-500 text-sm hidden sm:inline">Memory Infrastructure for AI</span>
+            <span className="text-gray-500 text-sm hidden sm:inline">Open Source Developer Tools</span>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
