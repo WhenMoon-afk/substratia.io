@@ -2,12 +2,16 @@ name: Security Scan
 
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
-    branches: [master]
+    branches: [master, main]
   schedule:
     # Run weekly on Monday at 9am UTC
     - cron: '0 9 * * 1'
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   audit:
@@ -38,6 +42,8 @@ jobs:
 
   secrets-scan:
     name: Secret Scanning
+    # Skip secrets scan on Dependabot PRs (only dependency version bumps)
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,6 +57,8 @@ jobs:
 
   codeql:
     name: CodeQL Analysis
+    # Skip CodeQL on Dependabot PRs (dependency bumps don't introduce code vulnerabilities)
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       security-events: write
