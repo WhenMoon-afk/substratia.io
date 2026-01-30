@@ -421,15 +421,9 @@ export default function MemoryDemoPage() {
             >
               Install Free Plugin
             </Link>
-            <Link
-              href="/pricing#pro"
-              className="px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
-            >
-              Get Cloud Sync ($9/mo)
-            </Link>
           </div>
           <p className="text-xs text-gray-500 mt-4">
-            Local storage is free forever. Cloud sync for cross-device access.
+            Free and open source. Your data stays on your machine.
           </p>
         </div>
 

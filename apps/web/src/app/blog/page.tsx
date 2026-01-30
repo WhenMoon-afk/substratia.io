@@ -6,15 +6,6 @@ import ShareButton from '@/components/ShareButton'
 
 const posts = [
   {
-    slug: 'announcing-substratia-cloud',
-    title: 'Announcing Substratia Cloud: Your Claude Code Memories, Everywhere',
-    excerpt: 'Cloud backup, cross-device sync, and web dashboard for your Claude Code memories. Join the waitlist for founding member pricing.',
-    date: '2026-01-12',
-    readTime: '6 min read',
-    tags: ['Announcement', 'Cloud', 'Coming Soon'],
-    featured: true,
-  },
-  {
     slug: 'context-management-guide',
     title: 'The Ultimate Guide to Claude Code Context Management',
     excerpt: 'Master context window management in Claude Code. Techniques for preserving context, avoiding compaction issues, and maximizing your AI coding sessions.',

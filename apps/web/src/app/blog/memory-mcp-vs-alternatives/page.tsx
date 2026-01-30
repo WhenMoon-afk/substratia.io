@@ -262,17 +262,18 @@ export default function BlogPost() {
           </p>
 
           <div className="mt-12 p-6 bg-white/5 border border-white/10 rounded-xl">
-            <h3 className="text-xl font-bold mb-3">Want Cloud Sync?</h3>
+            <h3 className="text-xl font-bold mb-3">Try memory-mcp</h3>
             <p className="text-gray-400 mb-4">
-              Substratia Pro (coming soon) adds cloud sync, memory dashboard, and team features
-              for memory-mcp users.
+              Open source, zero dependencies, installs in seconds with npx.
             </p>
-            <Link
-              href="/pro"
+            <a
+              href="https://github.com/WhenMoon-afk/claude-memory-mcp"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-lg hover:bg-forge-cyan/80 transition-all"
             >
-              Join the Waitlist
-            </Link>
+              View on GitHub
+            </a>
           </div>
         </div>
 
@@ -284,7 +285,7 @@ export default function BlogPost() {
             </div>
             <div>
               <div className="font-semibold">Substratia Team</div>
-              <div className="text-sm text-gray-400">Building memory infrastructure for AI</div>
+              <div className="text-sm text-gray-400">Building developer tools for Claude Code</div>
             </div>
           </div>
         </div>

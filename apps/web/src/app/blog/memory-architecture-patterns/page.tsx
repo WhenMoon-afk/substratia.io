@@ -259,14 +259,14 @@ Zero ML dependencies`}</pre>
             <li><strong>Embeddings</strong> - 46MB overhead for marginal semantic matching gains.
               FTS5 is faster and sufficient.</li>
             <li><strong>Cloud by default</strong> - Local-first means privacy and reliability.
-              Cloud is optional (coming in Pro tier).</li>
+              Your data stays on your machine.</li>
           </ul>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
             Stop Building, Start Using
           </h2>
           <p className="text-gray-300 mb-4">
-            Here&apos;s a meta-observation: we spent months building memory infrastructure for Claude.
+            Here&apos;s a meta-observation: we spent months building memory tools for Claude.
             The irony is that Claude kept forgetting about the work between sessions.
           </p>
           <p className="text-gray-300 mb-4">
@@ -325,7 +325,7 @@ Zero ML dependencies`}</pre>
             </div>
             <div>
               <div className="font-semibold">Substratia Team</div>
-              <div className="text-sm text-gray-400">Building memory infrastructure for AI</div>
+              <div className="text-sm text-gray-400">Building developer tools for Claude Code</div>
             </div>
           </div>
         </div>

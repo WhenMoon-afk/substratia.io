@@ -401,7 +401,7 @@ export default function BlogPost() {
             </div>
             <div>
               <div className="font-semibold">Substratia Team</div>
-              <div className="text-sm text-gray-400">Building memory infrastructure for AI</div>
+              <div className="text-sm text-gray-400">Building developer tools for Claude Code</div>
             </div>
           </div>
         </div>

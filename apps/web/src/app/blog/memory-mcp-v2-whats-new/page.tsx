@@ -194,13 +194,13 @@ export default function BlogPost() {
             What&apos;s Next
           </h2>
           <p className="text-gray-300 mb-4">
-            We&apos;re building Substratia Pro with:
+            We&apos;re continuing to improve memory-mcp with:
           </p>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
-            <li>Cloud sync across devices</li>
+            <li>Better search relevance and ranking</li>
             <li>Memory dashboard to view/edit what AI remembers</li>
-            <li>Automatic backups</li>
-            <li>Team memory sharing</li>
+            <li>Performance optimizations for large memory stores</li>
+            <li>Improved integration with Claude Code workflows</li>
           </ul>
 
           <div className="mt-12 p-6 bg-white/5 border border-white/10 rounded-xl">
@@ -213,16 +213,10 @@ export default function BlogPost() {
                 href="https://github.com/WhenMoon-afk/claude-memory-mcp"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-white/10 hover:bg-white/20 font-semibold rounded-lg transition-all"
+                className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-lg hover:bg-forge-cyan/80 transition-all"
               >
                 View on GitHub
               </a>
-              <Link
-                href="/pro"
-                className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-lg hover:bg-forge-cyan/80 transition-all"
-              >
-                Join Pro Waitlist
-              </Link>
             </div>
           </div>
         </div>
@@ -235,7 +229,7 @@ export default function BlogPost() {
             </div>
             <div>
               <div className="font-semibold">Substratia Team</div>
-              <div className="text-sm text-gray-400">Building memory infrastructure for AI</div>
+              <div className="text-sm text-gray-400">Building developer tools for Claude Code</div>
             </div>
           </div>
         </div>
