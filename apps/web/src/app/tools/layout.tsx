@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 import ToolsClientWrapper from '@/components/ToolsClientWrapper'
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Free AI Tools for Developers',
     description: '12 free tools for AI-assisted development. No signup required.',
     type: 'website',
-    url: 'https://substratia.io/tools',
+    url: siteUrl('/tools'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -22,8 +23,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
   ],
 }
 
@@ -32,21 +33,21 @@ const jsonLd = {
   '@type': 'CollectionPage',
   name: 'Free AI Tools for Developers',
   description: 'Free tools for developers: stack builder, Claude Code cost calculator, prompt optimizer, token counter, and more.',
-  url: 'https://substratia.io/tools',
+  url: siteUrl('/tools'),
   mainEntity: {
     '@type': 'ItemList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Claude Code Cheat Sheet', url: 'https://substratia.io/tools/cheat-sheet' },
-      { '@type': 'ListItem', position: 2, name: 'Claude Code Cost Calculator', url: 'https://substratia.io/tools/cost-calculator' },
-      { '@type': 'ListItem', position: 3, name: 'Claude Code Prompt Optimizer', url: 'https://substratia.io/tools/prompt-optimizer' },
-      { '@type': 'ListItem', position: 4, name: 'Stack Builder', url: 'https://substratia.io/tools/stack-builder' },
-      { '@type': 'ListItem', position: 5, name: 'Token Counter', url: 'https://substratia.io/tools/token-counter' },
-      { '@type': 'ListItem', position: 6, name: 'Prompt Library', url: 'https://substratia.io/tools/prompts' },
-      { '@type': 'ListItem', position: 7, name: 'Seed Maker', url: 'https://substratia.io/tools/seed-maker' },
-      { '@type': 'ListItem', position: 8, name: 'Image Prompt Generator', url: 'https://substratia.io/tools/image-prompt-generator' },
-      { '@type': 'ListItem', position: 9, name: 'Video Prompt Timeline', url: 'https://substratia.io/tools/video-prompt-timeline' },
-      { '@type': 'ListItem', position: 10, name: 'Markdown Preview', url: 'https://substratia.io/tools/markdown-preview' },
-      { '@type': 'ListItem', position: 11, name: 'Markdown Stripper', url: 'https://substratia.io/tools/markdown-stripper' },
+      { '@type': 'ListItem', position: 1, name: 'Claude Code Cheat Sheet', url: siteUrl('/tools/cheat-sheet') },
+      { '@type': 'ListItem', position: 2, name: 'Claude Code Cost Calculator', url: siteUrl('/tools/cost-calculator') },
+      { '@type': 'ListItem', position: 3, name: 'Claude Code Prompt Optimizer', url: siteUrl('/tools/prompt-optimizer') },
+      { '@type': 'ListItem', position: 4, name: 'Stack Builder', url: siteUrl('/tools/stack-builder') },
+      { '@type': 'ListItem', position: 5, name: 'Token Counter', url: siteUrl('/tools/token-counter') },
+      { '@type': 'ListItem', position: 6, name: 'Prompt Library', url: siteUrl('/tools/prompts') },
+      { '@type': 'ListItem', position: 7, name: 'Seed Maker', url: siteUrl('/tools/seed-maker') },
+      { '@type': 'ListItem', position: 8, name: 'Image Prompt Generator', url: siteUrl('/tools/image-prompt-generator') },
+      { '@type': 'ListItem', position: 9, name: 'Video Prompt Timeline', url: siteUrl('/tools/video-prompt-timeline') },
+      { '@type': 'ListItem', position: 10, name: 'Markdown Preview', url: siteUrl('/tools/markdown-preview') },
+      { '@type': 'ListItem', position: 11, name: 'Markdown Stripper', url: siteUrl('/tools/markdown-stripper') },
     ],
   },
 }

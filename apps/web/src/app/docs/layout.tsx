@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Documentation - Substratia | Memory Infrastructure for AI',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Substratia Documentation',
     description: 'Learn how to use momentum and memory-mcp tools.',
     type: 'website',
-    url: 'https://substratia.io/docs',
+    url: siteUrl('/docs'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,8 +22,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Documentation', item: 'https://substratia.io/docs' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Documentation', item: siteUrl('/docs') },
   ],
 }
 
@@ -34,16 +35,16 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/docs',
+    '@id': siteUrl('/docs'),
   },
 }
 

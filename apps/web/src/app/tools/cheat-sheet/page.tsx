@@ -5,6 +5,7 @@ import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 
 import RelatedTools from '@/components/RelatedTools'
+import { newsletterUrl } from '@/lib/site-config'
 
 export default function CheatSheetPage() {
   const [email, setEmail] = useState('')
@@ -18,8 +19,7 @@ export default function CheatSheetPage() {
     setStatus('loading')
 
     // Open Substack subscription in new tab with email pre-filled
-    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=cheat-sheet`
-    window.open(substackUrl, '_blank', 'noopener,noreferrer')
+    window.open(newsletterUrl(email, 'cheat-sheet'), '_blank', 'noopener,noreferrer')
 
     setStatus('success')
     setEmail('')

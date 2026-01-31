@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Seed Maker - High-Entropy Random String Generator | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Seed Maker - High-Entropy Random Generator',
     description: 'Generate cryptographically strong random strings from mouse movements. 100% client-side, private.',
     type: 'website',
-    url: 'https://substratia.io/tools/seed-maker',
+    url: siteUrl('/tools/seed-maker'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Seed%20Maker&subtitle=High-Entropy%20Random%20Generator',
+        url: siteUrl('/api/og?title=Seed%20Maker&subtitle=High-Entropy%20Random%20Generator'),
         width: 1200,
         height: 630,
         alt: 'Seed Maker',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Generate cryptographically strong random strings from mouse movements. 100% client-side.',
-  url: 'https://substratia.io/tools/seed-maker',
+  url: siteUrl('/tools/seed-maker'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Seed Maker', item: 'https://substratia.io/tools/seed-maker' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Seed Maker', item: siteUrl('/tools/seed-maker') },
   ],
 }
 

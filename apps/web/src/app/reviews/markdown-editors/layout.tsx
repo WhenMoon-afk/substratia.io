@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Best Markdown Editors 2026 - Obsidian vs Notion vs Typora | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Best Markdown Editors 2026 - Complete Comparison',
     description: 'Compare Obsidian, Notion, Typora, VS Code, and iA Writer. Find the best markdown editor for your workflow.',
     type: 'article',
-    url: 'https://substratia.io/reviews/markdown-editors',
+    url: siteUrl('/reviews/markdown-editors'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Reviews', item: 'https://substratia.io/reviews' },
-    { '@type': 'ListItem', position: 3, name: 'Markdown Editors', item: 'https://substratia.io/reviews/markdown-editors' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Reviews', item: siteUrl('/reviews') },
+    { '@type': 'ListItem', position: 3, name: 'Markdown Editors', item: siteUrl('/reviews/markdown-editors') },
   ],
 }
 

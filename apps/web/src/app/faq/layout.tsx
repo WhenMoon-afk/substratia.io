@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'FAQ - Claude Code & Memory Tools | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'FAQ - Claude Code & Memory Tools',
     description: 'Get answers to common questions about Claude Code and memory tools.',
     type: 'website',
-    url: 'https://substratia.io/faq',
+    url: siteUrl('/faq'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,8 +22,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'FAQ', item: 'https://substratia.io/faq' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'FAQ', item: siteUrl('/faq') },
   ],
 }
 

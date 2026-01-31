@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Token Counter - Estimate Costs for Claude, GPT-4 | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Free Token Counter for Claude & GPT-4',
     description: 'Count tokens and estimate costs for Claude 4.5, GPT-4, and other AI models. 100% free, no signup.',
     type: 'website',
-    url: 'https://substratia.io/tools/token-counter',
+    url: siteUrl('/tools/token-counter'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Token%20Counter&subtitle=Count%20tokens%20for%20Claude%20%26%20GPT-4',
+        url: siteUrl('/api/og?title=Token%20Counter&subtitle=Count%20tokens%20for%20Claude%20%26%20GPT-4'),
         width: 1200,
         height: 630,
         alt: 'Token Counter',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Count tokens and estimate costs for Claude, GPT-4, and other AI models.',
-  url: 'https://substratia.io/tools/token-counter',
+  url: siteUrl('/tools/token-counter'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Token Counter', item: 'https://substratia.io/tools/token-counter' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Token Counter', item: siteUrl('/tools/token-counter') },
   ],
 }
 

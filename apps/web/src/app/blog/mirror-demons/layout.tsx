@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Mirror Demons: How AI Chatbots Can Amplify Delusions | Substratia',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     type: 'article',
     publishedTime: '2026-01-11',
     authors: ['Substratia'],
-    url: 'https://substratia.io/blog/mirror-demons',
+    url: siteUrl('/blog/mirror-demons'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -24,9 +25,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'Mirror Demons', item: 'https://substratia.io/blog/mirror-demons' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'Mirror Demons', item: siteUrl('/blog/mirror-demons') },
   ],
 }
 
@@ -38,18 +39,18 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   dateModified: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/mirror-demons',
+    '@id': siteUrl('/blog/mirror-demons'),
   },
   keywords: ['AI safety', 'AI delusions', 'chatbot psychology', 'AI harm'],
   articleSection: 'Research',

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'How to Build Claude Agents: A Practical Guide | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'How to Build Claude Agents',
     description: 'Step-by-step guide to building effective Claude Code agents.',
     type: 'article',
-    url: 'https://substratia.io/blog/how-to-build-claude-agents',
+    url: siteUrl('/blog/how-to-build-claude-agents'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'How to Build Claude Agents', item: 'https://substratia.io/blog/how-to-build-claude-agents' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'How to Build Claude Agents', item: siteUrl('/blog/how-to-build-claude-agents') },
   ],
 }
 
@@ -35,17 +36,17 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/how-to-build-claude-agents',
+    '@id': siteUrl('/blog/how-to-build-claude-agents'),
   },
 }
 

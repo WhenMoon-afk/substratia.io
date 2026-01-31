@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Image Prompt Generator - AI Art Prompt Builder | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Image Prompt Generator - Build AI Art Prompts Visually',
     description: 'Free tool to create image generation prompts. 50+ style presets, negative prompts, platform-specific output. Works with Midjourney, DALL-E, Stable Diffusion.',
     type: 'website',
-    url: 'https://substratia.io/tools/image-prompt-generator',
+    url: siteUrl('/tools/image-prompt-generator'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Image%20Prompt%20Generator&subtitle=Build%20AI%20Art%20Prompts%20Visually',
+        url: siteUrl('/api/og?title=Image%20Prompt%20Generator&subtitle=Build%20AI%20Art%20Prompts%20Visually'),
         width: 1200,
         height: 630,
         alt: 'Image Prompt Generator',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Free prompt builder for AI image generation. 50+ style presets for Midjourney, DALL-E, Stable Diffusion.',
-  url: 'https://substratia.io/tools/image-prompt-generator',
+  url: siteUrl('/tools/image-prompt-generator'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Image Prompt Generator', item: 'https://substratia.io/tools/image-prompt-generator' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Image Prompt Generator', item: siteUrl('/tools/image-prompt-generator') },
   ],
 }
 

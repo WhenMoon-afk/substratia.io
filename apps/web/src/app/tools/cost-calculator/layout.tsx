@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Claude Code Cost Calculator - API vs Subscription | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Claude Code Cost Calculator - API vs Subscription',
     description: 'Calculate your Claude Code costs. Compare API pricing vs subscription plans. Find the most cost-effective option.',
     type: 'website',
-    url: 'https://substratia.io/tools/cost-calculator',
+    url: siteUrl('/tools/cost-calculator'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Claude%20Code%20Cost%20Calculator&subtitle=API%20vs%20Subscription%20Comparison',
+        url: siteUrl('/api/og?title=Claude%20Code%20Cost%20Calculator&subtitle=API%20vs%20Subscription%20Comparison'),
         width: 1200,
         height: 630,
         alt: 'Claude Code Cost Calculator',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Calculate and compare Claude Code API vs subscription costs.',
-  url: 'https://substratia.io/tools/cost-calculator',
+  url: siteUrl('/tools/cost-calculator'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Cost Calculator', item: 'https://substratia.io/tools/cost-calculator' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Cost Calculator', item: siteUrl('/tools/cost-calculator') },
   ],
 }
 

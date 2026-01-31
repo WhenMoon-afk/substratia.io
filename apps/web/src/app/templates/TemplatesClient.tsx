@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import { siteConfig } from '@/lib/site-config'
 
 interface Tool {
   id: string
@@ -38,7 +39,7 @@ const tools: Tool[] = [
       'SQLite persistence',
     ],
     installCommand: '/plugin install momentum@substratia-marketplace',
-    githubUrl: 'https://github.com/WhenMoon-afk/momentum',
+    githubUrl: siteConfig.links.repos.momentum,
     color: 'cyan',
   },
   {
@@ -60,7 +61,7 @@ const tools: Tool[] = [
       'Soft deletes with audit trail',
     ],
     installCommand: 'npx @whenmoon-afk/memory-mcp',
-    githubUrl: 'https://github.com/WhenMoon-afk/claude-memory-mcp',
+    githubUrl: siteConfig.links.repos.memoryMcp,
     npmUrl: 'https://www.npmjs.com/package/@whenmoon-afk/memory-mcp',
     color: 'purple',
   },
@@ -227,7 +228,7 @@ export default function TemplatesClient() {
             Contribute, customize, or just use them as-is.
           </p>
           <a
-            href="https://github.com/WhenMoon-afk"
+            href={siteConfig.links.github}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-xl font-semibold transition-all"

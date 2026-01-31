@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'The Real Cost of Context Window Churn | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'The Real Cost of Context Window Churn',
     description: 'How context window limitations affect developer productivity.',
     type: 'article',
-    url: 'https://substratia.io/blog/context-window-churn',
+    url: siteUrl('/blog/context-window-churn'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'Context Window Churn', item: 'https://substratia.io/blog/context-window-churn' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'Context Window Churn', item: siteUrl('/blog/context-window-churn') },
   ],
 }
 
@@ -35,17 +36,17 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/context-window-churn',
+    '@id': siteUrl('/blog/context-window-churn'),
   },
 }
 

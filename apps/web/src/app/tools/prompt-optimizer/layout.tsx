@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Claude Code Prompt Optimizer - Build Better AI Prompts | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Claude Code Prompt Optimizer - Build Better AI Prompts',
     description: 'Optimize your Claude Code prompts with thinking modes, autonomous patterns, and parallel execution snippets.',
     type: 'website',
-    url: 'https://substratia.io/tools/prompt-optimizer',
+    url: siteUrl('/tools/prompt-optimizer'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Prompt%20Optimizer&subtitle=Build%20Better%20Claude%20Code%20Prompts',
+        url: siteUrl('/api/og?title=Prompt%20Optimizer&subtitle=Build%20Better%20Claude%20Code%20Prompts'),
         width: 1200,
         height: 630,
         alt: 'Claude Code Prompt Optimizer',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Build optimized prompts for Claude Code with thinking modes and autonomous patterns.',
-  url: 'https://substratia.io/tools/prompt-optimizer',
+  url: siteUrl('/tools/prompt-optimizer'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Prompt Optimizer', item: 'https://substratia.io/tools/prompt-optimizer' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Prompt Optimizer', item: siteUrl('/tools/prompt-optimizer') },
   ],
 }
 

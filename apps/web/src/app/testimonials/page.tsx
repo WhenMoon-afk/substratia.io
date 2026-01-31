@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ShareButton from '@/components/ShareButton'
+import { newsletterUrl } from '@/lib/site-config'
 
 interface Testimonial {
   id: string
@@ -41,8 +42,7 @@ export default function TestimonialsPage() {
     setStatus('loading')
 
     // Open Substack subscription in new tab with email pre-filled
-    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=testimonials`
-    window.open(substackUrl, '_blank', 'noopener,noreferrer')
+    window.open(newsletterUrl(email, 'testimonials'), '_blank', 'noopener,noreferrer')
 
     setStatus('success')
     setEmail('')

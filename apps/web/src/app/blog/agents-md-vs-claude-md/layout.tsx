@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'AGENTS.md vs CLAUDE.md: Complete Guide | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'AGENTS.md vs CLAUDE.md: Complete Guide',
     description: 'Learn the differences between AGENTS.md and CLAUDE.md files.',
     type: 'article',
-    url: 'https://substratia.io/blog/agents-md-vs-claude-md',
+    url: siteUrl('/blog/agents-md-vs-claude-md'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'AGENTS.md vs CLAUDE.md', item: 'https://substratia.io/blog/agents-md-vs-claude-md' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'AGENTS.md vs CLAUDE.md', item: siteUrl('/blog/agents-md-vs-claude-md') },
   ],
 }
 
@@ -35,17 +36,17 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/agents-md-vs-claude-md',
+    '@id': siteUrl('/blog/agents-md-vs-claude-md'),
   },
 }
 

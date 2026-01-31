@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Best AI Coding Assistants 2026 - Claude Code vs Cursor vs GitHub Copilot | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Best AI Coding Assistants 2026 - Complete Comparison',
     description: 'Compare Claude Code, Cursor, GitHub Copilot, Codeium, and Windsurf. Find the best AI coding assistant for your needs.',
     type: 'article',
-    url: 'https://substratia.io/reviews/ai-coding-assistants',
+    url: siteUrl('/reviews/ai-coding-assistants'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -85,9 +86,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Reviews', item: 'https://substratia.io/reviews' },
-    { '@type': 'ListItem', position: 3, name: 'AI Coding Assistants', item: 'https://substratia.io/reviews/ai-coding-assistants' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Reviews', item: siteUrl('/reviews') },
+    { '@type': 'ListItem', position: 3, name: 'AI Coding Assistants', item: siteUrl('/reviews/ai-coding-assistants') },
   ],
 }
 

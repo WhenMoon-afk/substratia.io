@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Memory Demo - Interactive AI Memory Visualization | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Memory Demo - Interactive AI Memory Visualization',
     description: 'See how AI memory works in practice. Interactive demo of memory storage, retrieval, and context-aware recall.',
     type: 'website',
-    url: 'https://substratia.io/tools/memory-demo',
+    url: siteUrl('/tools/memory-demo'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Memory%20Demo&subtitle=Interactive%20AI%20Memory%20Visualization',
+        url: siteUrl('/api/og?title=Memory%20Demo&subtitle=Interactive%20AI%20Memory%20Visualization'),
         width: 1200,
         height: 630,
         alt: 'Memory Demo - Interactive AI Memory Visualization',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Interactive demonstration of AI memory storage, retrieval, and context-aware recall.',
-  url: 'https://substratia.io/tools/memory-demo',
+  url: siteUrl('/tools/memory-demo'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Memory Demo', item: 'https://substratia.io/tools/memory-demo' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Memory Demo', item: siteUrl('/tools/memory-demo') },
   ],
 }
 

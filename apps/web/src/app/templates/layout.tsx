@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Memory Tools - Substratia | momentum, memory-mcp',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Free Memory Tools for AI',
     description: 'Open-source tools: momentum (context recovery), memory-mcp (persistent memory).',
     type: 'website',
-    url: 'https://substratia.io/templates',
+    url: siteUrl('/templates'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,8 +22,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Memory Tools', item: 'https://substratia.io/templates' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Memory Tools', item: siteUrl('/templates') },
   ],
 }
 
@@ -31,7 +32,7 @@ const jsonLd = {
   '@type': 'ItemList',
   name: 'Free Memory Tools for AI',
   description: 'Open-source memory tools for AI assistants.',
-  url: 'https://substratia.io/templates',
+  url: siteUrl('/templates'),
   itemListElement: [
     {
       '@type': 'ListItem',

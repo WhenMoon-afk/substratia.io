@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next'
-
-const BASE_URL = 'https://substratia.io'
+import { SITE_URL } from '@/lib/site-config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString()
@@ -68,7 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const allPages = [...mainPages, ...tools, ...research, ...reviews, ...blog]
 
   return allPages.map((page) => ({
-    url: `${BASE_URL}${page.url}`,
+    url: `${SITE_URL}${page.url}`,
     lastModified: now,
     changeFrequency: page.changeFrequency,
     priority: page.priority,

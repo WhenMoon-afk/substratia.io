@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Video Prompt Timeline - AI Video Storyboard Builder | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Video Prompt Timeline - Build AI Video Prompts Visually',
     description: 'Free tool to create video generation prompts. 7 keyframes at 5-second intervals, drag-and-drop moment library, platform-specific output. Works with Grok, Runway, Pika, Luma.',
     type: 'website',
-    url: 'https://substratia.io/tools/video-prompt-timeline',
+    url: siteUrl('/tools/video-prompt-timeline'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Video%20Prompt%20Timeline&subtitle=AI%20Video%20Storyboard%20Builder',
+        url: siteUrl('/api/og?title=Video%20Prompt%20Timeline&subtitle=AI%20Video%20Storyboard%20Builder'),
         width: 1200,
         height: 630,
         alt: 'Video Prompt Timeline',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Free visual storyboard tool for AI video generation. 7 keyframes for Grok, Runway, Pika, Luma.',
-  url: 'https://substratia.io/tools/video-prompt-timeline',
+  url: siteUrl('/tools/video-prompt-timeline'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Video Prompt Timeline', item: 'https://substratia.io/tools/video-prompt-timeline' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Video Prompt Timeline', item: siteUrl('/tools/video-prompt-timeline') },
   ],
 }
 

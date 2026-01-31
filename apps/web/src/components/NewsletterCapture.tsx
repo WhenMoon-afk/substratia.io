@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { newsletterUrl } from '@/lib/site-config'
 
 interface NewsletterCaptureProps {
   source?: string
@@ -25,8 +26,7 @@ export default function NewsletterCapture({
     setStatus('loading')
 
     // Open Substack subscription in new tab with email pre-filled
-    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=${encodeURIComponent(source)}`
-    window.open(substackUrl, '_blank', 'noopener,noreferrer')
+    window.open(newsletterUrl(email, source), '_blank', 'noopener,noreferrer')
 
     setStatus('success')
     setEmail('')

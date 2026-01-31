@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'MCP Memory Servers Compared | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'MCP Memory Servers Compared',
     description: 'Compare memory-mcp, mem0, Basic Memory, and Obsidian MCP.',
     type: 'article',
-    url: 'https://substratia.io/blog/memory-mcp-vs-alternatives',
+    url: siteUrl('/blog/memory-mcp-vs-alternatives'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'MCP Memory Servers Compared', item: 'https://substratia.io/blog/memory-mcp-vs-alternatives' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'MCP Memory Servers Compared', item: siteUrl('/blog/memory-mcp-vs-alternatives') },
   ],
 }
 
@@ -35,17 +36,17 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/memory-mcp-vs-alternatives',
+    '@id': siteUrl('/blog/memory-mcp-vs-alternatives'),
   },
 }
 

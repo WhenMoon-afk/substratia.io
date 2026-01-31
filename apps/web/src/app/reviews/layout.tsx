@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'AI Tool Reviews & Comparisons | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'AI Tool Reviews & Comparisons',
     description: 'Honest reviews and side-by-side comparisons of AI tools. Find the best AI tools for your workflow.',
     type: 'website',
-    url: 'https://substratia.io/reviews',
+    url: siteUrl('/reviews'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,8 +22,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Reviews', item: 'https://substratia.io/reviews' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Reviews', item: siteUrl('/reviews') },
   ],
 }
 
@@ -31,14 +32,14 @@ const jsonLd = {
   '@type': 'CollectionPage',
   name: 'AI Tool Reviews & Comparisons',
   description: 'Honest reviews and side-by-side comparisons of AI tools. Updated for 2026.',
-  url: 'https://substratia.io/reviews',
+  url: siteUrl('/reviews'),
   mainEntity: {
     '@type': 'ItemList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Best AI Coding Assistants 2026', url: 'https://substratia.io/reviews/ai-coding-assistants' },
-      { '@type': 'ListItem', position: 2, name: 'Best AI Image Generators 2026', url: 'https://substratia.io/reviews/ai-image-generators' },
-      { '@type': 'ListItem', position: 3, name: 'Best AI Video Generators 2026', url: 'https://substratia.io/reviews/ai-video-generators' },
-      { '@type': 'ListItem', position: 4, name: 'Best Markdown Editors 2026', url: 'https://substratia.io/reviews/markdown-editors' },
+      { '@type': 'ListItem', position: 1, name: 'Best AI Coding Assistants 2026', url: siteUrl('/reviews/ai-coding-assistants') },
+      { '@type': 'ListItem', position: 2, name: 'Best AI Image Generators 2026', url: siteUrl('/reviews/ai-image-generators') },
+      { '@type': 'ListItem', position: 3, name: 'Best AI Video Generators 2026', url: siteUrl('/reviews/ai-video-generators') },
+      { '@type': 'ListItem', position: 4, name: 'Best Markdown Editors 2026', url: siteUrl('/reviews/markdown-editors') },
     ],
   },
 }

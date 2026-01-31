@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Markdown Preview - Live Editor & Renderer | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Markdown Preview - Live Editor & Renderer',
     description: 'Free live markdown preview tool. Edit markdown on the left, see rendered output on the right. Instant rendering.',
     type: 'website',
-    url: 'https://substratia.io/tools/markdown-preview',
+    url: siteUrl('/tools/markdown-preview'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Markdown%20Preview&subtitle=Live%20Editor%20%26%20Renderer',
+        url: siteUrl('/api/og?title=Markdown%20Preview&subtitle=Live%20Editor%20%26%20Renderer'),
         width: 1200,
         height: 630,
         alt: 'Markdown Preview',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Free live markdown preview tool. Obsidian-style dual panel editor with instant rendering.',
-  url: 'https://substratia.io/tools/markdown-preview',
+  url: siteUrl('/tools/markdown-preview'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Markdown Preview', item: 'https://substratia.io/tools/markdown-preview' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Markdown Preview', item: siteUrl('/tools/markdown-preview') },
   ],
 }
 

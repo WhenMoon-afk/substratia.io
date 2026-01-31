@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Substratia',
@@ -113,7 +114,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-semibold text-white mb-4">Contact</h2>
             <p className="text-gray-300">
               For privacy concerns, please open an issue on our{' '}
-              <a href="https://github.com/WhenMoon-afk/substratia.io" className="text-cyan-400 hover:underline" target="_blank" rel="noopener noreferrer">
+              <a href={siteConfig.links.repos.website} className="text-cyan-400 hover:underline" target="_blank" rel="noopener noreferrer">
                 GitHub repository
               </a>.
             </p>

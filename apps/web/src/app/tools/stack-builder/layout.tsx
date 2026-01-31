@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Stack Builder - Full-Stack Tech Selector | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Stack Builder - Full-Stack Tech Selector',
     description: 'Build your perfect tech stack with compatibility checks and AI analysis export.',
     type: 'website',
-    url: 'https://substratia.io/tools/stack-builder',
+    url: siteUrl('/tools/stack-builder'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Stack%20Builder&subtitle=Full-Stack%20Tech%20Selector',
+        url: siteUrl('/api/og?title=Stack%20Builder&subtitle=Full-Stack%20Tech%20Selector'),
         width: 1200,
         height: 630,
         alt: 'Stack Builder',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Build your perfect tech stack with visual selector, compatibility checks, and AI analysis export.',
-  url: 'https://substratia.io/tools/stack-builder',
+  url: siteUrl('/tools/stack-builder'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Stack Builder', item: 'https://substratia.io/tools/stack-builder' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Stack Builder', item: siteUrl('/tools/stack-builder') },
   ],
 }
 

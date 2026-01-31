@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import { siteConfig } from '@/lib/site-config'
 
-const GITHUB_REPO = 'https://github.com/WhenMoon-afk/mirror-demons-research'
-const SUBSTACK_ARTICLE = 'https://skyceres.substack.com/p/mirror-demons'
+const GITHUB_REPO = siteConfig.links.repos.mirrorDemons
+const SUBSTACK_ARTICLE = `${siteConfig.links.newsletter}/p/mirror-demons`
 
 // Pattern data
 const patterns = [

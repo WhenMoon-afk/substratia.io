@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Best AI Image Generators 2026 - Midjourney vs DALL-E vs Stable Diffusion | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Best AI Image Generators 2026 - Complete Comparison',
     description: 'Midjourney vs DALL-E 3 vs Stable Diffusion vs Grok. Which AI image generator is best for you?',
     type: 'article',
-    url: 'https://substratia.io/reviews/ai-image-generators',
+    url: siteUrl('/reviews/ai-image-generators'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -80,9 +81,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Reviews', item: 'https://substratia.io/reviews' },
-    { '@type': 'ListItem', position: 3, name: 'AI Image Generators', item: 'https://substratia.io/reviews/ai-image-generators' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Reviews', item: siteUrl('/reviews') },
+    { '@type': 'ListItem', position: 3, name: 'AI Image Generators', item: siteUrl('/reviews/ai-image-generators') },
   ],
 }
 

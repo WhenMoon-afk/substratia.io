@@ -5,6 +5,8 @@
 
 export const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://substratia.io'
 
+const GITHUB_ORG = 'https://github.com/WhenMoon-afk'
+
 export const siteConfig = {
   name: 'Substratia',
   url: SITE_URL,
@@ -20,8 +22,14 @@ export const siteConfig = {
     social: '/brand/social.png',
   },
   links: {
-    github: 'https://github.com/WhenMoon-afk',
+    github: GITHUB_ORG,
     newsletter: 'https://skyceres.substack.com',
+    repos: {
+      website: `${GITHUB_ORG}/substratia.io`,
+      momentum: `${GITHUB_ORG}/momentum`,
+      memoryMcp: `${GITHUB_ORG}/claude-memory-mcp`,
+      mirrorDemons: `${GITHUB_ORG}/mirror-demons-research`,
+    },
   },
   analytics: {
     plausibleDomain: 'substratia.io',
@@ -31,4 +39,9 @@ export const siteConfig = {
 /** Fully qualified URL for a given path */
 export function siteUrl(path: string = ''): string {
   return `${SITE_URL}${path}`
+}
+
+/** Newsletter subscription URL with UTM tracking */
+export function newsletterUrl(email: string, source: string): string {
+  return `${siteConfig.links.newsletter}/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=${encodeURIComponent(source)}`
 }

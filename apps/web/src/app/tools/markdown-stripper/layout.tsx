@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Markdown Stripper - Remove Formatting Instantly | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Markdown Stripper - Remove Formatting Instantly',
     description: 'Free tool to strip markdown formatting from text. Paste markdown, get clean plain text instantly.',
     type: 'website',
-    url: 'https://substratia.io/tools/markdown-stripper',
+    url: siteUrl('/tools/markdown-stripper'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Markdown%20Stripper&subtitle=Remove%20Formatting%20Instantly',
+        url: siteUrl('/api/og?title=Markdown%20Stripper&subtitle=Remove%20Formatting%20Instantly'),
         width: 1200,
         height: 630,
         alt: 'Markdown Stripper',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Free tool to strip markdown formatting from text. Get clean plain text instantly.',
-  url: 'https://substratia.io/tools/markdown-stripper',
+  url: siteUrl('/tools/markdown-stripper'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Markdown Stripper', item: 'https://substratia.io/tools/markdown-stripper' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Markdown Stripper', item: siteUrl('/tools/markdown-stripper') },
   ],
 }
 

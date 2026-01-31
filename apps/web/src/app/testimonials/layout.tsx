@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Testimonials - Claude Code Success Stories | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Claude Code Success Stories',
     description: 'Real results from developers and teams who improved their Claude Code workflows.',
     type: 'website',
-    url: 'https://substratia.io/testimonials',
+    url: siteUrl('/testimonials'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,8 +22,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Testimonials', item: 'https://substratia.io/testimonials' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Testimonials', item: siteUrl('/testimonials') },
   ],
 }
 
@@ -31,7 +32,7 @@ const jsonLd = {
   '@type': 'WebPage',
   name: 'Claude Code Success Stories',
   description: 'Success stories from developers and teams who improved their Claude Code workflows.',
-  url: 'https://substratia.io/testimonials',
+  url: siteUrl('/testimonials'),
   mainEntity: {
     '@type': 'ItemList',
     name: 'User Success Stories',

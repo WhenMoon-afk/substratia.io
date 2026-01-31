@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
+import { siteConfig } from '@/lib/site-config'
 
 interface ContentItem {
   title: string
@@ -432,7 +433,7 @@ export default function DocsPage() {
               <h2 className="text-2xl font-bold mb-6">Related Resources</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <a
-                  href="https://github.com/WhenMoon-afk/momentum"
+                  href={siteConfig.links.repos.momentum}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-forge-cyan transition-all"
@@ -442,7 +443,7 @@ export default function DocsPage() {
                   <div className="text-sm text-gray-400 mt-1">Fast context recovery plugin</div>
                 </a>
                 <a
-                  href="https://github.com/WhenMoon-afk/claude-memory-mcp"
+                  href={siteConfig.links.repos.memoryMcp}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-forge-purple transition-all"

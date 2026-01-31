@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'The Eleanor Chen Effect: Why AI Keeps Writing the Same Story | Substratia',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     type: 'article',
     publishedTime: '2026-01-11',
     authors: ['Substratia'],
-    url: 'https://substratia.io/blog/eleanor-chen-effect',
+    url: siteUrl('/blog/eleanor-chen-effect'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -24,9 +25,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'Eleanor Chen Effect', item: 'https://substratia.io/blog/eleanor-chen-effect' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'Eleanor Chen Effect', item: siteUrl('/blog/eleanor-chen-effect') },
   ],
 }
 
@@ -38,18 +39,18 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   dateModified: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/eleanor-chen-effect',
+    '@id': siteUrl('/blog/eleanor-chen-effect'),
   },
   keywords: ['AI creativity', 'LLM convergence', 'AI narratives', 'Eleanor Chen effect'],
   articleSection: 'Research',

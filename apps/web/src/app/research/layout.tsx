@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Research - Substratia | Original AI Safety & Behavior Research',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Substratia Research - Original AI Safety & Behavior Research',
     description: 'Controlled experiments investigating AI behavior patterns, safety implications, and emergent phenomena.',
     type: 'website',
-    url: 'https://substratia.io/research',
+    url: siteUrl('/research'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      'application/rss+xml': 'https://substratia.io/research/feed.xml',
+      'application/rss+xml': siteUrl('/research/feed.xml'),
     },
   },
 }
@@ -26,8 +27,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Research', item: 'https://substratia.io/research' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Research', item: siteUrl('/research') },
   ],
 }
 
@@ -36,11 +37,11 @@ const collectionLd = {
   '@type': 'CollectionPage',
   name: 'Substratia Research',
   description: 'Original research on AI safety, behavior patterns, and emergent phenomena.',
-  url: 'https://substratia.io/research',
+  url: siteUrl('/research'),
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
 }
 

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Best AI Video Generators 2026 - Runway vs Pika vs Luma vs Kling | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Best AI Video Generators 2026 - Complete Comparison',
     description: 'Runway Gen-3 vs Pika vs Luma vs Kling vs Grok. Which AI video generator is best for you?',
     type: 'article',
-    url: 'https://substratia.io/reviews/ai-video-generators',
+    url: siteUrl('/reviews/ai-video-generators'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Reviews', item: 'https://substratia.io/reviews' },
-    { '@type': 'ListItem', position: 3, name: 'AI Video Generators', item: 'https://substratia.io/reviews/ai-video-generators' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Reviews', item: siteUrl('/reviews') },
+    { '@type': 'ListItem', position: 3, name: 'AI Video Generators', item: siteUrl('/reviews/ai-video-generators') },
   ],
 }
 

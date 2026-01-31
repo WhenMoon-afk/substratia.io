@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Claude Code Cheat Sheet | Essential Commands & Tips',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Claude Code Cheat Sheet | Essential Commands & Tips',
     description: 'The ultimate Claude Code reference. Slash commands, shortcuts, CLAUDE.md tips, and more.',
     type: 'website',
-    url: 'https://substratia.io/tools/cheat-sheet',
+    url: siteUrl('/tools/cheat-sheet'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Claude%20Code%20Cheat%20Sheet&subtitle=Commands%2C%20Shortcuts%20%26%20Tips',
+        url: siteUrl('/api/og?title=Claude%20Code%20Cheat%20Sheet&subtitle=Commands%2C%20Shortcuts%20%26%20Tips'),
         width: 1200,
         height: 630,
         alt: 'Claude Code Cheat Sheet',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Essential Claude Code reference with commands, shortcuts, and CLAUDE.md tips.',
-  url: 'https://substratia.io/tools/cheat-sheet',
+  url: siteUrl('/tools/cheat-sheet'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Cheat Sheet', item: 'https://substratia.io/tools/cheat-sheet' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Cheat Sheet', item: siteUrl('/tools/cheat-sheet') },
   ],
 }
 

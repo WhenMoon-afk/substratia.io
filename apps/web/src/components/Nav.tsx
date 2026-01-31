@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from './ThemeToggle'
+import { siteConfig } from '@/lib/site-config'
 
 export default function Nav() {
   const pathname = usePathname()
@@ -52,7 +53,7 @@ export default function Nav() {
               </Link>
             ))}
             <a
-              href="https://github.com/WhenMoon-afk"
+              href={siteConfig.links.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-gray-400 hover:text-white transition-all"
@@ -102,7 +103,7 @@ export default function Nav() {
                 </Link>
               ))}
               <a
-                href="https://github.com/WhenMoon-afk"
+                href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-2 py-2 text-base text-gray-400 hover:text-white transition-all"

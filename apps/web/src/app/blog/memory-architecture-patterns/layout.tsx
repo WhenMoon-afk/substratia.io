@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Memory Architecture Patterns for AI Assistants | Substratia',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Memory Architecture Patterns for AI',
     description: 'Memory architecture patterns for building AI with persistent context.',
     type: 'article',
-    url: 'https://substratia.io/blog/memory-architecture-patterns',
+    url: siteUrl('/blog/memory-architecture-patterns'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,9 +22,9 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
-    { '@type': 'ListItem', position: 3, name: 'Memory Architecture Patterns', item: 'https://substratia.io/blog/memory-architecture-patterns' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
+    { '@type': 'ListItem', position: 3, name: 'Memory Architecture Patterns', item: siteUrl('/blog/memory-architecture-patterns') },
   ],
 }
 
@@ -35,17 +36,17 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
   datePublished: '2026-01-11',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://substratia.io/blog/memory-architecture-patterns',
+    '@id': siteUrl('/blog/memory-architecture-patterns'),
   },
 }
 

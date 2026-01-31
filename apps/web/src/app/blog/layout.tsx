@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Blog - Substratia | AI Memory Tools & Agent Building',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Substratia Blog - AI Memory Tools & Agent Building',
     description: 'Tutorials, tips, and best practices for building AI agents with Claude Code.',
     type: 'website',
-    url: 'https://substratia.io/blog',
+    url: siteUrl('/blog'),
   },
   twitter: {
     card: 'summary_large_image',
@@ -21,8 +22,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://substratia.io/blog' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
   ],
 }
 
@@ -31,11 +32,11 @@ const jsonLd = {
   '@type': 'Blog',
   name: 'Substratia Blog',
   description: 'Tutorials, comparisons, and best practices for AI memory tools, MCP servers, and agent configuration.',
-  url: 'https://substratia.io/blog',
+  url: siteUrl('/blog'),
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',
-    url: 'https://substratia.io',
+    url: siteUrl(),
   },
 }
 

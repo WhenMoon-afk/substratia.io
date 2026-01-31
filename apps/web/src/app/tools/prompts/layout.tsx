@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteUrl } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: 'Prompt Library - 24 Curated AI Prompts | Substratia',
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Free Prompt Library - 24 Curated AI Prompts',
     description: 'Battle-tested prompts for communication, creativity, and productivity. Click to copy. Works with any AI.',
     type: 'website',
-    url: 'https://substratia.io/tools/prompts',
+    url: siteUrl('/tools/prompts'),
     images: [
       {
-        url: 'https://substratia.io/api/og?title=Prompt%20Library&subtitle=24%20Curated%20AI%20Prompts',
+        url: siteUrl('/api/og?title=Prompt%20Library&subtitle=24%20Curated%20AI%20Prompts'),
         width: 1200,
         height: 630,
         alt: 'Prompt Library',
@@ -37,16 +38,16 @@ const jsonLd = {
     priceCurrency: 'USD',
   },
   description: 'Free prompt library with 24 battle-tested prompts for communication, creativity, and productivity.',
-  url: 'https://substratia.io/tools/prompts',
+  url: siteUrl('/tools/prompts'),
 }
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://substratia.io' },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://substratia.io/tools' },
-    { '@type': 'ListItem', position: 3, name: 'Prompt Library', item: 'https://substratia.io/tools/prompts' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: 'Prompt Library', item: siteUrl('/tools/prompts') },
   ],
 }
 
