@@ -43,7 +43,7 @@ const learningPath: Step[] = [
     resources: [
       { title: 'How to Build Claude Agents', href: '/blog/how-to-build-claude-agents', type: 'blog', time: '8 min read' },
       { title: 'AGENTS.md vs CLAUDE.md', href: '/blog/agents-md-vs-claude-md', type: 'blog', time: '12 min read' },
-      { title: 'AgentForge Builder', href: '/builder', type: 'tool' },
+      { title: 'Prompt Optimizer', href: '/tools/prompt-optimizer', type: 'tool' },
     ],
   },
   {

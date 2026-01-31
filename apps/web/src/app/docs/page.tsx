@@ -91,8 +91,8 @@ await forget(memoryId)`,
     id: 'quick-start',
     content: [
       {
-        title: 'What is AgentForge?',
-        text: 'AgentForge is a visual builder for creating AI agent configuration files (CLAUDE.md and agents.md). These files define how AI agents behave, what they can do, and what they should avoid.',
+        title: 'What are Agent Config Files?',
+        text: 'CLAUDE.md and agents.md are configuration files that define how AI agents behave, what they can do, and what they should avoid. You can create these manually or use our prompt tools to help.',
       },
       {
         title: 'Your First Agent',
@@ -113,7 +113,7 @@ await forget(memoryId)`,
     content: [
       {
         title: 'CLAUDE.md vs agents.md',
-        text: 'Both file types serve the same purpose: defining agent behavior. CLAUDE.md is the convention for Claude-based agents, while agents.md is a more generic format. AgentForge supports both.',
+        text: 'Both file types serve the same purpose: defining agent behavior. CLAUDE.md is the convention for Claude-based agents, while agents.md is a more generic format.',
       },
       {
         title: 'File Structure',
@@ -141,7 +141,7 @@ await forget(memoryId)`,
     content: [
       {
         title: 'What are Capabilities?',
-        text: 'Capabilities define what your agent can do. They are positive instructions that guide behavior. AgentForge includes 20+ built-in capabilities across 5 categories.',
+        text: 'Capabilities define what your agent can do. They are positive instructions that guide behavior. There are 20+ common capabilities across 5 categories.',
       },
       {
         title: 'Categories',
@@ -377,10 +377,10 @@ export default function DocsPage() {
               </nav>
               <div className="mt-8 pt-8 border-t border-white/10">
                 <Link
-                  href="/builder"
+                  href="/tools"
                   className="block px-4 py-2 bg-forge-purple hover:bg-forge-purple/80 rounded-lg text-center font-medium transition-all"
                 >
-                  Open Builder
+                  Browse Tools
                 </Link>
               </div>
             </div>
@@ -390,7 +390,7 @@ export default function DocsPage() {
           <div className="flex-1 min-w-0">
             <h1 className="text-4xl font-bold mb-4">Documentation</h1>
             <p className="text-xl text-gray-400 mb-12">
-              Everything you need to know about Substratia&apos;s memory tools and AgentForge builder.
+              Everything you need to know about Substratia&apos;s memory tools and developer utilities.
             </p>
 
             {sections.map((section) => (

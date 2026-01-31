@@ -61,10 +61,10 @@ export default function ThankYouPage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/builder"
+              href="/tools"
               className="px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-semibold transition-all"
             >
-              Try the Builder
+              Browse Tools
             </Link>
             <Link
               href="/"

@@ -43,7 +43,7 @@ export default function PricingPage() {
               {[
                 'memory-mcp - Persistent memory for Claude Code',
                 'momentum - Context recovery across sessions',
-                'AgentForge - Visual CLAUDE.md builder',
+                'Prompt Optimizer - Build better prompts',
                 'All developer tools and utilities',
                 'Unlimited local memories (SQLite)',
                 'Automatic memory via hooks',

@@ -27,11 +27,11 @@ export const metadata: Metadata = {
     title: 'Substratia',
   },
   title: 'Substratia - Open-Source Developer Tools for Claude Code',
-  description: 'Free, open-source tools for Claude Code power users. memory-mcp: persistent memory across sessions. AgentForge: visual CLAUDE.md builder. Plus free dev utilities.',
-  keywords: 'Claude Code tools, open source AI tools, memory-mcp, CLAUDE.md builder, AgentForge, AI developer tools, Claude Code plugins, MCP server, persistent AI memory',
+  description: 'Free, open-source tools for Claude Code power users. memory-mcp: persistent memory across sessions. Plus 12+ free dev utilities.',
+  keywords: 'Claude Code tools, open source AI tools, memory-mcp, CLAUDE.md, AI developer tools, Claude Code plugins, MCP server, persistent AI memory',
   openGraph: {
     title: 'Substratia - Open-Source Developer Tools for Claude Code',
-    description: 'Free tools for Claude Code: memory-mcp (persistent memory), AgentForge (visual config builder), and more. Open source, MIT licensed.',
+    description: 'Free tools for Claude Code: memory-mcp (persistent memory), dev utilities, and more. Open source, MIT licensed.',
     type: 'website',
     url: 'https://substratia.io',
     images: [
@@ -80,7 +80,7 @@ const websiteLd = {
   '@type': 'WebSite',
   name: 'Substratia',
   url: 'https://substratia.io',
-  description: 'Open-source developer tools for Claude Code. Free: memory-mcp, AgentForge, and more.',
+  description: 'Open-source developer tools for Claude Code. Free: memory-mcp, dev utilities, and more.',
   publisher: {
     '@type': 'Organization',
     name: 'Substratia',

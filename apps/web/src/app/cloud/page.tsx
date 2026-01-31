@@ -82,13 +82,13 @@ export default function CloudPage() {
               <div className="glass-strong rounded-2xl p-8">
                 <div className="w-14 h-14 rounded-xl bg-forge-cyan/20 flex items-center justify-center mb-6">
                   <svg className="w-7 h-7 text-forge-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3">AgentForge</h3>
+                <h3 className="text-xl font-bold mb-3">Prompt Tools</h3>
                 <p className="text-gray-400">
-                  Visual drag-and-drop builder for CLAUDE.md files. 28 capabilities,
-                  13 guardrail rulesets, instant export.
+                  Prompt optimizer, cheat sheet, cost calculator, and more.
+                  All free and browser-based.
                 </p>
               </div>
 

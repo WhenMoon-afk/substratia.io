@@ -1,19 +1,19 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Memory Tools - Substratia | momentum, memory-mcp, AgentForge',
-  description: 'Free, open-source memory tools for AI assistants. momentum for context recovery, memory-mcp for persistent memory, AgentForge for visual config building.',
-  keywords: 'AI memory tools, momentum, memory-mcp, AgentForge, Claude memory, AI context management, persistent memory',
+  title: 'Memory Tools - Substratia | momentum, memory-mcp',
+  description: 'Free, open-source memory tools for AI assistants. momentum for context recovery, memory-mcp for persistent memory.',
+  keywords: 'AI memory tools, momentum, memory-mcp, Claude memory, AI context management, persistent memory',
   openGraph: {
     title: 'Free Memory Tools for AI',
-    description: 'Open-source tools: momentum (context recovery), memory-mcp (persistent memory), AgentForge (visual config).',
+    description: 'Open-source tools: momentum (context recovery), memory-mcp (persistent memory).',
     type: 'website',
     url: 'https://substratia.io/templates',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Free Memory Tools for AI',
-    description: 'Open-source: momentum, memory-mcp, AgentForge.',
+    description: 'Open-source: momentum, memory-mcp.',
   },
 }
 
@@ -51,17 +51,6 @@ const jsonLd = {
         '@type': 'SoftwareApplication',
         name: 'memory-mcp',
         description: 'Persistent memory MCP server. Remember conversations across sessions.',
-        applicationCategory: 'DeveloperApplication',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      },
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      item: {
-        '@type': 'SoftwareApplication',
-        name: 'AgentForge',
-        description: 'Visual drag-and-drop builder for CLAUDE.md configuration files.',
         applicationCategory: 'DeveloperApplication',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       },

@@ -66,7 +66,6 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 | Video Prompt Timeline | `/tools/video-prompt-timeline` | Frame-by-frame video prompt storyboard (7 keyframes) |
 | Markdown Preview | `/tools/markdown-preview` | Live markdown editor with instant preview (Obsidian-style) |
 | Markdown Stripper | `/tools/markdown-stripper` | Remove all markdown formatting instantly |
-| AgentForge Builder | `/builder` | Drag-and-drop CLAUDE.md builder |
 
 ### Reviews (4 comparisons)
 | Comparison | Path | Tools Compared |
@@ -87,7 +86,6 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 - `/templates` - Memory tools (momentum, memory-mcp)
 - `/tools` - Free AI tools index (12 tools, with email capture)
 - `/reviews` - AI tool comparisons index
-- `/builder` - AgentForge drag-and-drop builder
 - `/blog` - Blog index (12 posts, with email capture)
 - `/docs` - Documentation
 - `/start-here` - Getting started guide
@@ -102,7 +100,6 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 ### Tech Stack
 - **Framework**: Next.js 14 (App Router, SSR)
 - **Styling**: Tailwind CSS 3.4
-- **Drag-and-Drop**: @dnd-kit (core + sortable)
 - **Backend**: Convex (real-time database)
 - **Auth**: Clerk (custom domain: clerk.substratia.io)
 - **Package Manager**: Bun
@@ -119,7 +116,6 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 src/
 ├── app/
 │   ├── page.tsx              # Landing page
-│   ├── builder/page.tsx      # Drag-and-drop config builder
 │   ├── templates/page.tsx    # Memory tools listings
 │   ├── pricing/page.tsx      # Subscription tiers
 │   ├── pro/page.tsx          # Pro waitlist
@@ -141,10 +137,8 @@ src/
 │   └── layout.tsx            # Root layout with metadata
 ├── components/
 │   ├── Nav.tsx               # Global navigation
-│   ├── AIAssistant.tsx       # Builder sidebar
-│   └── DraggableCapability.tsx
+│   └── ...
 ├── data/
-│   ├── presets.ts            # 28 capabilities + 13 rulesets
 │   ├── imagePromptPresets.ts # Image gen style presets (50+)
 │   └── videoPromptPresets.ts # Video timeline moment presets
 └── globals.css               # Tailwind + custom CSS variables
@@ -157,7 +151,7 @@ src/
 - **No static export** - SSR required for Clerk auth pages
 
 ### Client vs Server Components
-- **Client** ('use client'): builder/page.tsx, landing page, Nav.tsx, tools
+- **Client** ('use client'): landing page, Nav.tsx, tools
 - **Server** (default): layout.tsx, blog pages, docs
 
 ---
@@ -165,7 +159,7 @@ src/
 ## Branding
 
 - **Parent Brand**: Substratia (open-source developer tools for Claude Code)
-- **Products**: momentum, memory-mcp, AgentForge
+- **Products**: momentum, memory-mcp
 - **Tagline**: "Open-Source Developer Tools for Claude Code"
 - **Philosophy**: "Intelligence is substrate-agnostic"
 

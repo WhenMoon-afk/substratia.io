@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Documentation - Substratia | Memory Infrastructure for AI',
-  description: 'Learn how to use Substratia tools: momentum for context recovery, memory-mcp for persistent memory, and AgentForge for visual agent configuration.',
-  keywords: ['Substratia docs', 'momentum documentation', 'memory-mcp guide', 'AgentForge tutorial', 'Claude Code plugins', 'MCP server setup'],
+  description: 'Learn how to use Substratia tools: momentum for context recovery and memory-mcp for persistent memory.',
+  keywords: ['Substratia docs', 'momentum documentation', 'memory-mcp guide', 'Claude Code plugins', 'MCP server setup'],
   openGraph: {
     title: 'Substratia Documentation',
-    description: 'Learn how to use momentum, memory-mcp, and AgentForge tools.',
+    description: 'Learn how to use momentum and memory-mcp tools.',
     type: 'website',
     url: 'https://substratia.io/docs',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Substratia Documentation',
-    description: 'Learn how to use momentum, memory-mcp, and AgentForge.',
+    description: 'Learn how to use momentum and memory-mcp.',
   },
 }
 
@@ -30,7 +30,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
   headline: 'Substratia Documentation',
-  description: 'Learn how to use Substratia tools: momentum for context recovery, memory-mcp for persistent memory, and AgentForge for visual agent configuration.',
+  description: 'Learn how to use Substratia tools: momentum for context recovery and memory-mcp for persistent memory.',
   author: {
     '@type': 'Organization',
     name: 'Substratia',

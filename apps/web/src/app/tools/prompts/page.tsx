@@ -1353,14 +1353,14 @@ export default function PromptsPage() {
           <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8">
             <h2 className="text-2xl font-bold mb-3">Build Custom Agents</h2>
             <p className="text-gray-400 mb-6 max-w-xl mx-auto">
-              Use these prompts as a starting point, then customize with our drag-and-drop builder.
+              Use these prompts as a starting point, then customize with our prompt tools.
             </p>
             <div className="flex justify-center gap-4">
               <Link
-                href="/builder"
+                href="/tools/prompt-optimizer"
                 className="px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-xl font-semibold transition-all"
               >
-                Open AgentForge
+                Prompt Optimizer
               </Link>
               <Link
                 href="/templates"

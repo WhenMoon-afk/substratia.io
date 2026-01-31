@@ -76,7 +76,7 @@ export default function Home() {
               </h1>
 
               <p className="text-xl text-gray-300 mb-8 max-w-xl">
-                Free, open-source developer tools — from persistent memory to visual agent config.
+                Free, open-source developer tools — from persistent memory to productivity utilities.
                 Everything you need to get more out of Claude Code.
               </p>
 
@@ -192,35 +192,33 @@ export default function Home() {
               </div>
             </div>
 
-            {/* AgentForge */}
-            <div className="tool-card gradient-border p-6 rounded-2xl">
+            {/* Free Dev Tools */}
+            <Link href="/tools" className="tool-card gradient-border p-6 rounded-2xl block hover:border-forge-cyan/50 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-forge-cyan/20 flex items-center justify-center" aria-hidden="true">
                   <svg className="w-6 h-6 text-forge-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">AgentForge</h3>
-                  <span className="text-xs text-forge-cyan">Visual Builder</span>
+                  <h3 className="text-xl font-bold">Dev Tools</h3>
+                  <span className="text-xs text-forge-cyan">12+ Free Utilities</span>
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-4">
-                Drag-and-drop builder for CLAUDE.md files. 28 capabilities, 13 guardrail rulesets.
+                Cost calculator, prompt optimizer, cheat sheet, token counter, and more. No signup required.
               </p>
               <div className="code-block text-xs mb-4">
-                <code className="text-gray-400">substratia.io/builder</code>
+                <code className="text-forge-cyan">Free forever • No signup</code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">Free forever</span>
-                <Link
-                  href="/builder"
-                  className="text-sm text-forge-cyan hover:underline"
-                >
-                  Try Now
-                </Link>
+                <span className="text-xs text-gray-500">MIT licensed</span>
+                <span className="text-sm text-forge-cyan">
+                  Browse Tools →
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -244,7 +242,7 @@ export default function Home() {
                 role: "Startup CTO",
               },
               {
-                quote: "AgentForge saved me hours of trial and error with CLAUDE.md. The guardrails alone are worth it.",
+                quote: "The tools page is a goldmine. Cost calculator, prompt optimizer, cheat sheet — all free. Bookmarked instantly.",
                 author: "Solo Dev",
                 role: "Indie Hacker",
               },

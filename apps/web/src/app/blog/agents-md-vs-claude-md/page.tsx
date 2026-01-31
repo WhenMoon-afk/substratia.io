@@ -3,7 +3,7 @@ import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 
 export const metadata: Metadata = {
-  title: 'AGENTS.md vs CLAUDE.md: Complete Guide to AI Agent Configuration | Substratia AgentForge',
+  title: 'AGENTS.md vs CLAUDE.md: Complete Guide to AI Agent Configuration | Substratia',
   description: 'Learn the differences between AGENTS.md and CLAUDE.md files, when to use each, and best practices for configuring AI coding agents like Claude Code, Cursor, and GitHub Copilot.',
   keywords: 'AGENTS.md, CLAUDE.md, AI agents, Claude Code, Cursor, GitHub Copilot, agent configuration, prompt engineering, AI coding assistant',
   openGraph: {
@@ -204,35 +204,19 @@ See .claude/agents/ for custom agent definitions.`}</code>
             that Claude can invoke when needed.
           </p>
 
-          <h2>Using AgentForge to Generate Configs</h2>
+          <h2>Tips for Creating Great Configs</h2>
           <p>
-            Creating these configuration files from scratch can be tedious. That&apos;s why we built
-            <Link href="/builder" className="text-forge-cyan hover:underline"> AgentForge</Link> -
-            a free drag-and-drop builder that lets you visually construct CLAUDE.md and AGENTS.md
-            files with battle-tested presets.
-          </p>
-          <p>
-            With AgentForge, you can:
+            Creating these configuration files is straightforward once you understand the patterns.
+            Check out our <Link href="/tools/prompt-optimizer" className="text-forge-cyan hover:underline">Prompt Optimizer</Link> and
+            <Link href="/blog/how-to-build-claude-agents" className="text-forge-cyan hover:underline"> agent building guide</Link> for
+            best practices and templates.
           </p>
           <ul>
-            <li>Choose from 28+ pre-built capabilities</li>
-            <li>Add guardrails and safety rulesets</li>
-            <li>Export production-ready markdown files</li>
-            <li>Use templates from real production systems</li>
+            <li>Start with negative prompts (what NOT to do)</li>
+            <li>Add specific capabilities for your use case</li>
+            <li>Include guardrails and safety rules</li>
+            <li>Iterate based on real-world performance</li>
           </ul>
-
-          <div className="bg-white/5 border border-white/10 rounded-lg p-6 my-8 text-center">
-            <h3 className="text-xl font-semibold mb-4 mt-0">Build Your Config in Minutes</h3>
-            <p className="text-gray-300 mb-4">
-              Skip the manual editing. Use our visual builder to create optimized agent configurations.
-            </p>
-            <Link
-              href="/builder"
-              className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-semibold transition-all"
-            >
-              Try AgentForge Free
-            </Link>
-          </div>
 
           <h2>Conclusion</h2>
           <p>
@@ -250,7 +234,7 @@ See .claude/agents/ for custom agent definitions.`}</code>
           <ul>
             <li><Link href="/blog/how-to-build-claude-agents" className="text-forge-cyan hover:underline">How to Build Claude Agents: A Complete Guide</Link></li>
             <li><Link href="/blog/mastering-negative-prompts" className="text-forge-cyan hover:underline">Mastering Negative Prompts for AI Agents</Link></li>
-            <li><Link href="/docs" className="text-forge-cyan hover:underline">AgentForge Documentation</Link></li>
+            <li><Link href="/docs" className="text-forge-cyan hover:underline">Substratia Documentation</Link></li>
           </ul>
         </div>
 
@@ -258,13 +242,13 @@ See .claude/agents/ for custom agent definitions.`}</code>
         <div className="mt-16 p-8 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl border border-white/10 text-center">
           <h3 className="text-2xl font-bold mb-4">Ready to Build Your Agent Config?</h3>
           <p className="text-gray-300 mb-6">
-            Use AgentForge to create production-ready CLAUDE.md and AGENTS.md files in minutes.
+            Check out our tools and guides to create production-ready CLAUDE.md and AGENTS.md files.
           </p>
           <Link
-            href="/builder"
+            href="/tools"
             className="inline-block px-8 py-4 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-semibold text-lg transition-all"
           >
-            Start Building - Free
+            Browse Tools - Free
           </Link>
         </div>
       </article>

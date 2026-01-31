@@ -144,8 +144,8 @@ Here's the template I use for every project:
 
 The key insight: **Keep it under 3000 tokens.** This file gets read every session. Bloat wastes context.
 
-Want to build your CLAUDE.md visually?
-→ [AgentForge Builder](https://substratia.io/builder) - Drag-and-drop CLAUDE.md generator
+Want to optimize your CLAUDE.md?
+→ [Prompt Optimizer](https://substratia.io/tools/prompt-optimizer) - Build better prompts for Claude Code
 
 — Substratia
 

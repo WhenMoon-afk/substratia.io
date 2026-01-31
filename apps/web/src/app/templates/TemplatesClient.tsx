@@ -64,28 +64,6 @@ const tools: Tool[] = [
     npmUrl: 'https://www.npmjs.com/package/@whenmoon-afk/memory-mcp',
     color: 'purple',
   },
-  {
-    id: 'agentforge',
-    name: 'AgentForge',
-    tagline: 'Visual Builder',
-    description: 'Drag-and-drop builder for CLAUDE.md and agents.md files. Configure capabilities and guardrails visually.',
-    stats: {
-      capabilities: '28',
-      rulesets: '13',
-      price: 'Free',
-    },
-    features: [
-      '28 battle-tested capabilities',
-      '13 guardrail rulesets',
-      'Drag-and-drop interface',
-      'Live preview',
-      'Export to clipboard/file',
-      'AI-assisted suggestions',
-    ],
-    installCommand: 'Visit substratia.io/builder',
-    internalUrl: '/builder',
-    color: 'cyan',
-  },
 ]
 
 export default function TemplatesClient() {
@@ -281,18 +259,11 @@ export default function TemplatesClient() {
               <div className="text-xs text-gray-500">Best for: Cross-session knowledge</div>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-semibold mb-2">Building a New Agent?</h3>
+              <h3 className="font-semibold mb-2">Both Together</h3>
               <p className="text-gray-400 text-sm mb-3">
-                Use <span className="text-forge-cyan font-mono">AgentForge</span> to visually configure
-                capabilities and guardrails.
-              </p>
-              <div className="text-xs text-gray-500">Best for: CLAUDE.md creation</div>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-semibold mb-2">All Three Together</h3>
-              <p className="text-gray-400 text-sm mb-3">
-                Build agent configs with AgentForge, manage sessions with momentum,
-                persist knowledge with memory-mcp.
+                Manage sessions with <span className="text-forge-cyan font-mono">momentum</span>,
+                persist knowledge with <span className="text-forge-purple font-mono">memory-mcp</span>.
+                Complete AI workflow.
               </p>
               <div className="text-xs text-gray-500">Best for: Complete AI workflow</div>
             </div>

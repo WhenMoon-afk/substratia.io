@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Substratia - Open Source Developer Tools for Claude Code',
-  description: 'Free, open source developer tools for Claude Code. memory-mcp, momentum, AgentForge, and more. All MIT licensed.',
+  description: 'Free, open source developer tools for Claude Code. memory-mcp, momentum, and more. All MIT licensed.',
   keywords: [
     'Claude Code tools',
     'open source',

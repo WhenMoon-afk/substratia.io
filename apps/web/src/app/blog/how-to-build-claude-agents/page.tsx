@@ -160,23 +160,24 @@ Brief description of the agent's purpose.
           </ol>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
-            Getting Started with AgentForge
+            Getting Started
           </h2>
           <p className="text-gray-300 mb-4">
-            Instead of writing your CLAUDE.md from scratch, use our free builder tool.
-            It includes pre-built capabilities and rulesets that you can customize for your use case.
+            Check out our <Link href="/tools/prompt-optimizer" className="text-forge-cyan hover:underline">Prompt Optimizer</Link> and
+            <Link href="/tools/cheat-sheet" className="text-forge-cyan hover:underline"> Cheat Sheet</Link> for
+            reference patterns and best practices when writing your CLAUDE.md.
           </p>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-6 my-8 text-center">
             <h3 className="text-xl font-semibold mb-3">Ready to build your first agent?</h3>
             <p className="text-gray-400 mb-4">
-              Our free builder has 20+ capabilities and 9 rulesets ready to use.
+              Explore our free tools to help you write better CLAUDE.md files.
             </p>
             <Link
-              href="/builder"
+              href="/tools"
               className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-lg font-semibold transition-all"
             >
-              Try the Free Builder
+              Browse Free Tools
             </Link>
           </div>
 
@@ -189,7 +190,7 @@ Brief description of the agent's purpose.
             prompts, add specific capabilities, and iterate based on real-world performance.
           </p>
           <p className="text-gray-300">
-            With AgentForge, you can skip the trial-and-error phase and start with battle-tested
+            With the right tools and patterns, you can skip the trial-and-error phase and start with battle-tested
             configurations from real production systems.
           </p>
         </div>
