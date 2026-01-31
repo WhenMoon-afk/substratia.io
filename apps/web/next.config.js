@@ -6,7 +6,7 @@ const nextConfig = {
   // To enable static export (without auth): uncomment below and remove dashboard routes
   // output: 'export',
   images: {
-    unoptimized: true,
+    formats: ['image/webp', 'image/avif'],
   },
   trailingSlash: true,
 
@@ -98,11 +98,11 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.convex.cloud https://clerk.substratia.io https://*.clerk.accounts.dev wss://*.convex.cloud https://formspree.io",
+              "connect-src 'self' https://*.convex.cloud https://clerk.substratia.io https://*.clerk.accounts.dev wss://*.convex.cloud",
               "frame-src 'self' https://clerk.substratia.io https://*.clerk.accounts.dev https://challenges.cloudflare.com",
               "frame-ancestors 'self'",
               "base-uri 'self'",
-              "form-action 'self' https://formspree.io",
+              "form-action 'self'",
             ].join('; '),
           },
         ],

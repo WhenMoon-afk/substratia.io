@@ -61,6 +61,7 @@ export default function Home() {
                   width={48}
                   height={48}
                   className="rounded-lg"
+                  priority
                 />
                 <Image
                   src="/brand/wordmark.png"
@@ -68,6 +69,7 @@ export default function Home() {
                   width={180}
                   height={40}
                   className="h-8 w-auto"
+                  priority
                 />
               </div>
 

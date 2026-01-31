@@ -32,6 +32,7 @@ export default function Nav() {
               width={28}
               height={28}
               className="rounded"
+              priority
             />
             <span className="text-xl font-bold text-white">Substratia</span>
           </Link>
