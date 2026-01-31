@@ -7,6 +7,7 @@ import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { siteConfig, siteUrl } from '@/lib/site-config'
 
 export const viewport: Viewport = {
   themeColor: [
@@ -18,41 +19,41 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   manifest: '/manifest.json',
   icons: {
-    icon: '/brand/logo-icon.png',
-    apple: '/brand/logo-icon.png',
+    icon: siteConfig.brand.logo,
+    apple: siteConfig.brand.logo,
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Substratia',
+    title: siteConfig.name,
   },
-  title: 'Substratia - Open-Source Developer Tools for Claude Code',
-  description: 'Free, open-source tools for Claude Code power users. memory-mcp: persistent memory across sessions. Plus 12+ free dev utilities.',
-  keywords: 'Claude Code tools, open source AI tools, memory-mcp, CLAUDE.md, AI developer tools, Claude Code plugins, MCP server, persistent AI memory',
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
   openGraph: {
-    title: 'Substratia - Open-Source Developer Tools for Claude Code',
+    title: siteConfig.title,
     description: 'Free tools for Claude Code: memory-mcp (persistent memory), dev utilities, and more. Open source, MIT licensed.',
     type: 'website',
-    url: 'https://substratia.io',
+    url: siteConfig.url,
     images: [
       {
-        url: 'https://substratia.io/brand/social.png',
+        url: siteUrl(siteConfig.brand.social),
         width: 1200,
         height: 630,
-        alt: 'Substratia - Open-Source Developer Tools for Claude Code',
+        alt: siteConfig.title,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Substratia - Open-Source Developer Tools for Claude Code',
+    title: siteConfig.title,
     description: 'Free tools for Claude Code power users: persistent memory, visual agent config, dev utilities. Open source, MIT licensed.',
-    images: ['https://substratia.io/brand/social.png'],
+    images: [siteUrl(siteConfig.brand.social)],
   },
   alternates: {
-    canonical: 'https://substratia.io',
+    canonical: siteConfig.url,
     types: {
-      'application/rss+xml': 'https://substratia.io/feed.xml',
+      'application/rss+xml': siteUrl('/feed.xml'),
     },
   },
 }
@@ -60,34 +61,34 @@ export const metadata: Metadata = {
 const organizationLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Substratia',
-  url: 'https://substratia.io',
-  logo: 'https://substratia.io/brand/logo-icon.png',
-  description: 'Open-source developer tools for Claude Code — persistent memory, visual agent config, and free dev utilities',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: siteUrl(siteConfig.brand.logo),
+  description: siteConfig.shortDescription,
   sameAs: [
-    'https://github.com/WhenMoon-afk',
-    'https://skyceres.substack.com',
+    siteConfig.links.github,
+    siteConfig.links.newsletter,
   ],
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    url: 'https://github.com/WhenMoon-afk',
+    url: siteConfig.links.github,
   },
 }
 
 const websiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Substratia',
-  url: 'https://substratia.io',
+  name: siteConfig.name,
+  url: siteConfig.url,
   description: 'Open-source developer tools for Claude Code. Free: memory-mcp, dev utilities, and more.',
   publisher: {
     '@type': 'Organization',
-    name: 'Substratia',
+    name: siteConfig.name,
   },
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://substratia.io/tools?q={search_term_string}',
+    target: siteUrl('/tools?q={search_term_string}'),
     'query-input': 'required name=search_term_string',
   },
 }
@@ -105,16 +106,16 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* DNS prefetch for external links */}
         <link rel="dns-prefetch" href="https://github.com" />
-        <link rel="dns-prefetch" href="https://skyceres.substack.com" />
+        <link rel="dns-prefetch" href={siteConfig.links.newsletter} />
         <link rel="dns-prefetch" href="https://plausible.io" />
         {/* Plausible Analytics - privacy-friendly, no cookies, GDPR compliant */}
         <Script
           defer
-          data-domain="substratia.io"
+          data-domain={siteConfig.analytics.plausibleDomain}
           src="https://plausible.io/js/script.js"
           strategy="afterInteractive"
         />
-        <link rel="alternate" type="application/rss+xml" title="Substratia Blog" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} Blog`} href="/feed.xml" />
         <Script
           id="organization-ld"
           type="application/ld+json"

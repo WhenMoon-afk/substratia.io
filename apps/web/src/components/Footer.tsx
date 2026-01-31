@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { siteConfig } from '@/lib/site-config'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
@@ -15,7 +16,7 @@ export default function Footer() {
     setStatus('loading')
 
     // Open Substack subscription in new tab with email pre-filled
-    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}`
+    const substackUrl = `${siteConfig.links.newsletter}/subscribe?email=${encodeURIComponent(email)}`
     window.open(substackUrl, '_blank', 'noopener,noreferrer')
 
     setStatus('success')
@@ -81,7 +82,7 @@ export default function Footer() {
             <Link href="/reviews" className="hover:text-white transition-all">Reviews</Link>
             <Link href="/blog" className="hover:text-white transition-all">Blog</Link>
             <Link href="/docs" className="hover:text-white transition-all">Docs</Link>
-            <a href="https://github.com/WhenMoon-afk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">GitHub</a>
+            <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">GitHub</a>
           </div>
         </div>
 
