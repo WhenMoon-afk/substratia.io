@@ -34,28 +34,19 @@ export default function TestimonialsPage() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mreezwlv'
-
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
 
     setStatus('loading')
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, source: 'testimonials', interest: 'tools' }),
-      })
-      if (res.ok) {
-        setStatus('success')
-        setEmail('')
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
+
+    // Open Substack subscription in new tab with email pre-filled
+    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=testimonials`
+    window.open(substackUrl, '_blank', 'noopener,noreferrer')
+
+    setStatus('success')
+    setEmail('')
+    setTimeout(() => setStatus('idle'), 3000)
   }
 
   const hasTestimonials = testimonials.length > 0
@@ -185,7 +176,7 @@ export default function TestimonialsPage() {
               </p>
               {status === 'success' ? (
                 <div className="bg-green-500/20 border border-green-500/50 rounded-xl p-4 text-green-300 max-w-md mx-auto">
-                  You&apos;re subscribed! We&apos;ll keep you posted.
+                  Almost there! Complete signup in the Substack tab.
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">

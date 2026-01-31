@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
-import NewsletterCapture from '@/components/NewsletterCapture'
+
 import RelatedTools from '@/components/RelatedTools'
 
 export default function CheatSheetPage() {
@@ -11,28 +11,19 @@ export default function CheatSheetPage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [copiedSection, setCopiedSection] = useState<string | null>(null)
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mreezwlv'
-
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
 
     setStatus('loading')
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, source: 'cheat-sheet', interest: 'claude-code-tips' }),
-      })
-      if (res.ok) {
-        setStatus('success')
-        setEmail('')
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
+
+    // Open Substack subscription in new tab with email pre-filled
+    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=cheat-sheet`
+    window.open(substackUrl, '_blank', 'noopener,noreferrer')
+
+    setStatus('success')
+    setEmail('')
+    setTimeout(() => setStatus('idle'), 3000)
   }
 
   const copySection = (id: string, content: string) => {
@@ -463,7 +454,7 @@ Save this to CLAUDE.md under ## Session Notes`}
             </p>
             {status === 'success' ? (
               <div className="bg-green-500/20 border border-green-500/50 rounded-xl p-4 text-green-300">
-                You&apos;re in! Check your inbox for tips.
+                Almost there! Complete signup in the Substack tab.
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
@@ -502,10 +493,6 @@ Save this to CLAUDE.md under ## Session Notes`}
         </div>
       </section>
 
-      {/* Newsletter */}
-      <div className="max-w-4xl mx-auto mt-8 px-4">
-        <NewsletterCapture source="cheat-sheet" compact />
-      </div>
 
       {/* Print Styles */}
       <style jsx global>{`
