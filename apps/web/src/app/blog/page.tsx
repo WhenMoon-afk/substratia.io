@@ -143,7 +143,7 @@ export default function BlogPage() {
                 </div>
                 <button
                   onClick={() => sharePost(post)}
-                  className={`px-3 py-1 text-xs rounded-lg transition-all ${
+                  className={`px-3 py-1 text-xs rounded-xl transition-all ${
                     sharedSlug === post.slug
                       ? 'bg-green-500 text-white'
                       : 'bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan'
