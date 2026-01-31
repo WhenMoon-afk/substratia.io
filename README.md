@@ -9,7 +9,7 @@ This is a TurboRepo monorepo containing:
 ```
 substratia/
 ├── apps/
-│   ├── web/          # Next.js 14 web app (substratia.io)
+│   ├── web/          # Next.js 15 web app (substratia.io)
 │   └── mobile/       # Expo React Native app (Android)
 ├── packages/
 │   ├── convex/       # Shared Convex backend
@@ -41,7 +41,7 @@ bun run build
 ## Tech Stack
 
 ### Web (apps/web)
-- Next.js 14 (App Router, SSR)
+- Next.js 15 (App Router, SSR)
 - TypeScript
 - Tailwind CSS 3.4
 - Clerk (auth)

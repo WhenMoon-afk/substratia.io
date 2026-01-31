@@ -101,7 +101,7 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Next.js 14 (App Router, SSR)
+- **Framework**: Next.js 15 (App Router, SSR)
 - **Styling**: Tailwind CSS 3.4
 - **Backend**: Convex (real-time database)
 - **Auth**: Clerk (custom domain: clerk.substratia.io)
