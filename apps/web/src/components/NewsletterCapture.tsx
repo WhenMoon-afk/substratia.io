@@ -18,35 +18,26 @@ export default function NewsletterCapture({
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mreezwlv'
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
 
     setStatus('loading')
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ email, source, interest: 'newsletter' }),
-      })
-      if (res.ok) {
-        setStatus('success')
-        setEmail('')
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
+
+    // Open Substack subscription in new tab with email pre-filled
+    const substackUrl = `https://skyceres.substack.com/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=${encodeURIComponent(source)}`
+    window.open(substackUrl, '_blank', 'noopener,noreferrer')
+
+    setStatus('success')
+    setEmail('')
+    setTimeout(() => setStatus('idle'), 3000)
   }
 
   if (status === 'success') {
     return (
       <div className={`${compact ? 'p-4' : 'p-6'} bg-green-500/10 border border-green-500/20 rounded-xl text-center`}>
-        <p className="text-green-400 font-medium">You&apos;re subscribed!</p>
-        <p className="text-sm text-gray-400 mt-1">Check your inbox for a welcome email.</p>
+        <p className="text-green-400 font-medium">Almost there!</p>
+        <p className="text-sm text-gray-400 mt-1">Complete signup in the Substack tab.</p>
       </div>
     )
   }

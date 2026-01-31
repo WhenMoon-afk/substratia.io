@@ -105,7 +105,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* DNS prefetch for external links */}
         <link rel="dns-prefetch" href="https://github.com" />
-        <link rel="dns-prefetch" href="https://formspree.io" />
+        <link rel="dns-prefetch" href="https://skyceres.substack.com" />
         <link rel="dns-prefetch" href="https://plausible.io" />
         {/* Plausible Analytics - privacy-friendly, no cookies, GDPR compliant */}
         <Script
