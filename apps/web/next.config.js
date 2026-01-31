@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === 'production'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -94,7 +96,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.substratia.io https://*.clerk.accounts.dev https://challenges.cloudflare.com",
+              `script-src 'self' 'unsafe-inline' ${isProd ? '' : "'unsafe-eval'"} https://clerk.substratia.io https://*.clerk.accounts.dev https://challenges.cloudflare.com`,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
