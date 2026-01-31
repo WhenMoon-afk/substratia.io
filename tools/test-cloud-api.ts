@@ -48,11 +48,19 @@ async function testWebsiteLoads(): Promise<void> {
   if (!html.includes('Substratia')) throw new Error('Missing Substratia brand');
 }
 
-async function testPricingPage(): Promise<void> {
-  const res = await fetch(`${WEB_URL}/pricing`);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const html = await res.text();
-  if (!html.includes('Subscribe')) throw new Error('Missing Subscribe button');
+async function testRemovedPagesRedirect(): Promise<void> {
+  // Verify removed commercial pages redirect properly (301)
+  for (const path of ['/pricing', '/pro', '/thank-you']) {
+    const res = await fetch(`${WEB_URL}${path}`, { redirect: 'manual' });
+    if (res.status !== 301 && res.status !== 308) {
+      throw new Error(`${path}: expected 301/308 redirect, got ${res.status}`);
+    }
+  }
+  // /cloud should redirect to /tools
+  const cloudRes = await fetch(`${WEB_URL}/cloud`, { redirect: 'manual' });
+  if (cloudRes.status !== 301 && cloudRes.status !== 308) {
+    throw new Error(`/cloud: expected 301/308 redirect, got ${cloudRes.status}`);
+  }
 }
 
 async function testDashboardRedirects(): Promise<void> {
@@ -162,7 +170,7 @@ async function main() {
   console.log('--- Public Endpoints ---');
   await test('Health check', testHealth);
   await test('Website loads', testWebsiteLoads);
-  await test('Pricing page loads', testPricingPage);
+  await test('Removed pages redirect correctly', testRemovedPagesRedirect);
   await test('Dashboard redirects (unauthenticated)', testDashboardRedirects);
 
   console.log('\n--- API Security ---');

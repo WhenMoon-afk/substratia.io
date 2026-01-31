@@ -76,7 +76,7 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 
 ### Pages
 - `/` - Landing page (developer tools overview)
-- `/cloud` - Redirects to `/tools`
+- `/cloud` - Redirects to `/tools` (301 via next.config.js)
 - `/dashboard` - **Memory dashboard** (requires auth, shows snapshots/memories)
 - `/sign-in` - Clerk authentication (Google OAuth)
 - `/sign-up` - Clerk registration
@@ -88,9 +88,13 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 - `/blog` - Blog index (12 posts, with email capture)
 - `/docs` - Documentation
 - `/start-here` - Getting started guide
-- `/pricing` - Pricing page
 - `/privacy` - Privacy policy (GDPR compliance)
 - `/terms` - Terms of service
+
+#### Removed Pages (redirect to `/`)
+- `/pricing` - Removed (was commercial, redirects to homepage)
+- `/pro` - Removed (was commercial, redirects to homepage)
+- `/thank-you` - Removed (was purchase confirmation, redirects to homepage)
 
 ---
 
@@ -116,8 +120,6 @@ src/
 ├── app/
 │   ├── page.tsx              # Landing page
 │   ├── templates/page.tsx    # Memory tools listings
-│   ├── pricing/page.tsx      # Subscription tiers
-│   ├── pro/page.tsx          # Pro waitlist
 │   ├── docs/page.tsx         # Documentation
 │   ├── blog/                  # Blog posts (10 posts)
 │   │   ├── page.tsx          # Blog index

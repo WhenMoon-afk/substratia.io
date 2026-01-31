@@ -11,12 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/start-here', priority: 0.9, changeFrequency: 'weekly' as const },
     { url: '/templates', priority: 0.9, changeFrequency: 'weekly' as const },
     { url: '/docs', priority: 0.8, changeFrequency: 'weekly' as const },
-    { url: '/pricing', priority: 0.7, changeFrequency: 'weekly' as const },
     { url: '/faq', priority: 0.7, changeFrequency: 'monthly' as const },
     { url: '/testimonials', priority: 0.7, changeFrequency: 'weekly' as const },
-    { url: '/dashboard', priority: 0.6, changeFrequency: 'weekly' as const },
-    { url: '/sign-in', priority: 0.4, changeFrequency: 'monthly' as const },
-    { url: '/sign-up', priority: 0.4, changeFrequency: 'monthly' as const },
     { url: '/privacy', priority: 0.3, changeFrequency: 'monthly' as const },
     { url: '/terms', priority: 0.3, changeFrequency: 'monthly' as const },
   ]

@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       customer_email: email,
       client_reference_id: userId, // Link to Clerk user
       success_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://substratia.io"}/dashboard?checkout=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://substratia.io"}/pricing?checkout=cancelled`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://substratia.io"}/?checkout=cancelled`,
       metadata: {
         clerkUserId: userId,
         tier,

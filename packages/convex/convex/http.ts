@@ -250,7 +250,7 @@ http.route({
           message: tierCheck.reason,
           limit: tierCheck.limit,
           current: tierCheck.current,
-          upgradeUrl: "https://substratia.io/pricing",
+          upgradeUrl: "https://substratia.io/",
         }),
         { status: 402, headers: { "Content-Type": "application/json" } }
       );
@@ -333,7 +333,7 @@ http.route({
           message: tierCheck.reason,
           limit: tierCheck.limit,
           current: tierCheck.current,
-          upgradeUrl: "https://substratia.io/pricing",
+          upgradeUrl: "https://substratia.io/",
         }),
         { status: 402, headers: { "Content-Type": "application/json" } }
       );
@@ -376,7 +376,7 @@ http.route({
             limit: tierCheck.limit,
             current: tierCheck.current,
             requestedCount: memories.length,
-            upgradeUrl: "https://substratia.io/pricing",
+            upgradeUrl: "https://substratia.io/",
           }),
           { status: 402, headers: { "Content-Type": "application/json" } }
         );

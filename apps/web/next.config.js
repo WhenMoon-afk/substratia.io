@@ -10,6 +10,52 @@ const nextConfig = {
   },
   trailingSlash: true,
 
+  // Redirects for removed pages
+  async redirects() {
+    return [
+      {
+        source: '/cloud',
+        destination: '/tools',
+        permanent: true,
+      },
+      {
+        source: '/cloud/',
+        destination: '/tools',
+        permanent: true,
+      },
+      {
+        source: '/pricing',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/pricing/',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/pro',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/pro/',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/thank-you',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/thank-you/',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
+
   // Security headers
   async headers() {
     return [
