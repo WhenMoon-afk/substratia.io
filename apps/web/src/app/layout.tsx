@@ -8,6 +8,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { StructuredData } from "@/components/StructuredData";
 import { siteConfig, siteUrl } from "@/lib/site-config";
 
 const outfit = Outfit({
@@ -138,16 +139,7 @@ export default function RootLayout({
           title={`${siteConfig.name} Blog`}
           href="/feed.xml"
         />
-        <Script
-          id="organization-ld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
-        />
-        <Script
-          id="website-ld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
-        />
+        <StructuredData data={[organizationLd, websiteLd]} />
       </head>
       <body className="antialiased bg-forge-dark text-white">
         <ThemeProvider>
