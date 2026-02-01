@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-export type ViewMode = 'split' | 'edit' | 'preview'
+export type ViewMode = "split" | "edit" | "preview";
 
 interface ToolbarProps {
-  viewMode: ViewMode
-  onViewModeChange: (mode: ViewMode) => void
-  hasContent: boolean
-  onDownloadMarkdown: () => void
-  onDownloadHtml: () => void
-  onExportPdf: () => void
-  onLoadExample: () => void
-  onClear: () => void
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
+  hasContent: boolean;
+  onDownloadMarkdown: () => void;
+  onDownloadHtml: () => void;
+  onExportPdf: () => void;
+  onLoadExample: () => void;
+  onClear: () => void;
 }
 
 export default function Toolbar({
@@ -27,27 +27,40 @@ export default function Toolbar({
     <div className="flex flex-wrap gap-2 mb-4 items-center justify-between">
       <div className="flex gap-2">
         {/* View Mode Toggle */}
-        <div className="bg-white/5 rounded-lg p-1 flex">
+        <div
+          className="bg-white/5 rounded-lg p-1 flex"
+          role="group"
+          aria-label="Editor view mode"
+        >
           <button
-            onClick={() => onViewModeChange('edit')}
+            onClick={() => onViewModeChange("edit")}
+            aria-pressed={viewMode === "edit"}
             className={`px-3 py-1 text-xs rounded transition-all ${
-              viewMode === 'edit' ? 'bg-forge-cyan text-forge-dark' : 'text-gray-400 hover:text-white'
+              viewMode === "edit"
+                ? "bg-forge-cyan text-forge-dark"
+                : "text-gray-400 hover:text-white"
             }`}
           >
             Edit
           </button>
           <button
-            onClick={() => onViewModeChange('split')}
+            onClick={() => onViewModeChange("split")}
+            aria-pressed={viewMode === "split"}
             className={`px-3 py-1 text-xs rounded transition-all ${
-              viewMode === 'split' ? 'bg-forge-cyan text-forge-dark' : 'text-gray-400 hover:text-white'
+              viewMode === "split"
+                ? "bg-forge-cyan text-forge-dark"
+                : "text-gray-400 hover:text-white"
             }`}
           >
             Split
           </button>
           <button
-            onClick={() => onViewModeChange('preview')}
+            onClick={() => onViewModeChange("preview")}
+            aria-pressed={viewMode === "preview"}
             className={`px-3 py-1 text-xs rounded transition-all ${
-              viewMode === 'preview' ? 'bg-forge-cyan text-forge-dark' : 'text-gray-400 hover:text-white'
+              viewMode === "preview"
+                ? "bg-forge-cyan text-forge-dark"
+                : "text-gray-400 hover:text-white"
             }`}
           >
             Preview
@@ -88,9 +101,11 @@ export default function Toolbar({
           className="px-3 py-1 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all flex items-center gap-1"
         >
           Clear
-          <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">⌘K</kbd>
+          <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">
+            ⌘K
+          </kbd>
         </button>
       </div>
     </div>
-  )
+  );
 }

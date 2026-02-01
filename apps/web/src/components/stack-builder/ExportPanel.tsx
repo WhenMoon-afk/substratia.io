@@ -35,6 +35,7 @@ export default function ExportPanel({
           <button
             onClick={() => onDownload("markdown")}
             disabled={selectedCount === 0}
+            aria-label="Download as Markdown"
             className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             .md
@@ -42,6 +43,7 @@ export default function ExportPanel({
           <button
             onClick={() => onDownload("csv")}
             disabled={selectedCount === 0}
+            aria-label="Download as CSV"
             className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             .csv
@@ -49,6 +51,7 @@ export default function ExportPanel({
           <button
             onClick={() => onDownload("json")}
             disabled={selectedCount === 0}
+            aria-label="Download as JSON"
             className="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             .json
