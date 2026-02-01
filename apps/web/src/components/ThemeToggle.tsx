@@ -1,16 +1,11 @@
-'use client'
+"use client";
 
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useTheme } from "next-themes";
+import { useHydrated } from "@/hooks/useHydrated";
 
 export default function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  // Avoid hydration mismatch
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const mounted = useHydrated();
 
   if (!mounted) {
     // Return placeholder to avoid layout shift
@@ -21,21 +16,26 @@ export default function ThemeToggle() {
       >
         <div className="w-5 h-5" />
       </button>
-    )
+    );
   }
 
-  const isDark = resolvedTheme === 'dark'
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       className="p-2 text-gray-400 hover:text-white transition-all rounded-lg hover:bg-white/10"
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-      title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      title={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
       {isDark ? (
         // Sun icon for switching to light mode
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -45,7 +45,12 @@ export default function ThemeToggle() {
         </svg>
       ) : (
         // Moon icon for switching to dark mode
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -55,5 +60,5 @@ export default function ThemeToggle() {
         </svg>
       )}
     </button>
-  )
+  );
 }
