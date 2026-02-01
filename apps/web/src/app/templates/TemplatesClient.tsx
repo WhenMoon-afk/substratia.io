@@ -1,100 +1,136 @@
-'use client'
+"use client";
 
-import { useState, useCallback, useEffect } from 'react'
-import Link from 'next/link'
-import ShareButton from '@/components/ShareButton'
-import { siteConfig } from '@/lib/site-config'
+import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
+import { siteConfig } from "@/lib/site-config";
+
+interface ToolStyles {
+  hoverBorder: string;
+  badge: string;
+  statValue: string;
+  checkIcon: string;
+  ctaButton: string;
+}
 
 interface Tool {
-  id: string
-  name: string
-  tagline: string
-  description: string
-  stats: Record<string, string>
-  features: string[]
-  installCommand: string
-  githubUrl?: string
-  npmUrl?: string
-  internalUrl?: string
-  color: string
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  stats: Record<string, string>;
+  features: string[];
+  installCommand: string;
+  githubUrl?: string;
+  npmUrl?: string;
+  internalUrl?: string;
+  color: string;
+  styles: ToolStyles;
 }
+
+/**
+ * Pre-computed Tailwind class strings for each tool color.
+ * Tailwind's JIT scanner needs to see full class names statically —
+ * dynamic template literals like `bg-forge-${color}/20` won't be included.
+ */
+const colorStyles: Record<string, ToolStyles> = {
+  cyan: {
+    hoverBorder: "hover:border-forge-cyan/50",
+    badge: "bg-forge-cyan/20 text-forge-cyan",
+    statValue: "text-forge-cyan",
+    checkIcon: "text-forge-cyan",
+    ctaButton: "bg-forge-cyan text-forge-dark hover:bg-forge-cyan/80",
+  },
+  purple: {
+    hoverBorder: "hover:border-forge-purple/50",
+    badge: "bg-forge-purple/20 text-forge-purple",
+    statValue: "text-forge-purple",
+    checkIcon: "text-forge-purple",
+    ctaButton: "bg-forge-purple text-forge-dark hover:bg-forge-purple/80",
+  },
+};
 
 const tools: Tool[] = [
   {
-    id: 'momentum',
-    name: 'momentum',
-    tagline: 'Context Recovery',
-    description: 'Instant context recovery for Claude Code. Save snapshots as you work, restore in milliseconds after /clear.',
+    id: "momentum",
+    name: "momentum",
+    tagline: "Context Recovery",
+    description:
+      "Instant context recovery for Claude Code. Save snapshots as you work, restore in milliseconds after /clear.",
     stats: {
-      restore: '<5ms',
-      storage: 'SQLite',
-      price: 'Free',
+      restore: "<5ms",
+      storage: "SQLite",
+      price: "Free",
     },
     features: [
-      'Snapshot-based context saving',
-      'Instant restoration (<5ms)',
-      'Session management',
-      'Context search',
-      'Importance tagging',
-      'SQLite persistence',
+      "Snapshot-based context saving",
+      "Instant restoration (<5ms)",
+      "Session management",
+      "Context search",
+      "Importance tagging",
+      "SQLite persistence",
     ],
-    installCommand: '/plugin install momentum@substratia-marketplace',
+    installCommand: "/plugin install momentum@substratia-marketplace",
     githubUrl: siteConfig.links.repos.momentum,
-    color: 'cyan',
+    color: "cyan",
+    styles: colorStyles.cyan,
   },
   {
-    id: 'memory-mcp',
-    name: 'memory-mcp',
-    tagline: 'Persistent Memory',
-    description: 'Give your AI persistent memory across sessions. Store, recall, and search facts that survive conversation resets.',
+    id: "memory-mcp",
+    name: "memory-mcp",
+    tagline: "Persistent Memory",
+    description:
+      "Give your AI persistent memory across sessions. Store, recall, and search facts that survive conversation resets.",
     stats: {
-      search: 'FTS5',
-      storage: 'SQLite',
-      price: 'Free',
+      search: "FTS5",
+      storage: "SQLite",
+      price: "Free",
     },
     features: [
-      'Store memories with auto-summarization',
-      'Full-text search (no embeddings)',
-      'Token budgeting for context',
-      'Entity extraction',
-      'Hybrid relevance scoring',
-      'Soft deletes with audit trail',
+      "Store memories with auto-summarization",
+      "Full-text search (no embeddings)",
+      "Token budgeting for context",
+      "Entity extraction",
+      "Hybrid relevance scoring",
+      "Soft deletes with audit trail",
     ],
-    installCommand: 'npx @whenmoon-afk/memory-mcp',
+    installCommand: "npx @whenmoon-afk/memory-mcp",
     githubUrl: siteConfig.links.repos.memoryMcp,
-    npmUrl: 'https://www.npmjs.com/package/@whenmoon-afk/memory-mcp',
-    color: 'purple',
+    npmUrl: "https://www.npmjs.com/package/@whenmoon-afk/memory-mcp",
+    color: "purple",
+    styles: colorStyles.purple,
   },
-]
+];
 
 export default function TemplatesClient() {
-  const [copiedCommand, setCopiedCommand] = useState<string | null>(null)
-  const [sharedTool, setSharedTool] = useState<string | null>(null)
+  const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
+  const [sharedTool, setSharedTool] = useState<string | null>(null);
 
   // Handle URL hash navigation on mount
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const hash = window.location.hash.slice(1)
+    if (typeof window === "undefined") return;
+    const hash = window.location.hash.slice(1);
     if (hash) {
       setTimeout(() => {
-        const element = document.getElementById(hash)
-        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }, 100)
+        const element = document.getElementById(hash);
+        if (element)
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
     }
-  }, [])
+  }, []);
 
   const copyCommand = useCallback(async (tool: Tool) => {
-    await navigator.clipboard.writeText(tool.installCommand)
-    setCopiedCommand(tool.id)
-    setTimeout(() => setCopiedCommand(null), 2000)
-  }, [])
+    await navigator.clipboard.writeText(tool.installCommand);
+    setCopiedCommand(tool.id);
+    setTimeout(() => setCopiedCommand(null), 2000);
+  }, []);
 
   const shareTool = useCallback(async (tool: Tool) => {
-    const shareUrl = `${window.location.origin}${window.location.pathname}#${tool.id}`
-    await navigator.clipboard.writeText(shareUrl)
-    setSharedTool(tool.id)
-    setTimeout(() => setSharedTool(null), 2000)
-  }, [])
+    const shareUrl = `${window.location.origin}${window.location.pathname}#${tool.id}`;
+    await navigator.clipboard.writeText(shareUrl);
+    setSharedTool(tool.id);
+    setTimeout(() => setSharedTool(null), 2000);
+  }, []);
 
   return (
     <main className="min-h-screen text-white">
@@ -125,11 +161,13 @@ export default function TemplatesClient() {
             <div
               key={tool.id}
               id={tool.id}
-              className={`bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-forge-${tool.color}/50 transition-all scroll-mt-24`}
+              className={`bg-white/5 border border-white/10 rounded-2xl p-8 ${tool.styles.hoverBorder} transition-all scroll-mt-24`}
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                 <div>
-                  <div className={`inline-block px-2 py-1 text-xs rounded bg-forge-${tool.color}/20 text-forge-${tool.color} mb-2`}>
+                  <div
+                    className={`inline-block px-2 py-1 text-xs rounded ${tool.styles.badge} mb-2`}
+                  >
                     {tool.tagline}
                   </div>
                   <h2 className="text-2xl font-bold mb-2">{tool.name}</h2>
@@ -138,8 +176,14 @@ export default function TemplatesClient() {
                 <div className="flex flex-wrap gap-4 text-center">
                   {Object.entries(tool.stats).map(([key, value]) => (
                     <div key={key} className="bg-white/5 rounded-lg px-4 py-2">
-                      <div className={`text-lg font-bold text-forge-${tool.color}`}>{value}</div>
-                      <div className="text-xs text-gray-500 capitalize">{key}</div>
+                      <div
+                        className={`text-lg font-bold ${tool.styles.statValue}`}
+                      >
+                        {value}
+                      </div>
+                      <div className="text-xs text-gray-500 capitalize">
+                        {key}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -147,12 +191,27 @@ export default function TemplatesClient() {
 
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-400 mb-3">Features</h3>
+                  <h3 className="text-sm font-semibold text-gray-400 mb-3">
+                    Features
+                  </h3>
                   <ul className="space-y-2">
                     {tool.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm">
-                        <svg className={`w-4 h-4 text-forge-${tool.color} flex-shrink-0 mt-0.5`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <li
+                        key={feature}
+                        className="flex items-start gap-2 text-sm"
+                      >
+                        <svg
+                          className={`w-4 h-4 ${tool.styles.checkIcon} flex-shrink-0 mt-0.5`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
                         </svg>
                         <span className="text-gray-300">{feature}</span>
                       </li>
@@ -160,18 +219,22 @@ export default function TemplatesClient() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-400 mb-3">Install</h3>
+                  <h3 className="text-sm font-semibold text-gray-400 mb-3">
+                    Install
+                  </h3>
                   <div className="bg-black/30 rounded-lg p-4 font-mono text-sm mb-4 flex items-center justify-between gap-2">
-                    <code className="text-forge-cyan overflow-x-auto">{tool.installCommand}</code>
+                    <code className="text-forge-cyan overflow-x-auto">
+                      {tool.installCommand}
+                    </code>
                     <button
                       onClick={() => copyCommand(tool)}
                       className={`px-2 py-1 text-xs rounded transition-all shrink-0 ${
                         copiedCommand === tool.id
-                          ? 'bg-green-500 text-white'
-                          : 'bg-white/10 hover:bg-white/20'
+                          ? "bg-green-500 text-white"
+                          : "bg-white/10 hover:bg-white/20"
                       }`}
                     >
-                      {copiedCommand === tool.id ? 'Copied!' : 'Copy'}
+                      {copiedCommand === tool.id ? "Copied!" : "Copy"}
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-3">
@@ -198,7 +261,7 @@ export default function TemplatesClient() {
                     {tool.internalUrl && (
                       <Link
                         href={tool.internalUrl}
-                        className={`px-4 py-2 bg-forge-${tool.color} text-forge-dark hover:bg-forge-${tool.color}/80 rounded-lg text-sm font-medium transition-all`}
+                        className={`px-4 py-2 ${tool.styles.ctaButton} rounded-lg text-sm font-medium transition-all`}
                       >
                         Try Now
                       </Link>
@@ -207,11 +270,11 @@ export default function TemplatesClient() {
                       onClick={() => shareTool(tool)}
                       className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                         sharedTool === tool.id
-                          ? 'bg-green-500 text-white'
-                          : 'bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan'
+                          ? "bg-green-500 text-white"
+                          : "bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan"
                       }`}
                     >
-                      {sharedTool === tool.id ? 'Link Copied!' : 'Share'}
+                      {sharedTool === tool.id ? "Link Copied!" : "Share"}
                     </button>
                   </div>
                 </div>
@@ -224,8 +287,8 @@ export default function TemplatesClient() {
         <div className="max-w-3xl mx-auto text-center bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 mb-16">
           <h2 className="text-2xl font-bold mb-4">Free & Open Source</h2>
           <p className="text-gray-400 mb-6">
-            All Substratia tools are MIT licensed and free forever.
-            Contribute, customize, or just use them as-is.
+            All Substratia tools are MIT licensed and free forever. Contribute,
+            customize, or just use them as-is.
           </p>
           <a
             href={siteConfig.links.github}
@@ -246,31 +309,40 @@ export default function TemplatesClient() {
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
               <h3 className="font-semibold mb-2">Context Window Full?</h3>
               <p className="text-gray-400 text-sm mb-3">
-                Use <span className="text-forge-cyan font-mono">momentum</span> to snapshot your work,
-                then /clear and restore instantly.
+                Use <span className="text-forge-cyan font-mono">momentum</span>{" "}
+                to snapshot your work, then /clear and restore instantly.
               </p>
-              <div className="text-xs text-gray-500">Best for: Mid-session context management</div>
+              <div className="text-xs text-gray-500">
+                Best for: Mid-session context management
+              </div>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
               <h3 className="font-semibold mb-2">New Session?</h3>
               <p className="text-gray-400 text-sm mb-3">
-                Use <span className="text-forge-purple font-mono">memory-mcp</span> to recall facts
-                from past sessions automatically.
+                Use{" "}
+                <span className="text-forge-purple font-mono">memory-mcp</span>{" "}
+                to recall facts from past sessions automatically.
               </p>
-              <div className="text-xs text-gray-500">Best for: Cross-session knowledge</div>
+              <div className="text-xs text-gray-500">
+                Best for: Cross-session knowledge
+              </div>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
               <h3 className="font-semibold mb-2">Both Together</h3>
               <p className="text-gray-400 text-sm mb-3">
-                Manage sessions with <span className="text-forge-cyan font-mono">momentum</span>,
-                persist knowledge with <span className="text-forge-purple font-mono">memory-mcp</span>.
+                Manage sessions with{" "}
+                <span className="text-forge-cyan font-mono">momentum</span>,
+                persist knowledge with{" "}
+                <span className="text-forge-purple font-mono">memory-mcp</span>.
                 Complete AI workflow.
               </p>
-              <div className="text-xs text-gray-500">Best for: Complete AI workflow</div>
+              <div className="text-xs text-gray-500">
+                Best for: Complete AI workflow
+              </div>
             </div>
           </div>
         </div>
       </div>
     </main>
-  )
+  );
 }

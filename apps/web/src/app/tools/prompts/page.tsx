@@ -1,61 +1,71 @@
-'use client'
+"use client";
 
-import { useState, useCallback, useEffect } from 'react'
-import Link from 'next/link'
-import ShareButton from '@/components/ShareButton'
-import NewsletterCapture from '@/components/NewsletterCapture'
-import RelatedTools from '@/components/RelatedTools'
-import { downloadMarkdown } from '@/lib/file-utils'
-import { prompts, categories } from '@/data/promptLibrary'
-import type { Prompt } from '@/data/promptLibrary'
+import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
+import NewsletterCapture from "@/components/NewsletterCapture";
+import RelatedTools from "@/components/RelatedTools";
+import { downloadMarkdown } from "@/lib/file-utils";
+import { prompts, categories } from "@/data/promptLibrary";
+import type { Prompt } from "@/data/promptLibrary";
+
+/**
+ * Pre-computed Tailwind class strings for category badge colors.
+ * Tailwind's JIT scanner needs to see full class names statically —
+ * dynamic template literals like `bg-forge-${color}/20` won't be included.
+ */
+const categoryBadgeStyles: Record<string, string> = {
+  cyan: "bg-forge-cyan/20 text-forge-cyan",
+  purple: "bg-forge-purple/20 text-forge-purple",
+};
 
 export default function PromptsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [expandedPrompt, setExpandedPrompt] = useState<string | null>(null)
-  const [copiedId, setCopiedId] = useState<string | null>(null)
-  const [sharedId, setSharedId] = useState<string | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [expandedPrompt, setExpandedPrompt] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [sharedId, setSharedId] = useState<string | null>(null);
 
   // Load prompt from URL on mount
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const params = new URLSearchParams(window.location.search)
-    const promptId = params.get('p')
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const promptId = params.get("p");
     if (promptId) {
-      const prompt = prompts.find(p => p.id === promptId)
+      const prompt = prompts.find((p) => p.id === promptId);
       if (prompt) {
-        setExpandedPrompt(promptId)
+        setExpandedPrompt(promptId);
         // Scroll to the prompt after a short delay
         setTimeout(() => {
-          const element = document.getElementById(`prompt-${promptId}`)
+          const element = document.getElementById(`prompt-${promptId}`);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
           }
-        }, 100)
+        }, 100);
       }
     }
-  }, [])
+  }, []);
 
   const filteredPrompts = selectedCategory
     ? prompts.filter((p) => p.category === selectedCategory)
-    : prompts
+    : prompts;
 
   const copyPrompt = useCallback((prompt: Prompt) => {
-    navigator.clipboard.writeText(prompt.content)
-    setCopiedId(prompt.id)
-    setTimeout(() => setCopiedId(null), 2000)
-  }, [])
+    navigator.clipboard.writeText(prompt.content);
+    setCopiedId(prompt.id);
+    setTimeout(() => setCopiedId(null), 2000);
+  }, []);
 
   const sharePrompt = useCallback(async (prompt: Prompt) => {
-    const shareUrl = `${window.location.origin}${window.location.pathname}?p=${prompt.id}`
-    await navigator.clipboard.writeText(shareUrl)
-    setSharedId(prompt.id)
-    setTimeout(() => setSharedId(null), 2000)
-  }, [])
+    const shareUrl = `${window.location.origin}${window.location.pathname}?p=${prompt.id}`;
+    await navigator.clipboard.writeText(shareUrl);
+    setSharedId(prompt.id);
+    setTimeout(() => setSharedId(null), 2000);
+  }, []);
 
   const downloadPrompt = useCallback((prompt: Prompt) => {
-    const content = `# ${prompt.name}\n\n${prompt.description}\n\nCategory: ${prompt.category}\n${prompt.model ? `Model: ${prompt.model}\n` : ''}\n---\n\n${prompt.content}`
-    downloadMarkdown(content, `${prompt.id}.md`)
-  }, [])
+    const content = `# ${prompt.name}\n\n${prompt.description}\n\nCategory: ${prompt.category}\n${prompt.model ? `Model: ${prompt.model}\n` : ""}\n---\n\n${prompt.content}`;
+    downloadMarkdown(content, `${prompt.id}.md`);
+  }, []);
 
   return (
     <main className="min-h-screen text-white">
@@ -63,7 +73,10 @@ export default function PromptsPage() {
         {/* Header */}
         <div className="max-w-4xl mx-auto mb-8">
           <div className="flex items-center justify-between mb-4">
-            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+            <Link
+              href="/tools"
+              className="text-forge-cyan hover:underline text-sm"
+            >
               &larr; Back to Tools
             </Link>
             <ShareButton title="Prompt Library - Substratia" />
@@ -77,7 +90,8 @@ export default function PromptsPage() {
             </span>
           </div>
           <p className="text-gray-400">
-            Curated prompts for communication, creativity, and productivity. Click to copy.
+            Curated prompts for communication, creativity, and productivity.
+            Click to copy.
           </p>
         </div>
 
@@ -88,8 +102,8 @@ export default function PromptsPage() {
               onClick={() => setSelectedCategory(null)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 selectedCategory === null
-                  ? 'bg-forge-cyan text-forge-dark'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-300'
+                  ? "bg-forge-cyan text-forge-dark"
+                  : "bg-white/5 hover:bg-white/10 text-gray-300"
               }`}
             >
               All
@@ -100,8 +114,8 @@ export default function PromptsPage() {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
                   selectedCategory === cat.id
-                    ? 'bg-forge-cyan text-forge-dark'
-                    : 'bg-white/5 hover:bg-white/10 text-gray-300'
+                    ? "bg-forge-cyan text-forge-dark"
+                    : "bg-white/5 hover:bg-white/10 text-gray-300"
                 }`}
               >
                 <span>{cat.icon}</span>
@@ -122,18 +136,25 @@ export default function PromptsPage() {
               {/* Header */}
               <div
                 className="p-4 cursor-pointer"
-                onClick={() => setExpandedPrompt(expandedPrompt === prompt.id ? null : prompt.id)}
+                onClick={() =>
+                  setExpandedPrompt(
+                    expandedPrompt === prompt.id ? null : prompt.id,
+                  )
+                }
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-bold text-lg">{prompt.name}</h3>
-                      <span className={`px-2 py-0.5 text-xs rounded-full bg-forge-${
-                        categories.find(c => c.id === prompt.category)?.color
-                      }/20 text-forge-${
-                        categories.find(c => c.id === prompt.category)?.color
-                      }`}>
-                        {categories.find(c => c.id === prompt.category)?.name}
+                      <span
+                        className={`px-2 py-0.5 text-xs rounded-full ${
+                          categoryBadgeStyles[
+                            categories.find((c) => c.id === prompt.category)
+                              ?.color ?? "cyan"
+                          ]
+                        }`}
+                      >
+                        {categories.find((c) => c.id === prompt.category)?.name}
                       </span>
                       {prompt.model && (
                         <span className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-gray-400">
@@ -141,39 +162,41 @@ export default function PromptsPage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-gray-400 text-sm">{prompt.description}</p>
+                    <p className="text-gray-400 text-sm">
+                      {prompt.description}
+                    </p>
                   </div>
                   <div className="flex items-center gap-2 ml-4">
                     <button
                       onClick={(e) => {
-                        e.stopPropagation()
-                        copyPrompt(prompt)
+                        e.stopPropagation();
+                        copyPrompt(prompt);
                       }}
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                         copiedId === prompt.id
-                          ? 'bg-green-500 text-white'
-                          : 'bg-forge-cyan/20 text-forge-cyan hover:bg-forge-cyan/30'
+                          ? "bg-green-500 text-white"
+                          : "bg-forge-cyan/20 text-forge-cyan hover:bg-forge-cyan/30"
                       }`}
                     >
-                      {copiedId === prompt.id ? 'Copied!' : 'Copy'}
+                      {copiedId === prompt.id ? "Copied!" : "Copy"}
                     </button>
                     <button
                       onClick={(e) => {
-                        e.stopPropagation()
-                        sharePrompt(prompt)
+                        e.stopPropagation();
+                        sharePrompt(prompt);
                       }}
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                         sharedId === prompt.id
-                          ? 'bg-green-500 text-white'
-                          : 'bg-forge-purple/20 text-forge-purple hover:bg-forge-purple/30'
+                          ? "bg-green-500 text-white"
+                          : "bg-forge-purple/20 text-forge-purple hover:bg-forge-purple/30"
                       }`}
                     >
-                      {sharedId === prompt.id ? 'Copied!' : 'Share'}
+                      {sharedId === prompt.id ? "Copied!" : "Share"}
                     </button>
                     <button
                       onClick={(e) => {
-                        e.stopPropagation()
-                        downloadPrompt(prompt)
+                        e.stopPropagation();
+                        downloadPrompt(prompt);
                       }}
                       className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white/10 text-gray-400 hover:bg-white/20 transition-all"
                     >
@@ -181,13 +204,18 @@ export default function PromptsPage() {
                     </button>
                     <svg
                       className={`w-5 h-5 text-gray-400 transition-transform ${
-                        expandedPrompt === prompt.id ? 'rotate-180' : ''
+                        expandedPrompt === prompt.id ? "rotate-180" : ""
                       }`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -213,7 +241,8 @@ export default function PromptsPage() {
           <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8">
             <h2 className="text-2xl font-bold mb-3">Build Custom Agents</h2>
             <p className="text-gray-400 mb-6 max-w-xl mx-auto">
-              Use these prompts as a starting point, then customize with our prompt tools.
+              Use these prompts as a starting point, then customize with our
+              prompt tools.
             </p>
             <div className="flex justify-center gap-4">
               <Link
@@ -238,5 +267,5 @@ export default function PromptsPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }
