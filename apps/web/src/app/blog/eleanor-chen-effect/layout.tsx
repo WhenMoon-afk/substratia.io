@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'The Eleanor Chen Effect: Why AI Keeps Writing the Same Story | Substratia',
@@ -21,15 +22,7 @@ export const metadata: Metadata = {
   },
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
-    { '@type': 'ListItem', position: 3, name: 'Eleanor Chen Effect', item: siteUrl('/blog/eleanor-chen-effect') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Blog', '/blog'], ['Eleanor Chen Effect', '/blog/eleanor-chen-effect'])
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -63,14 +56,7 @@ export default function EleanorChenLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'Token Counter - Estimate Costs for Claude, GPT-4 | Substratia',
@@ -41,15 +42,7 @@ const jsonLd = {
   url: siteUrl('/tools/token-counter'),
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
-    { '@type': 'ListItem', position: 3, name: 'Token Counter', item: siteUrl('/tools/token-counter') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Tools', '/tools'], ['Token Counter', '/tools/token-counter'])
 
 export default function TokenCounterLayout({
   children,
@@ -58,14 +51,7 @@ export default function TokenCounterLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

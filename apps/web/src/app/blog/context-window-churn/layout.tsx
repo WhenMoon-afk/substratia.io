@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'The Real Cost of Context Window Churn | Substratia',
@@ -18,15 +19,7 @@ export const metadata: Metadata = {
   },
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
-    { '@type': 'ListItem', position: 3, name: 'Context Window Churn', item: siteUrl('/blog/context-window-churn') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Blog', '/blog'], ['Context Window Churn', '/blog/context-window-churn'])
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -57,14 +50,7 @@ export default function ContextWindowChurnLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'Memory Demo - Interactive AI Memory Visualization | Substratia',
@@ -41,15 +42,7 @@ const jsonLd = {
   url: siteUrl('/tools/memory-demo'),
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
-    { '@type': 'ListItem', position: 3, name: 'Memory Demo', item: siteUrl('/tools/memory-demo') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Tools', '/tools'], ['Memory Demo', '/tools/memory-demo'])
 
 export default function MemoryDemoLayout({
   children,
@@ -58,14 +51,7 @@ export default function MemoryDemoLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

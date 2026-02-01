@@ -42,6 +42,31 @@ export function siteUrl(path: string = ''): string {
   return `${SITE_URL}${path}`
 }
 
+/**
+ * Build a Schema.org BreadcrumbList from label/path pairs.
+ *
+ * Home is always prepended automatically.  Example:
+ *
+ *   breadcrumb(['Tools', '/tools'], ['Cheat Sheet', '/tools/cheat-sheet'])
+ */
+export function breadcrumb(
+  ...items: [name: string, path: string][]
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
+      ...items.map(([name, path], i) => ({
+        '@type': 'ListItem',
+        position: i + 2,
+        name,
+        item: siteUrl(path),
+      })),
+    ],
+  }
+}
+
 /** Newsletter subscription URL with UTM tracking */
 export function newsletterUrl(email: string, source: string): string {
   return `${siteConfig.links.newsletter}/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=${encodeURIComponent(source)}`

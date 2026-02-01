@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'Mastering Negative Prompts for AI | Substratia',
@@ -18,15 +19,7 @@ export const metadata: Metadata = {
   },
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
-    { '@type': 'ListItem', position: 3, name: 'Mastering Negative Prompts', item: siteUrl('/blog/mastering-negative-prompts') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Blog', '/blog'], ['Mastering Negative Prompts', '/blog/mastering-negative-prompts'])
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -57,14 +50,7 @@ export default function MasteringNegativePromptsLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

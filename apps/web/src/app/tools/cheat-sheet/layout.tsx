@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'Claude Code Cheat Sheet | Essential Commands & Tips',
@@ -41,15 +42,7 @@ const jsonLd = {
   url: siteUrl('/tools/cheat-sheet'),
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
-    { '@type': 'ListItem', position: 3, name: 'Cheat Sheet', item: siteUrl('/tools/cheat-sheet') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Tools', '/tools'], ['Cheat Sheet', '/tools/cheat-sheet'])
 
 export default function CheatSheetLayout({
   children,
@@ -58,14 +51,7 @@ export default function CheatSheetLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

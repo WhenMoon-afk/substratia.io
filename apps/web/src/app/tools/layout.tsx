@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 import ToolsClientWrapper from '@/components/ToolsClientWrapper'
 
 export const metadata: Metadata = {
@@ -19,14 +20,7 @@ export const metadata: Metadata = {
   },
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Tools', '/tools'])
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -59,14 +53,7 @@ export default function ToolsLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       <ToolsClientWrapper>{children}</ToolsClientWrapper>
     </>
   )

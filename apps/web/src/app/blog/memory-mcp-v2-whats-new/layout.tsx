@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: "What's New in memory-mcp v2.5 | Substratia",
@@ -18,15 +19,7 @@ export const metadata: Metadata = {
   },
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: siteUrl('/blog') },
-    { '@type': 'ListItem', position: 3, name: 'memory-mcp v2.5', item: siteUrl('/blog/memory-mcp-v2-whats-new') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Blog', '/blog'], ['memory-mcp v2.5', '/blog/memory-mcp-v2-whats-new'])
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -57,14 +50,7 @@ export default function MemoryMcpV2WhatsNewLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )

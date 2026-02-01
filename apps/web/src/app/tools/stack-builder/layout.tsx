@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { siteUrl } from '@/lib/site-config'
+import { siteUrl, breadcrumb } from '@/lib/site-config'
+import { StructuredData } from '@/components/StructuredData'
 
 export const metadata: Metadata = {
   title: 'Stack Builder - Full-Stack Tech Selector | Substratia',
@@ -41,15 +42,7 @@ const jsonLd = {
   url: siteUrl('/tools/stack-builder'),
 }
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl() },
-    { '@type': 'ListItem', position: 2, name: 'Tools', item: siteUrl('/tools') },
-    { '@type': 'ListItem', position: 3, name: 'Stack Builder', item: siteUrl('/tools/stack-builder') },
-  ],
-}
+const breadcrumbLd = breadcrumb(['Tools', '/tools'], ['Stack Builder', '/tools/stack-builder'])
 
 export default function StackBuilderLayout({
   children,
@@ -58,14 +51,7 @@ export default function StackBuilderLayout({
 }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
   )
