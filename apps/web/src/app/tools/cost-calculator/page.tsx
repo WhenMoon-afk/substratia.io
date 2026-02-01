@@ -4,16 +4,18 @@ import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 import NewsletterCapture from '@/components/NewsletterCapture'
-import CopyButton from '@/components/CopyButton'
 import RelatedTools from '@/components/RelatedTools'
 import { downloadJson } from '@/lib/file-utils'
-
-interface Model {
-  id: string
-  name: string
-  inputPer1M: number
-  outputPer1M: number
-}
+import {
+  models,
+  findModel,
+  calculateCost,
+  formatCurrency,
+  DEFAULT_MODEL_ID,
+  COMPARISON_SONNET_ID,
+  COMPARISON_OPUS_ID,
+  MAX_SUBSCRIPTION_COST,
+} from '@/data/costCalculatorModels'
 
 interface Session {
   id: string
@@ -22,17 +24,6 @@ interface Session {
   outputTokens: number
   model: string
 }
-
-const models: Model[] = [
-  { id: 'opus-4.5', name: 'Claude Opus 4.5', inputPer1M: 5, outputPer1M: 25 },
-  { id: 'opus-4.1', name: 'Claude Opus 4.1', inputPer1M: 15, outputPer1M: 75 },
-  { id: 'opus-4', name: 'Claude Opus 4', inputPer1M: 15, outputPer1M: 75 },
-  { id: 'sonnet-4.5', name: 'Claude Sonnet 4.5', inputPer1M: 3, outputPer1M: 15 },
-  { id: 'sonnet-4', name: 'Claude Sonnet 4', inputPer1M: 3, outputPer1M: 15 },
-  { id: 'haiku-4.5', name: 'Claude Haiku 4.5', inputPer1M: 1, outputPer1M: 5 },
-  { id: 'haiku-3.5', name: 'Claude Haiku 3.5', inputPer1M: 0.80, outputPer1M: 4 },
-  { id: 'haiku-3', name: 'Claude Haiku 3', inputPer1M: 0.25, outputPer1M: 1.25 },
-]
 
 const STORAGE_KEY = 'substratia-cost-sessions'
 
@@ -50,16 +41,8 @@ function saveSessions(sessions: Session[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions))
 }
 
-function formatCurrency(amount: number): string {
-  return `$${amount.toFixed(2)}`
-}
-
-function calculateCost(inputTokens: number, outputTokens: number, model: Model): number {
-  return (inputTokens / 1_000_000) * model.inputPer1M + (outputTokens / 1_000_000) * model.outputPer1M
-}
-
 export default function CostCalculatorPage() {
-  const [selectedModel, setSelectedModel] = useState('sonnet-4.5')
+  const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL_ID)
   const [inputTokens, setInputTokens] = useState<number>(0)
   const [outputTokens, setOutputTokens] = useState<number>(0)
   const [sessions, setSessions] = useState<Session[]>([])
@@ -91,7 +74,7 @@ export default function CostCalculatorPage() {
     }
   }, [])
 
-  const model = useMemo(() => models.find(m => m.id === selectedModel) || models.find(m => m.id === 'sonnet-4.5') || models[0], [selectedModel])
+  const model = useMemo(() => findModel(selectedModel), [selectedModel])
 
   const currentCost = useMemo(() => {
     return calculateCost(inputTokens, outputTokens, model)
@@ -148,7 +131,7 @@ export default function CostCalculatorPage() {
     })
 
     const totalCost = last7Days.reduce((sum, s) => {
-      const m = models.find(m => m.id === s.model) || models.find(m => m.id === 'sonnet-4.5') || models[0]
+      const m = findModel(s.model)
       return sum + calculateCost(s.inputTokens, s.outputTokens, m)
     }, 0)
 
@@ -171,8 +154,8 @@ export default function CostCalculatorPage() {
 
   // Subscription comparison
   const comparison = useMemo(() => {
-    const sonnetModel = models.find(m => m.id === 'sonnet')!
-    const opusModel = models.find(m => m.id === 'opus')!
+    const sonnetModel = findModel(COMPARISON_SONNET_ID)
+    const opusModel = findModel(COMPARISON_OPUS_ID)
 
     // Assume 80% input, 20% output for typical usage
     const inputRatio = 0.8
@@ -184,14 +167,12 @@ export default function CostCalculatorPage() {
     const opusApiCost = (monthlyUsage * inputRatio / 1_000_000) * opusModel.inputPer1M +
                         (monthlyUsage * outputRatio / 1_000_000) * opusModel.outputPer1M
 
-    const subscriptionCost = 200 // Claude Max
-
     return {
       sonnetApi: sonnetApiCost,
       opusApi: opusApiCost,
-      subscription: subscriptionCost,
-      recommendation: sonnetApiCost < subscriptionCost ? 'api' : 'subscription',
-      savings: Math.abs(sonnetApiCost - subscriptionCost),
+      subscription: MAX_SUBSCRIPTION_COST,
+      recommendation: sonnetApiCost < MAX_SUBSCRIPTION_COST ? 'api' : 'subscription',
+      savings: Math.abs(sonnetApiCost - MAX_SUBSCRIPTION_COST),
     }
   }, [monthlyUsage])
 
@@ -347,7 +328,7 @@ export default function CostCalculatorPage() {
                   {/* Recent Sessions */}
                   <div className="space-y-2 max-h-[200px] overflow-y-auto">
                     {sessions.slice(0, 10).map(session => {
-                      const m = models.find(m => m.id === session.model) || models.find(m => m.id === 'sonnet-4.5') || models[0]
+                      const m = findModel(session.model)
                       const cost = calculateCost(session.inputTokens, session.outputTokens, m)
                       const date = new Date(session.date)
                       return (
