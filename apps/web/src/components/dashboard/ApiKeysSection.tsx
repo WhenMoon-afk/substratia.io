@@ -7,13 +7,14 @@ interface ApiKeysSectionProps {
   apiKeys: ApiKey[] | undefined;
   onCreateKey: (name: string) => Promise<{ key: string }>;
   onRevokeKey: (keyId: ApiKeyId) => Promise<void>;
+  showApiSection: boolean;
+  onToggleApiSection: () => void;
 }
 
-export default function ApiKeysSection({ apiKeys, onCreateKey, onRevokeKey }: ApiKeysSectionProps) {
+export default function ApiKeysSection({ apiKeys, onCreateKey, onRevokeKey, showApiSection, onToggleApiSection }: ApiKeysSectionProps) {
   const [newKeyName, setNewKeyName] = useState("");
   const [newKeyValue, setNewKeyValue] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
-  const [showApiSection, setShowApiSection] = useState(true);
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
 
   // Auto-fill default key name for first-time users
@@ -74,7 +75,7 @@ export default function ApiKeysSection({ apiKeys, onCreateKey, onRevokeKey }: Ap
         </h2>
         {apiKeys && apiKeys.length > 0 && (
           <button
-            onClick={() => setShowApiSection(!showApiSection)}
+            onClick={onToggleApiSection}
             className="text-gray-400 hover:text-white transition-colors text-sm"
           >
             {showApiSection ? "Hide" : "Show"} API Keys

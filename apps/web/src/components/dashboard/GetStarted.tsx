@@ -5,9 +5,10 @@ import type { ApiKey } from "@/types/dashboard";
 
 interface GetStartedProps {
   apiKeys: ApiKey[] | undefined;
+  onExpandApiSection: () => void;
 }
 
-export default function GetStarted({ apiKeys }: GetStartedProps) {
+export default function GetStarted({ apiKeys, onExpandApiSection }: GetStartedProps) {
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
 
   const copyToClipboard = (text: string) => {
@@ -65,6 +66,7 @@ export default function GetStarted({ apiKeys }: GetStartedProps) {
               <>
                 <button
                   onClick={() => {
+                    onExpandApiSection();
                     document.getElementById('api-keys-section')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   className="text-cyan-400 hover:text-cyan-300 underline"

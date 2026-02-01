@@ -26,6 +26,7 @@ export default function DashboardPage() {
   const forgetMemory = useMutation(api.memories.forget);
 
   const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
+  const [showApiSection, setShowApiSection] = useState(true);
 
   // Check for checkout success
   useEffect(() => {
@@ -129,11 +130,13 @@ export default function DashboardPage() {
         <RecentMemories memories={recentMemories} onDeleteMemory={handleDeleteMemory} />
       </div>
 
-      <GetStarted apiKeys={apiKeys} />
+      <GetStarted apiKeys={apiKeys} onExpandApiSection={() => setShowApiSection(true)} />
       <ApiKeysSection
         apiKeys={apiKeys}
         onCreateKey={handleCreateKey}
         onRevokeKey={handleRevokeKey}
+        showApiSection={showApiSection}
+        onToggleApiSection={() => setShowApiSection(prev => !prev)}
       />
     </div>
   );
