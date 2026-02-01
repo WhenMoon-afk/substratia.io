@@ -83,7 +83,7 @@ export default function CostComparison({ comparison }: CostComparisonProps) {
       </div>
 
       {/* Verdict */}
-      <div className="mt-4 p-4 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-lg">
+      <div className="mt-4 p-4 bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-lg">
         <div className="text-sm font-medium mb-1">Our Recommendation</div>
         <div className="text-lg">
           {comparison.recommendation === "api" ? (

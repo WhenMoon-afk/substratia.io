@@ -59,7 +59,7 @@ export default function SeedOptions({
               onChange={(e) =>
                 onOptionsChange({ ...options, [opt.key]: e.target.checked })
               }
-              className="rounded border-white/20 bg-black/30"
+              className="rounded-sm border-white/20 bg-black/30"
             />
             {opt.label}
           </label>

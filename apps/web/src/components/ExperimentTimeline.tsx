@@ -25,7 +25,7 @@ export default function ExperimentTimeline({ experiment, isExpanded, onToggle }:
             <p className="text-gray-400">{experiment.character} &bull; {experiment.occupation}</p>
           </div>
           <div className="flex flex-col items-end gap-2">
-            <span className={`text-xs px-2 py-1 rounded border ${patternColors}`}>
+            <span className={`text-xs px-2 py-1 rounded-sm border ${patternColors}`}>
               {experiment.pattern}
             </span>
             <span className="text-xs text-gray-500">
@@ -83,7 +83,7 @@ export default function ExperimentTimeline({ experiment, isExpanded, onToggle }:
 
                     {expandedMoment === i && (
                       <div className="mt-4 space-y-3">
-                        <div className="bg-black/30 rounded p-3">
+                        <div className="bg-black/30 rounded-sm p-3">
                           <p className="text-xs text-gray-500 mb-1">AI Response:</p>
                           <p className="text-sm text-gray-300 italic">&ldquo;{moment.aiResponse}&rdquo;</p>
                         </div>

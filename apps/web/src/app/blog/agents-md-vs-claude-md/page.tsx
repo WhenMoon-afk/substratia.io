@@ -316,7 +316,7 @@ See .claude/agents/ for custom agent definitions.`}</code>
         </div>
 
         {/* CTA */}
-        <div className="mt-16 p-8 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl border border-white/10 text-center">
+        <div className="mt-16 p-8 bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl border border-white/10 text-center">
           <h3 className="text-2xl font-bold mb-4">
             Ready to Build Your Agent Config?
           </h3>

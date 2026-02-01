@@ -43,7 +43,7 @@ export default function KeyframeEditor({
               value={keyframe?.prompt || ""}
               onChange={(e) => onUpdateKeyframe({ prompt: e.target.value })}
               placeholder="Describe what's happening at this moment..."
-              className="w-full h-24 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm resize-none"
+              className="w-full h-24 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm resize-none"
             />
           </div>
 
@@ -61,7 +61,7 @@ export default function KeyframeEditor({
               onChange={(e) =>
                 onUpdateKeyframe({ motion: e.target.value as Motion })
               }
-              className="w-full px-3 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+              className="w-full px-3 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
             >
               {motionOptions.map((m) => (
                 <option key={m.id} value={m.id} className="bg-forge-dark">
@@ -85,7 +85,7 @@ export default function KeyframeEditor({
               onChange={(e) =>
                 onUpdateKeyframe({ transition: e.target.value as Transition })
               }
-              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
             >
               {transitionOptions.map((t) => (
                 <option key={t.id} value={t.id} className="bg-forge-dark">

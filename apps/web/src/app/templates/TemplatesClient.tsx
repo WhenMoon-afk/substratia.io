@@ -166,7 +166,7 @@ export default function TemplatesClient() {
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                 <div>
                   <div
-                    className={`inline-block px-2 py-1 text-xs rounded ${tool.styles.badge} mb-2`}
+                    className={`inline-block px-2 py-1 text-xs rounded-sm ${tool.styles.badge} mb-2`}
                   >
                     {tool.tagline}
                   </div>
@@ -201,7 +201,7 @@ export default function TemplatesClient() {
                         className="flex items-start gap-2 text-sm"
                       >
                         <svg
-                          className={`w-4 h-4 ${tool.styles.checkIcon} flex-shrink-0 mt-0.5`}
+                          className={`w-4 h-4 ${tool.styles.checkIcon} shrink-0 mt-0.5`}
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -284,7 +284,7 @@ export default function TemplatesClient() {
         </div>
 
         {/* Open Source CTA */}
-        <div className="max-w-3xl mx-auto text-center bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 mb-16">
+        <div className="max-w-3xl mx-auto text-center bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 mb-16">
           <h2 className="text-2xl font-bold mb-4">Free & Open Source</h2>
           <p className="text-gray-400 mb-6">
             All Substratia tools are MIT licensed and free forever. Contribute,

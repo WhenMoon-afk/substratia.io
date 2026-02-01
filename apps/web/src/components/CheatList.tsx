@@ -18,7 +18,7 @@ export function ShortcutList({ shortcuts }: { shortcuts: Shortcut[] }) {
     <ul className="space-y-1 text-sm">
       {shortcuts.map((s) => (
         <li key={s.keys} className="flex gap-2">
-          <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-xs font-mono">{s.keys}</kbd>
+          <kbd className="px-1.5 py-0.5 bg-white/10 rounded-sm text-xs font-mono">{s.keys}</kbd>
           <span className="text-gray-400 text-xs">{s.desc}</span>
         </li>
       ))}

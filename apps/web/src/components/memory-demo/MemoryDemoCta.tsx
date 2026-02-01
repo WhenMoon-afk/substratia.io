@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function MemoryDemoCta() {
   return (
-    <div className="mt-12 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 text-center">
+    <div className="mt-12 bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8 text-center">
       <h2 className="text-2xl font-bold mb-3">
         Ready to stop repeating yourself?
       </h2>

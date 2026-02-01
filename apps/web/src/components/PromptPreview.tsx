@@ -41,7 +41,7 @@ export default function PromptPreview({
 
       <div className="bg-black/30 rounded-lg p-4 min-h-[120px]">
         {generatedPrompt ? (
-          <pre className="text-sm text-gray-200 whitespace-pre-wrap break-words font-mono">
+          <pre className="text-sm text-gray-200 whitespace-pre-wrap wrap-break-word font-mono">
             {generatedPrompt}
           </pre>
         ) : (

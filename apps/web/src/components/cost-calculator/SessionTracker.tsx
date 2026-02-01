@@ -53,7 +53,7 @@ export default function SessionTracker({
           id="model-select"
           value={selectedModel}
           onChange={(e) => onModelChange(e.target.value)}
-          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
         >
           {models.map((m) => (
             <option key={m.id} value={m.id} className="bg-forge-dark">
@@ -78,7 +78,7 @@ export default function SessionTracker({
             value={inputTokens || ""}
             onChange={(e) => onInputTokensChange(parseInt(e.target.value) || 0)}
             placeholder="0"
-            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
           />
         </div>
         <div>
@@ -96,7 +96,7 @@ export default function SessionTracker({
               onOutputTokensChange(parseInt(e.target.value) || 0)
             }
             placeholder="0"
-            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
           />
         </div>
       </div>

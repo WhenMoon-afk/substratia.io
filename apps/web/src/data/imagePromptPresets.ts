@@ -91,7 +91,7 @@ export const stylePresets: StylePreset[] = [
   { id: 'wide-angle', name: 'Wide Angle', category: 'technical', keywords: ['wide angle lens', '14mm', 'expansive view'], emoji: '🔭' },
   { id: 'telephoto', name: 'Telephoto', category: 'technical', keywords: ['telephoto lens', '200mm', 'compressed perspective'], emoji: '🔍' },
   { id: 'film-grain', name: 'Film Grain', category: 'technical', keywords: ['film grain', 'analog look', '35mm film'], emoji: '🎞️' },
-  { id: 'long-exposure', name: 'Long Exposure', category: 'technical', keywords: ['long exposure', 'motion blur', 'light trails'], emoji: '⏱️' },
+  { id: 'long-exposure', name: 'Long Exposure', category: 'technical', keywords: ['long exposure', 'motion blur-sm', 'light trails'], emoji: '⏱️' },
   { id: 'hdr', name: 'HDR', category: 'technical', keywords: ['HDR', 'high dynamic range', 'detailed highlights and shadows'], emoji: '🌈' },
   { id: 'tilt-shift', name: 'Tilt-shift', category: 'technical', keywords: ['tilt-shift', 'miniature effect', 'selective focus'], emoji: '🏘️' },
 ]

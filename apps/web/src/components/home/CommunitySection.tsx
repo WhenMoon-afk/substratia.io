@@ -31,7 +31,7 @@ interface CommunitySectionProps {
 
 function StatSkeleton() {
   return (
-    <span className="inline-block w-12 h-4 bg-gray-700 rounded animate-pulse" />
+    <span className="inline-block w-12 h-4 bg-gray-700 rounded-sm animate-pulse" />
   );
 }
 
@@ -62,7 +62,7 @@ export default memo(function CommunitySection({
   return (
     <section
       aria-label="Directory listings"
-      className="relative z-10 py-24 bg-gradient-to-b from-transparent via-forge-dark-lighter/30 to-transparent"
+      className="relative z-10 py-24 bg-linear-to-b from-transparent via-forge-dark-lighter/30 to-transparent"
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-4">

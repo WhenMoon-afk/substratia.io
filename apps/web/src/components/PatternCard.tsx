@@ -19,7 +19,7 @@ export default function PatternCard({ pattern, isExpanded, onToggle }: {
           <h3 className={`text-xl font-bold ${colorClasses.text}`}>{pattern.title}</h3>
           <p className="text-gray-400 text-sm">{pattern.tagline}</p>
         </div>
-        <span className={`text-xs px-2 py-1 rounded ${colorClasses.badge}`}>
+        <span className={`text-xs px-2 py-1 rounded-sm ${colorClasses.badge}`}>
           Risk: {pattern.riskLevel}
         </span>
       </div>

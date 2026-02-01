@@ -97,7 +97,7 @@ export default function MarkdownStripperPage() {
                   className="px-3 py-1 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all flex items-center gap-1"
                 >
                   Clear
-                  <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">
+                  <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded-sm">
                     ⌘K
                   </kbd>
                 </button>
@@ -116,7 +116,7 @@ This is **bold** and *italic* text.
 [Link text](https://example.com)
 
 \`inline code\``}
-              className="w-full h-64 sm:h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-forge-cyan text-white font-mono text-sm resize-none"
+              className="w-full h-64 sm:h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white font-mono text-sm resize-none"
             />
             <div className="mt-2 text-xs text-gray-500">
               {input.length.toLocaleString()} characters
@@ -148,7 +148,7 @@ This is **bold** and *italic* text.
             </div>
             <div className="w-full h-64 sm:h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg overflow-auto">
               {strippedText ? (
-                <pre className="text-white text-sm whitespace-pre-wrap break-words font-sans">
+                <pre className="text-white text-sm whitespace-pre-wrap wrap-break-word font-sans">
                   {strippedText}
                 </pre>
               ) : (

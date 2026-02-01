@@ -53,7 +53,7 @@ export default function RecentSnapshots({ snapshots }: RecentSnapshotsProps) {
                     </p>
                   </div>
                   <span
-                    className={`px-2 py-1 text-xs rounded flex-shrink-0 ml-2 ${
+                    className={`px-2 py-1 text-xs rounded shrink-0 ml-2 ${
                       snapshot.importance === "critical"
                         ? "bg-red-500/20 text-red-400"
                         : snapshot.importance === "important"
@@ -96,7 +96,7 @@ export default function RecentSnapshots({ snapshots }: RecentSnapshotsProps) {
                         <h4 className="text-gray-400 text-xs font-medium uppercase mb-1">Files Touched</h4>
                         <div className="flex flex-wrap gap-1">
                           {snapshot.filesTouched.map((f, i) => (
-                            <code key={i} className="text-xs bg-gray-800 text-cyan-400 px-1.5 py-0.5 rounded">
+                            <code key={i} className="text-xs bg-gray-800 text-cyan-400 px-1.5 py-0.5 rounded-sm">
                               {f.split('/').pop()}
                             </code>
                           ))}

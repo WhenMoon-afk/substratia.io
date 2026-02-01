@@ -39,7 +39,7 @@ export default function PromptOutput({
             className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1"
           >
             Clear All
-            <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">
+            <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded-sm">
               ⌘K
             </kbd>
           </button>
@@ -47,7 +47,7 @@ export default function PromptOutput({
 
         <div className="bg-black/30 rounded-lg p-4 min-h-[300px] max-h-[400px] overflow-auto">
           {generatedPrompt ? (
-            <pre className="text-sm text-gray-200 whitespace-pre-wrap break-words font-mono">
+            <pre className="text-sm text-gray-200 whitespace-pre-wrap wrap-break-word font-mono">
               {generatedPrompt}
             </pre>
           ) : (
@@ -109,7 +109,7 @@ export default function PromptOutput({
       </div>
 
       {/* Tips */}
-      <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
+      <div className="bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
         <h3 className="font-medium mb-2">Tips</h3>
         <ul className="text-sm text-gray-400 space-y-1">
           <li>

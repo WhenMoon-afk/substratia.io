@@ -122,7 +122,7 @@ function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
 
   return (
     <div className="relative z-10 py-1" aria-hidden="true">
-      <div className={`h-px bg-gradient-to-r ${gradient} max-w-3xl mx-auto`} />
+      <div className={`h-px bg-linear-to-r ${gradient} max-w-3xl mx-auto`} />
     </div>
   );
 }
@@ -260,7 +260,7 @@ export default function StartHerePage() {
                 <div className="flex items-start gap-4">
                   <button
                     onClick={() => toggleStep(step.number)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
                       completedSteps.has(step.number)
                         ? "bg-green-500 text-white"
                         : "bg-forge-cyan/20 text-forge-cyan border border-forge-cyan/50"

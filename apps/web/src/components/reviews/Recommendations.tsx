@@ -29,7 +29,7 @@ export function Recommendations({ items, columns = 2 }: RecommendationsProps) {
         {items.map((rec) => (
           <div
             key={rec.title}
-            className={`bg-gradient-to-br ${gradientStyles[rec.gradient]} border rounded-xl p-6`}
+            className={`bg-linear-to-br ${gradientStyles[rec.gradient]} border rounded-xl p-6`}
           >
             <h3 className="font-bold text-lg mb-2">{rec.title}</h3>
             <p className={`text-xl font-bold mb-2 ${pickColors[rec.gradient]}`}>

@@ -240,7 +240,7 @@ export default function VideoPromptTimelinePage() {
                 type="text"
                 value={timeline.name}
                 onChange={(e) => updateTimeline({ name: e.target.value })}
-                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
               />
             </div>
 
@@ -251,7 +251,7 @@ export default function VideoPromptTimelinePage() {
                 id="video-platform"
                 value={timeline.platform}
                 onChange={(e) => updateTimeline({ platform: e.target.value as VideoPlatform })}
-                className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+                className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
               >
                 {videoPlatforms.map(p => (
                   <option key={p.id} value={p.id} className="bg-forge-dark">
@@ -268,7 +268,7 @@ export default function VideoPromptTimelinePage() {
                 id="video-aspect-ratio"
                 value={timeline.aspectRatio}
                 onChange={(e) => updateTimeline({ aspectRatio: e.target.value as VideoAspectRatio })}
-                className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+                className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
               >
                 {videoAspectRatios.map(ar => (
                   <option key={ar.id} value={ar.id} className="bg-forge-dark">
@@ -291,7 +291,7 @@ export default function VideoPromptTimelinePage() {
                 className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all flex items-center gap-1"
               >
                 Clear
-                <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">⌘K</kbd>
+                <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded-sm">⌘K</kbd>
               </button>
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function VideoPromptTimelinePage() {
               value={timeline.globalStyle}
               onChange={(e) => updateTimeline({ globalStyle: e.target.value })}
               placeholder="e.g., cinematic, 4K, dramatic lighting, film grain..."
-              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
+              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm"
             />
           </div>
         </div>
@@ -326,13 +326,13 @@ export default function VideoPromptTimelinePage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => loadFavorite(fav)}
-                      className="px-3 py-1 bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan rounded text-sm"
+                      className="px-3 py-1 bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan rounded-sm text-sm"
                     >
                       Load
                     </button>
                     <button
                       onClick={() => removeFavorite(fav.id)}
-                      className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded text-sm"
+                      className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-sm text-sm"
                     >
                       Delete
                     </button>
@@ -430,7 +430,7 @@ export default function VideoPromptTimelinePage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
+          <div className="bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
             <h3 className="font-medium mb-2">Tips</h3>
             <ul className="text-sm text-gray-400 space-y-1">
               <li>- Start with a clear opening shot at 0s</li>

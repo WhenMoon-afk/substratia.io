@@ -1,6 +1,6 @@
 export default function SupportedSyntax() {
   return (
-    <div className="mt-6 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
+    <div className="mt-6 bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
       <h3 className="font-medium mb-3">Supported Syntax</h3>
       <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-400">
         <ul className="space-y-1">

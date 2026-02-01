@@ -40,7 +40,7 @@ export default function BlogHeader({
             return (
               <span
                 key={tag.label}
-                className={`text-xs px-2 py-1 rounded ${colorClass}`}
+                className={`text-xs px-2 py-1 rounded-sm ${colorClass}`}
               >
                 {tag.label}
               </span>

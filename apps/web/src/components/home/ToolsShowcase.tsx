@@ -183,7 +183,7 @@ export default memo(function ToolsShowcase() {
   return (
     <section
       aria-label="Featured tools"
-      className="relative z-10 py-24 bg-gradient-to-b from-transparent via-forge-dark-lighter/50 to-transparent"
+      className="relative z-10 py-24 bg-linear-to-b from-transparent via-forge-dark-lighter/50 to-transparent"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">

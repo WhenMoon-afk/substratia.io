@@ -198,7 +198,7 @@ Downloaded from substratia.io/tools/cheat-sheet
                     <h4 className="text-sm font-semibold text-forge-purple mb-2">
                       {pattern.title}
                     </h4>
-                    <pre className="text-xs bg-black/50 rounded p-3 overflow-x-auto">
+                    <pre className="text-xs bg-black/50 rounded-sm p-3 overflow-x-auto">
                       {pattern.code}
                     </pre>
                   </div>
@@ -218,7 +218,7 @@ Downloaded from substratia.io/tools/cheat-sheet
                 {promptPatterns.map((pattern) => (
                   <div key={pattern.title} className="glass rounded-lg p-4">
                     <h4 className="text-sm font-semibold text-forge-cyan mb-2">{pattern.title}</h4>
-                    <pre className="text-xs bg-black/50 rounded p-2 overflow-x-auto whitespace-pre-wrap">
+                    <pre className="text-xs bg-black/50 rounded-sm p-2 overflow-x-auto whitespace-pre-wrap">
                       {pattern.prompt}
                     </pre>
                   </div>
@@ -239,7 +239,7 @@ Downloaded from substratia.io/tools/cheat-sheet
                   <h4 className="text-sm font-semibold text-forge-purple mb-2">
                     Location: ~/.claude/claude_desktop_config.json
                   </h4>
-                  <pre className="text-xs bg-black/50 rounded p-3 overflow-x-auto">
+                  <pre className="text-xs bg-black/50 rounded-sm p-3 overflow-x-auto">
                     {mcpExampleConfig}
                   </pre>
                 </div>
@@ -328,7 +328,7 @@ Downloaded from substratia.io/tools/cheat-sheet
                   placeholder="Enter your email"
                   aria-label="Email address for newsletter subscription"
                   required
-                  className="flex-1 px-4 py-3 bg-white/5 border border-white/20 rounded-xl focus:outline-none focus:border-forge-cyan transition-all"
+                  className="flex-1 px-4 py-3 bg-white/5 border border-white/20 rounded-xl focus:outline-hidden focus:border-forge-cyan transition-all"
                 />
                 <button
                   type="submit"

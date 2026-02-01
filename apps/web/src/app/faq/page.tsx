@@ -111,7 +111,7 @@ export default function FAQPage() {
                     >
                       <span className="font-medium pr-4">{faq.question}</span>
                       <svg
-                        className={`w-5 h-5 flex-shrink-0 transition-transform ${
+                        className={`w-5 h-5 shrink-0 transition-transform ${
                           openItems.has(faq.id) ? 'rotate-180' : ''
                         }`}
                         aria-hidden="true"
@@ -128,7 +128,7 @@ export default function FAQPage() {
                       <div className="text-gray-300 mb-3">
                         {faq.answer}
                         {faq.code && (
-                          <> Install with: <code className="bg-white/10 px-2 py-0.5 rounded text-sm">{faq.code}</code></>
+                          <> Install with: <code className="bg-white/10 px-2 py-0.5 rounded-sm text-sm">{faq.code}</code></>
                         )}
                       </div>
                       <div className="flex gap-2 pt-2 border-t border-white/10">

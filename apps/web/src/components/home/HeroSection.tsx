@@ -113,7 +113,7 @@ export default function HeroSection({
               )}
               {statsLoading && (
                 <StatBadge>
-                  <span className="inline-block w-16 h-3 bg-gray-700 rounded animate-pulse" />
+                  <span className="inline-block w-16 h-3 bg-gray-700 rounded-sm animate-pulse" />
                 </StatBadge>
               )}
             </div>

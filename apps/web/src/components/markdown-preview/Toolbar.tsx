@@ -101,7 +101,7 @@ export default function Toolbar({
           className="px-3 py-1 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all flex items-center gap-1"
         >
           Clear
-          <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">
+          <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded-sm">
             ⌘K
           </kbd>
         </button>

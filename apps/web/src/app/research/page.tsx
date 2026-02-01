@@ -75,7 +75,7 @@ export default function ResearchPage() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded"
+                      className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded-sm"
                     >
                       {tag}
                     </span>
@@ -169,7 +169,7 @@ export default function ResearchPage() {
 
         {/* CTA */}
         <div className="max-w-3xl mx-auto mt-12">
-          <div className="bg-gradient-to-br from-forge-cyan/10 via-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-2xl p-8">
+          <div className="bg-linear-to-br from-forge-cyan/10 via-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-2xl p-8">
             <h2 className="text-2xl font-bold mb-3 text-center">From Research to Tools</h2>
             <p className="text-gray-400 text-center mb-8">
               Our research directly informs the tools we build. Try them out.
