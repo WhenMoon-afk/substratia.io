@@ -1,78 +1,63 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
-import ShareButton from '@/components/ShareButton'
-import { siteConfig } from '@/lib/site-config'
+import Link from "next/link";
+import type { Metadata } from "next";
+import { siteConfig } from "@/lib/site-config";
+import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
 
 export const metadata: Metadata = {
-  title: 'The Real Cost of Context Window Churn | Substratia',
-  description: 'Context window management is the hidden tax on AI-assisted development. We measured the cost and built a solution.',
-  keywords: 'context window, AI development, Claude Code, context management, developer productivity, momentum, MCP',
-}
+  title: "The Real Cost of Context Window Churn | Substratia",
+  description:
+    "Context window management is the hidden tax on AI-assisted development. We measured the cost and built a solution.",
+  keywords:
+    "context window, AI development, Claude Code, context management, developer productivity, momentum, MCP",
+};
 
 export default function BlogPost() {
   return (
     <main className="min-h-screen text-white">
       <article className="container mx-auto px-4 py-12 max-w-3xl">
-        {/* Back link */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/blog" className="text-forge-cyan hover:underline">
-            &larr; Back to Blog
-          </Link>
-          <ShareButton title="The Real Cost of Context Window Churn" />
-        </div>
-
-        {/* Header */}
-        <header className="mb-8">
-          <div className="flex gap-2 mb-4">
-            <span className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded">
-              Productivity
-            </span>
-            <span className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded">
-              Developer Experience
-            </span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            The Real Cost of Context Window Churn
-          </h1>
-          <div className="flex items-center gap-4 text-gray-400">
-            <span>January 11, 2026</span>
-            <span>6 min read</span>
-          </div>
-        </header>
+        <BlogHeader
+          title="The Real Cost of Context Window Churn"
+          date="January 11, 2026"
+          readTime="6 min read"
+          tags={[{ label: "Productivity" }, { label: "Developer Experience" }]}
+        />
 
         {/* Content */}
         <div className="prose prose-invert prose-lg max-w-none">
           <p className="text-xl text-gray-300 mb-8">
             If you use AI coding assistants for real work, you know the feeling.
-            You&apos;ve been working on a complex feature for an hour. Claude understands
-            your codebase, your decisions, your constraints. Then the context window
-            fills up. And you start over.
+            You&apos;ve been working on a complex feature for an hour. Claude
+            understands your codebase, your decisions, your constraints. Then
+            the context window fills up. And you start over.
           </p>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
             The Hidden Tax
           </h2>
           <p className="text-gray-300 mb-4">
-            Context window churn isn&apos;t just annoying. It&apos;s expensive in three ways:
+            Context window churn isn&apos;t just annoying. It&apos;s expensive
+            in three ways:
           </p>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
             <li>
-              <strong>Time</strong> - Re-explaining your project state, decisions,
-              and constraints. Often 5-10 minutes per reset.
+              <strong>Time</strong> - Re-explaining your project state,
+              decisions, and constraints. Often 5-10 minutes per reset.
             </li>
             <li>
-              <strong>Tokens</strong> - Paying for the same context multiple times.
-              If you lose context mid-task, you&apos;re re-sending what the model
-              already knew.
+              <strong>Tokens</strong> - Paying for the same context multiple
+              times. If you lose context mid-task, you&apos;re re-sending what
+              the model already knew.
             </li>
             <li>
-              <strong>Quality</strong> - The AI loses nuance. Decisions made earlier
-              in the session that informed current work are forgotten.
+              <strong>Quality</strong> - The AI loses nuance. Decisions made
+              earlier in the session that informed current work are forgotten.
             </li>
           </ul>
 
           <div className="bg-forge-cyan/10 border border-forge-cyan/30 rounded-xl p-6 mb-8">
-            <h3 className="text-lg font-bold text-forge-cyan mb-2">The Real Numbers</h3>
+            <h3 className="text-lg font-bold text-forge-cyan mb-2">
+              The Real Numbers
+            </h3>
             <p className="text-gray-300 mb-0">
               In a typical 2-hour Claude Code session, we measured:
             </p>
@@ -92,16 +77,21 @@ export default function BlogPost() {
 
           <h3 className="text-xl font-semibold mt-6 mb-3">LLM Compaction</h3>
           <p className="text-gray-300 mb-4">
-            Claude Code&apos;s built-in compaction uses the model itself to summarize
-            context. It&apos;s better than nothing, but:
+            Claude Code&apos;s built-in compaction uses the model itself to
+            summarize context. It&apos;s better than nothing, but:
           </p>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
             <li>Takes 30-60 seconds (an eternity when you&apos;re in flow)</li>
-            <li>Lossy - the model decides what&apos;s &quot;important,&quot; not you</li>
+            <li>
+              Lossy - the model decides what&apos;s &quot;important,&quot; not
+              you
+            </li>
             <li>Still uses tokens for the summarization step</li>
           </ul>
 
-          <h3 className="text-xl font-semibold mt-6 mb-3">Manual Context Files</h3>
+          <h3 className="text-xl font-semibold mt-6 mb-3">
+            Manual Context Files
+          </h3>
           <p className="text-gray-300 mb-4">
             Some developers maintain README files or scratch pads with context.
             This helps, but:
@@ -109,23 +99,28 @@ export default function BlogPost() {
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
             <li>Requires manual maintenance</li>
             <li>Falls out of sync with actual state</li>
-            <li>Doesn&apos;t capture the nuanced back-and-forth that built understanding</li>
+            <li>
+              Doesn&apos;t capture the nuanced back-and-forth that built
+              understanding
+            </li>
           </ul>
 
-          <h3 className="text-xl font-semibold mt-6 mb-3">Just Start a New Session</h3>
+          <h3 className="text-xl font-semibold mt-6 mb-3">
+            Just Start a New Session
+          </h3>
           <p className="text-gray-300 mb-4">
-            The &quot;solution&quot; many developers use by default. But you lose everything
-            the AI learned about your project, your preferences, and your current
-            task state.
+            The &quot;solution&quot; many developers use by default. But you
+            lose everything the AI learned about your project, your preferences,
+            and your current task state.
           </p>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
             A Different Approach: Snapshots
           </h2>
           <p className="text-gray-300 mb-4">
-            We built <strong>momentum</strong> to solve this differently. Instead of
-            trying to compress context, we save it at task boundaries and restore
-            it instantly after <code>/clear</code>.
+            We built <strong>momentum</strong> to solve this differently.
+            Instead of trying to compress context, we save it at task boundaries
+            and restore it instantly after <code>/clear</code>.
           </p>
 
           <div className="bg-black/30 rounded-lg p-4 font-mono text-sm mb-6">
@@ -182,16 +177,14 @@ export default function BlogPost() {
             </table>
           </div>
           <p className="text-gray-300 mb-4 text-sm italic">
-            Benchmarks on M1 MacBook Pro using Bun&apos;s native SQLite. Your results
-            may vary but will be in the same ballpark.
+            Benchmarks on M1 MacBook Pro using Bun&apos;s native SQLite. Your
+            results may vary but will be in the same ballpark.
           </p>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
             What Gets Saved
           </h2>
-          <p className="text-gray-300 mb-4">
-            A momentum snapshot captures:
-          </p>
+          <p className="text-gray-300 mb-4">A momentum snapshot captures:</p>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
             <li>
               <strong>Summary</strong> - What you were working on
@@ -200,7 +193,8 @@ export default function BlogPost() {
               <strong>Key files</strong> - Files relevant to the current task
             </li>
             <li>
-              <strong>Decisions made</strong> - Technical choices and their rationale
+              <strong>Decisions made</strong> - Technical choices and their
+              rationale
             </li>
             <li>
               <strong>Blockers</strong> - What was stopping progress
@@ -209,7 +203,8 @@ export default function BlogPost() {
               <strong>Code state</strong> - Important variables, configurations
             </li>
             <li>
-              <strong>Recent messages</strong> - The last few exchanges for context
+              <strong>Recent messages</strong> - The last few exchanges for
+              context
             </li>
           </ul>
 
@@ -221,22 +216,28 @@ export default function BlogPost() {
           </p>
           <ol className="list-decimal pl-6 text-gray-300 mb-4 space-y-3">
             <li>
-              <strong>Work normally</strong> - Claude saves snapshots automatically
-              at task boundaries (configurable)
+              <strong>Work normally</strong> - Claude saves snapshots
+              automatically at task boundaries (configurable)
             </li>
             <li>
               <strong>Context fills up</strong> - You notice things getting slow
               or hit Claude&apos;s limit
             </li>
             <li>
-              <strong>Run <code>/clear</code></strong> - Clears the context window
+              <strong>
+                Run <code>/clear</code>
+              </strong>{" "}
+              - Clears the context window
             </li>
             <li>
-              <strong>Claude calls <code>restore_context</code></strong> - Latest
-              snapshot is loaded instantly
+              <strong>
+                Claude calls <code>restore_context</code>
+              </strong>{" "}
+              - Latest snapshot is loaded instantly
             </li>
             <li>
-              <strong>Continue where you left off</strong> - No re-explanation needed
+              <strong>Continue where you left off</strong> - No re-explanation
+              needed
             </li>
           </ol>
 
@@ -244,31 +245,29 @@ export default function BlogPost() {
             Why Not Just Bigger Context Windows?
           </h2>
           <p className="text-gray-300 mb-4">
-            Context windows are getting larger. Claude supports 200K tokens. GPT-4
-            has 128K. Why not just use more context?
+            Context windows are getting larger. Claude supports 200K tokens.
+            GPT-4 has 128K. Why not just use more context?
           </p>
-          <p className="text-gray-300 mb-4">
-            Three reasons:
-          </p>
+          <p className="text-gray-300 mb-4">Three reasons:</p>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
             <li>
-              <strong>Cost</strong> - Larger context means more tokens, means more
-              money. At scale, this matters.
+              <strong>Cost</strong> - Larger context means more tokens, means
+              more money. At scale, this matters.
             </li>
             <li>
               <strong>Latency</strong> - Larger context windows are slower. The
               model has to process all that context for every response.
             </li>
             <li>
-              <strong>Attention degradation</strong> - Studies show models perform
-              worse with very long contexts. Important information in the &quot;middle&quot;
-              gets less attention.
+              <strong>Attention degradation</strong> - Studies show models
+              perform worse with very long contexts. Important information in
+              the &quot;middle&quot; gets less attention.
             </li>
           </ul>
           <p className="text-gray-300 mb-4">
-            Smart context management isn&apos;t about stuffing more tokens into the
-            window. It&apos;s about having the <em>right</em> context available when
-            you need it.
+            Smart context management isn&apos;t about stuffing more tokens into
+            the window. It&apos;s about having the <em>right</em> context
+            available when you need it.
           </p>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
@@ -278,20 +277,24 @@ export default function BlogPost() {
             momentum is free and open source. Install it in Claude Code:
           </p>
           <div className="bg-black/30 rounded-lg p-4 font-mono text-sm mb-6">
-            <code className="text-forge-cyan">/plugin install momentum@substratia-marketplace</code>
+            <code className="text-forge-cyan">
+              /plugin install momentum@substratia-marketplace
+            </code>
           </div>
           <p className="text-gray-300 mb-4">
             Requires Bun runtime. If you don&apos;t have it:
           </p>
           <div className="bg-black/30 rounded-lg p-4 font-mono text-sm mb-6">
-            <code className="text-forge-cyan">curl -fsSL https://bun.sh/install | bash</code>
+            <code className="text-forge-cyan">
+              curl -fsSL https://bun.sh/install | bash
+            </code>
           </div>
 
           <div className="mt-12 p-6 bg-white/5 border border-white/10 rounded-xl">
             <h3 className="text-xl font-bold mb-3">The Ecosystem</h3>
             <p className="text-gray-400 mb-4">
-              momentum handles short-term context (within a session). For long-term
-              memory across sessions, use <strong>memory-mcp</strong>.
+              momentum handles short-term context (within a session). For
+              long-term memory across sessions, use <strong>memory-mcp</strong>.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -312,40 +315,23 @@ export default function BlogPost() {
           </div>
         </div>
 
-        {/* Author */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-forge-purple/30 rounded-full flex items-center justify-center font-bold">
-              S
-            </div>
-            <div>
-              <div className="font-semibold">Substratia Team</div>
-              <div className="text-sm text-gray-400">Building developer tools for Claude Code</div>
-            </div>
-          </div>
-        </div>
+        <BlogAuthor />
 
-        {/* Related Posts */}
-        <div className="mt-12">
-          <h3 className="text-xl font-bold mb-4">Related Posts</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <Link
-              href="/blog/memory-architecture-patterns"
-              className="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-forge-cyan/50 transition-all"
-            >
-              <div className="font-semibold mb-1">Memory Architecture Patterns</div>
-              <div className="text-sm text-gray-400">Two tools, one ecosystem</div>
-            </Link>
-            <Link
-              href="/blog/why-fts5-over-embeddings"
-              className="p-4 bg-white/5 border border-white/10 rounded-xl hover:border-forge-cyan/50 transition-all"
-            >
-              <div className="font-semibold mb-1">Why We Chose FTS5 Over Embeddings</div>
-              <div className="text-sm text-gray-400">The simpler search that works</div>
-            </Link>
-          </div>
-        </div>
+        <RelatedPosts
+          posts={[
+            {
+              href: "/blog/memory-architecture-patterns",
+              title: "Memory Architecture Patterns",
+              description: "Two tools, one ecosystem",
+            },
+            {
+              href: "/blog/why-fts5-over-embeddings",
+              title: "Why We Chose FTS5 Over Embeddings",
+              description: "The simpler search that works",
+            },
+          ]}
+        />
       </article>
     </main>
-  )
+  );
 }
