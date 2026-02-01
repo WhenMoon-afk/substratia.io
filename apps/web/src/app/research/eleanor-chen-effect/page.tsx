@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation'
+import { permanentRedirect } from "next/navigation";
 
 export default function EleanorChenEffectRedirect() {
-  redirect('/blog/eleanor-chen-effect')
+  permanentRedirect("/blog/eleanor-chen-effect");
 }
