@@ -108,9 +108,16 @@ function ToolCard({ tool }: { tool: Tool }) {
 
   const content = (
     <>
+      {tool.featured && (
+        <div className="absolute top-3 right-3">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-forge-purple/20 text-forge-purple border border-forge-purple/30">
+            Featured
+          </span>
+        </div>
+      )}
       <div className="flex items-center gap-3 mb-4">
         <div
-          className={`w-12 h-12 rounded-xl ${bgClass} flex items-center justify-center`}
+          className={`w-12 h-12 rounded-xl ${bgClass} flex items-center justify-center transition-transform group-hover:scale-110`}
           aria-hidden="true"
         >
           <svg
@@ -154,9 +161,9 @@ function ToolCard({ tool }: { tool: Tool }) {
     </>
   );
 
-  const cardClasses = `tool-card gradient-border p-6 rounded-2xl ${
+  const cardClasses = `group tool-card gradient-border p-6 rounded-2xl relative ${
     tool.featured
-      ? "border-2 border-forge-purple/30"
+      ? "border-2 border-forge-purple/30 ring-1 ring-forge-purple/10"
       : "hover:border-forge-cyan/50 transition-all"
   }`;
 
