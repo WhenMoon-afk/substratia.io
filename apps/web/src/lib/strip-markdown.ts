@@ -50,8 +50,12 @@ export function stripMarkdown(text: string): string {
   // Remove task list markers [ ] and [x]
   result = result.replace(/\[[ x]\]\s*/gi, "");
 
-  // Remove HTML tags
-  result = result.replace(/<[^>]+>/g, "");
+  // Remove HTML tags (loop to prevent incomplete sanitization, e.g. "<scr<script>ipt>")
+  let prev = "";
+  while (prev !== result) {
+    prev = result;
+    result = result.replace(/<[^>]+>/g, "");
+  }
 
   // Remove extra blank lines (collapse multiple newlines to max 2)
   result = result.replace(/\n{3,}/g, "\n\n");
