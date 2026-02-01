@@ -4,24 +4,21 @@ import { useState, useCallback, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 import NewsletterCapture from '@/components/NewsletterCapture'
-import CopyButton from '@/components/CopyButton'
 import RelatedTools from '@/components/RelatedTools'
+import TimelineSlot from '@/components/TimelineSlot'
+import MomentLibrary from '@/components/MomentLibrary'
+import KeyframeEditor from '@/components/KeyframeEditor'
+import PromptPreview from '@/components/PromptPreview'
 import { downloadText, downloadJson } from '@/lib/file-utils'
 import {
   DndContext,
   DragOverlay,
-  useDraggable,
-  useDroppable,
   type DragStartEvent,
   type DragEndEvent,
 } from '@dnd-kit/core'
 import {
   videoPlatforms,
-  motionOptions,
-  transitionOptions,
   videoAspectRatios,
-  momentPresets,
-  categoryLabels,
   timelineSlots,
   createEmptyKeyframe,
   createEmptyTimeline,
@@ -32,88 +29,12 @@ import {
   type VideoPlatform,
   type VideoKeyframe,
   type VideoTimeline,
-  type MomentCategory,
-  type Motion,
-  type Transition,
   type VideoAspectRatio,
 } from '@/data/videoPromptPresets'
-
-// Timeline slot component with drag-and-drop
-function TimelineSlot({
-  timestamp,
-  keyframe,
-  isSelected,
-  onSelect,
-  onRemove,
-  isDragging,
-}: {
-  timestamp: number
-  keyframe?: VideoKeyframe
-  isSelected: boolean
-  onSelect: () => void
-  onRemove: () => void
-  isDragging?: boolean
-}) {
-  const hasContent = keyframe && keyframe.prompt.trim()
-
-  const { attributes, listeners, setNodeRef: setDragRef, transform } = useDraggable({
-    id: timestamp,
-    disabled: !hasContent,
-  })
-
-  const { setNodeRef: setDropRef, isOver } = useDroppable({
-    id: timestamp,
-  })
-
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined
-
-  return (
-    <div className="flex flex-col items-center" ref={setDropRef}>
-      <button
-        ref={setDragRef}
-        onClick={onSelect}
-        style={style}
-        {...(hasContent ? { ...attributes, ...listeners } : {})}
-        className={`w-14 h-14 rounded-xl border-2 flex items-center justify-center text-2xl transition-all ${
-          isDragging
-            ? 'opacity-50'
-            : isOver
-              ? 'border-forge-cyan bg-forge-cyan/30 scale-110'
-              : isSelected
-                ? 'border-forge-cyan bg-forge-cyan/20 scale-110'
-                : hasContent
-                  ? 'border-forge-purple bg-forge-purple/20 hover:border-forge-purple/80 cursor-grab active:cursor-grabbing'
-                  : 'border-white/20 bg-white/5 hover:border-white/40'
-        }`}
-      >
-        {keyframe?.emoji || '⬜'}
-      </button>
-
-      <span className={`text-xs mt-2 ${isSelected ? 'text-forge-cyan' : 'text-gray-500'}`}>
-        {timestamp}s
-      </span>
-
-      {hasContent && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            onRemove()
-          }}
-          className="text-xs text-red-400 hover:text-red-300 mt-1"
-        >
-          remove
-        </button>
-      )}
-    </div>
-  )
-}
 
 export default function VideoPromptTimelinePage() {
   const [timeline, setTimeline] = useState<VideoTimeline>(createEmptyTimeline)
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null)
-  const [activeCategory, setActiveCategory] = useState<MomentCategory | null>(null)
   const [favorites, setFavorites] = useState<VideoTimeline[]>(() => getFavorites())
   const [showFavorites, setShowFavorites] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -141,7 +62,6 @@ export default function VideoPromptTimelinePage() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd/Ctrl+K: Clear timeline
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
         setTimeline(createEmptyTimeline())
@@ -152,7 +72,7 @@ export default function VideoPromptTimelinePage() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // Get keyframe for a slot, or create empty placeholder
+  // Get keyframe for a slot
   const getKeyframeForSlot = useCallback((timestamp: number): VideoKeyframe | undefined => {
     return timeline.keyframes.find(k => k.timestamp === timestamp)
   }, [timeline.keyframes])
@@ -256,20 +176,14 @@ export default function VideoPromptTimelinePage() {
 
     if (!fromKeyframe) return
 
-    // Swap keyframes between slots
     setTimeline(prev => {
       const newKeyframes = prev.keyframes.filter(
         k => k.timestamp !== fromTimestamp && k.timestamp !== toTimestamp
       )
-
-      // Move the dragged keyframe to new timestamp
       newKeyframes.push({ ...fromKeyframe, timestamp: toTimestamp })
-
-      // If there was a keyframe at the destination, move it to the source
       if (toKeyframe) {
         newKeyframes.push({ ...toKeyframe, timestamp: fromTimestamp })
       }
-
       return { ...prev, keyframes: newKeyframes }
     })
   }, [timeline.keyframes])
@@ -293,16 +207,8 @@ export default function VideoPromptTimelinePage() {
     setSelectedSlot(null)
   }, [])
 
-  // Filter moments by category
-  const filteredMoments = useMemo(() => {
-    if (!activeCategory) return momentPresets
-    return momentPresets.filter(m => m.category === activeCategory)
-  }, [activeCategory])
-
   // Selected keyframe for editor
-  const selectedKeyframe = selectedSlot !== null ? getKeyframeForSlot(selectedSlot) : null
-
-  const categories = Object.entries(categoryLabels) as [MomentCategory, string][]
+  const selectedKeyframe = selectedSlot !== null ? getKeyframeForSlot(selectedSlot) : undefined
 
   return (
     <main className="min-h-screen text-white">
@@ -441,34 +347,24 @@ export default function VideoPromptTimelinePage() {
         <div className="bg-white/5 border border-white/10 rounded-xl p-6 mb-6">
           <h3 className="text-sm font-medium text-gray-400 mb-4 text-center">Timeline (30 seconds)</h3>
 
-          {/* Timeline Track */}
           <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <div className="relative">
-              {/* Connection Lines */}
               <div className="absolute top-8 left-0 right-0 h-0.5 bg-white/20" />
-
-              {/* Keyframe Slots */}
               <div className="flex justify-between relative z-10">
-                {timelineSlots.map((timestamp) => {
-                  const keyframe = getKeyframeForSlot(timestamp)
-                  const isSelected = selectedSlot === timestamp
-
-                  return (
-                    <TimelineSlot
-                      key={timestamp}
-                      timestamp={timestamp}
-                      keyframe={keyframe}
-                      isSelected={isSelected}
-                      isDragging={activeDragId === timestamp}
-                      onSelect={() => setSelectedSlot(isSelected ? null : timestamp)}
-                      onRemove={() => removeKeyframe(timestamp)}
-                    />
-                  )
-                })}
+                {timelineSlots.map((timestamp) => (
+                  <TimelineSlot
+                    key={timestamp}
+                    timestamp={timestamp}
+                    keyframe={getKeyframeForSlot(timestamp)}
+                    isSelected={selectedSlot === timestamp}
+                    isDragging={activeDragId === timestamp}
+                    onSelect={() => setSelectedSlot(selectedSlot === timestamp ? null : timestamp)}
+                    onRemove={() => removeKeyframe(timestamp)}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Drag Overlay */}
             <DragOverlay>
               {activeDragId !== null && (
                 <div className="w-14 h-14 rounded-xl border-2 border-forge-cyan bg-forge-cyan/30 flex items-center justify-center text-2xl shadow-lg">
@@ -485,231 +381,34 @@ export default function VideoPromptTimelinePage() {
 
         {/* Main Grid: Moment Library + Keyframe Editor */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          {/* Moment Library */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h3 className="text-sm font-medium text-gray-400 mb-3">Moment Library</h3>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              <button
-                onClick={() => setActiveCategory(null)}
-                className={`px-3 py-1 text-xs rounded-full transition-all ${
-                  activeCategory === null
-                    ? 'bg-forge-cyan text-forge-dark'
-                    : 'bg-white/10 text-gray-400 hover:bg-white/20'
-                }`}
-              >
-                All
-              </button>
-              {categories.map(([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => setActiveCategory(key)}
-                  className={`px-3 py-1 text-xs rounded-full transition-all ${
-                    activeCategory === key
-                      ? 'bg-forge-cyan text-forge-dark'
-                      : 'bg-white/10 text-gray-400 hover:bg-white/20'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            {/* Moments Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-[300px] overflow-y-auto">
-              {filteredMoments.map(moment => (
-                <button
-                  key={moment.id}
-                  onClick={() => applyMoment(moment.promptSnippet, moment.emoji)}
-                  disabled={selectedSlot === null}
-                  className={`p-2 text-left text-sm rounded-lg transition-all ${
-                    selectedSlot === null
-                      ? 'bg-white/5 border border-white/10 opacity-50 cursor-not-allowed'
-                      : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-forge-cyan/50'
-                  }`}
-                >
-                  <span className="mr-1">{moment.emoji}</span>
-                  {moment.name}
-                </button>
-              ))}
-            </div>
-
-            {selectedSlot === null && (
-              <p className="text-xs text-gray-500 mt-3 text-center">
-                Select a timeline slot to add moments
-              </p>
-            )}
-          </div>
-
-          {/* Keyframe Editor */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h3 className="text-sm font-medium text-gray-400 mb-3">
-              Keyframe Editor
-              {selectedSlot !== null && (
-                <span className="text-forge-cyan ml-2">({selectedSlot}s)</span>
-              )}
-            </h3>
-
-            {selectedSlot !== null ? (
-              <div className="space-y-4">
-                {/* Prompt */}
-                <div>
-                  <label htmlFor="scene-description" className="block text-xs text-gray-500 mb-1">Scene Description</label>
-                  <textarea
-                    id="scene-description"
-                    value={selectedKeyframe?.prompt || ''}
-                    onChange={(e) => setKeyframe(selectedSlot, { prompt: e.target.value })}
-                    placeholder="Describe what's happening at this moment..."
-                    className="w-full h-24 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm resize-none"
-                  />
-                </div>
-
-                {/* Motion */}
-                <div>
-                  <label htmlFor="camera-motion" className="block text-xs text-gray-500 mb-1">Camera Motion</label>
-                  <select
-                    id="camera-motion"
-                    value={selectedKeyframe?.motion || 'static'}
-                    onChange={(e) => setKeyframe(selectedSlot, { motion: e.target.value as Motion })}
-                    className="w-full px-3 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
-                  >
-                    {motionOptions.map(m => (
-                      <option key={m.id} value={m.id} className="bg-forge-dark">
-                        {m.icon} {m.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Transition */}
-                <div>
-                  <label htmlFor="scene-transition" className="block text-xs text-gray-500 mb-1">Transition to Next</label>
-                  <select
-                    id="scene-transition"
-                    value={selectedKeyframe?.transition || 'cut'}
-                    onChange={(e) => setKeyframe(selectedSlot, { transition: e.target.value as Transition })}
-                    className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm"
-                  >
-                    {transitionOptions.map(t => (
-                      <option key={t.id} value={t.id} className="bg-forge-dark">
-                        {t.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Emoji Picker (simple) */}
-                <div>
-                  <label id="thumbnail-icon-label" className="block text-xs text-gray-500 mb-1">Thumbnail Icon</label>
-                  <div className="flex gap-2 flex-wrap" role="group" aria-labelledby="thumbnail-icon-label">
-                    {['🎬', '🏃', '💥', '🌅', '🌙', '🎭', '🔥', '💫', '🌊', '⚡'].map(emoji => (
-                      <button
-                        key={emoji}
-                        onClick={() => setKeyframe(selectedSlot, { emoji })}
-                        className={`w-10 h-10 rounded-lg text-xl transition-all ${
-                          selectedKeyframe?.emoji === emoji
-                            ? 'bg-forge-cyan/30 border border-forge-cyan'
-                            : 'bg-white/10 border border-white/20 hover:bg-white/20'
-                        }`}
-                      >
-                        {emoji}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-12 text-gray-500">
-                <p className="text-4xl mb-4">🎬</p>
-                <p>Select a timeline slot to edit</p>
-              </div>
-            )}
-          </div>
+          <MomentLibrary
+            selectedSlot={selectedSlot}
+            onApplyMoment={applyMoment}
+          />
+          <KeyframeEditor
+            selectedSlot={selectedSlot}
+            keyframe={selectedKeyframe}
+            onUpdateKeyframe={(updates) => selectedSlot !== null && setKeyframe(selectedSlot, updates)}
+          />
         </div>
 
         {/* Preview Output */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-sm font-medium text-gray-400">Generated Prompt</h3>
-            <span className="text-xs text-gray-500">
-              {videoPlatforms.find(p => p.id === timeline.platform)?.name} format
-            </span>
-          </div>
-
-          <div className="bg-black/30 rounded-lg p-4 min-h-[120px]">
-            {generatedPrompt ? (
-              <pre className="text-sm text-gray-200 whitespace-pre-wrap break-words font-mono">
-                {generatedPrompt}
-              </pre>
-            ) : (
-              <p className="text-sm text-gray-500 italic">
-                Add keyframes to generate your video prompt...
-              </p>
-            )}
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            <CopyButton
-              text={generatedPrompt}
-              label="Copy"
-              successMessage="Video prompt copied!"
-              disabled={!generatedPrompt}
-            />
-            <button
-              onClick={downloadPrompt}
-              disabled={!generatedPrompt}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Download .txt
-            </button>
-            <button
-              onClick={saveToFavorites}
-              disabled={timeline.keyframes.length === 0}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                saved
-                  ? 'bg-forge-purple text-white'
-                  : 'bg-forge-purple/30 hover:bg-forge-purple/50 text-forge-purple disabled:opacity-50 disabled:cursor-not-allowed'
-              }`}
-            >
-              {saved ? 'Saved!' : 'Save to Favorites'}
-            </button>
-            <button
-              onClick={shareURL}
-              disabled={timeline.keyframes.length === 0}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                shared
-                  ? 'bg-green-500 text-white'
-                  : 'bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed'
-              }`}
-            >
-              {shared ? 'Link Copied!' : 'Share URL'}
-            </button>
-            <button
-              onClick={exportJSON}
-              disabled={timeline.keyframes.length === 0}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                jsonCopied
-                  ? 'bg-green-500 text-white'
-                  : 'bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed'
-              }`}
-            >
-              {jsonCopied ? 'JSON Copied!' : 'Export JSON'}
-            </button>
-            <button
-              onClick={downloadJSON}
-              disabled={timeline.keyframes.length === 0}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Download .json
-            </button>
-          </div>
-        </div>
+        <PromptPreview
+          generatedPrompt={generatedPrompt}
+          platform={timeline.platform}
+          hasKeyframes={timeline.keyframes.length > 0}
+          onDownloadPrompt={downloadPrompt}
+          onSaveToFavorites={saveToFavorites}
+          onShareURL={shareURL}
+          onExportJSON={exportJSON}
+          onDownloadJSON={downloadJSON}
+          saved={saved}
+          shared={shared}
+          jsonCopied={jsonCopied}
+        />
 
         {/* Stats & Tips */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Stats */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
@@ -731,7 +430,6 @@ export default function VideoPromptTimelinePage() {
             </div>
           </div>
 
-          {/* Tips */}
           <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
             <h3 className="font-medium mb-2">Tips</h3>
             <ul className="text-sm text-gray-400 space-y-1">
@@ -743,7 +441,6 @@ export default function VideoPromptTimelinePage() {
           </div>
         </div>
 
-        {/* Related Tools */}
         <RelatedTools currentPath="/tools/video-prompt-timeline" />
 
         {/* CTA */}
