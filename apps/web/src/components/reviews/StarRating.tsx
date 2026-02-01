@@ -4,7 +4,7 @@ export function StarRating({ rating }: { rating: number }) {
       {[...Array(10)].map((_, i) => (
         <div
           key={i}
-          className={`w-2 h-6 rounded-sm ${
+          className={`w-2 h-6 rounded-xs ${
             i < rating ? "bg-forge-cyan" : "bg-white/10"
           }`}
         />

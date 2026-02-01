@@ -177,12 +177,12 @@ export default function ApiKeysSection({
                   Or copy key manually
                 </summary>
                 <div className="mt-2 flex items-center gap-2">
-                  <code className="bg-gray-900 px-3 py-2 rounded text-cyan-400 font-mono text-sm flex-1 overflow-x-auto">
+                  <code className="bg-gray-900 px-3 py-2 rounded-sm text-cyan-400 font-mono text-sm flex-1 overflow-x-auto">
                     {newKeyValue}
                   </code>
                   <button
                     onClick={() => copyToClipboard(newKeyValue)}
-                    className="px-3 py-2 bg-cyan-500/20 text-cyan-400 rounded hover:bg-cyan-500/30 transition-colors text-sm"
+                    className="px-3 py-2 bg-cyan-500/20 text-cyan-400 rounded-sm hover:bg-cyan-500/30 transition-colors text-sm"
                   >
                     Copy
                   </button>
@@ -199,7 +199,7 @@ export default function ApiKeysSection({
                 placeholder="Key name (e.g., 'work-laptop', 'home-desktop')"
                 value={newKeyName}
                 onChange={(e) => setNewKeyName(e.target.value)}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-none"
+                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-hidden"
                 onKeyDown={(e) => e.key === "Enter" && handleCreateKey()}
               />
               {apiKeys && apiKeys.length === 0 && newKeyName === "default" && (

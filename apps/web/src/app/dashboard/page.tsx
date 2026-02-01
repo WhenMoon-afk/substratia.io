@@ -77,7 +77,7 @@ export default function DashboardPage() {
     <div className="min-h-screen p-8">
       {/* Checkout Success Banner */}
       {showCheckoutSuccess && (
-        <div className="mb-6 bg-gradient-to-r from-green-500/20 to-cyan-500/20 border border-green-500/30 rounded-xl p-6 relative">
+        <div className="mb-6 bg-linear-to-r from-green-500/20 to-cyan-500/20 border border-green-500/30 rounded-xl p-6 relative">
           <button
             onClick={() => setShowCheckoutSuccess(false)}
             className="absolute top-4 right-4 text-gray-400 hover:text-white"

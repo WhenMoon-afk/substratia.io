@@ -47,7 +47,7 @@ export default function NewsletterCapture({
 
   if (compact) {
     return (
-      <div className="p-4 bg-gradient-to-r from-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-xl">
+      <div className="p-4 bg-linear-to-r from-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-xl">
         <p className="text-sm font-medium mb-3">{heading}</p>
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
@@ -57,7 +57,7 @@ export default function NewsletterCapture({
             placeholder="your@email.com"
             aria-label="Email address for newsletter subscription"
             required
-            className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-forge-cyan/50 transition-colors text-sm"
+            className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-hidden focus:border-forge-cyan/50 transition-colors text-sm"
           />
           <button
             type="submit"
@@ -87,12 +87,12 @@ export default function NewsletterCapture({
             placeholder="your@email.com"
             aria-label="Email address for newsletter subscription"
             required
-            className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-forge-cyan/50 transition-colors text-sm"
+            className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-hidden focus:border-forge-cyan/50 transition-colors text-sm"
           />
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="px-5 py-2.5 bg-gradient-to-r from-forge-purple to-forge-cyan text-white font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 text-sm whitespace-nowrap"
+            className="px-5 py-2.5 bg-linear-to-r from-forge-purple to-forge-cyan text-white font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 text-sm whitespace-nowrap"
           >
             {status === 'loading' ? 'Opening...' : 'Subscribe'}
           </button>
@@ -108,7 +108,7 @@ export default function NewsletterCapture({
   }
 
   return (
-    <div className="p-6 bg-gradient-to-r from-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-xl">
+    <div className="p-6 bg-linear-to-r from-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-xl">
       <h3 className="text-lg font-semibold mb-1">{heading}</h3>
       <p className="text-sm text-gray-400 mb-4">{description}</p>
       <form onSubmit={handleSubmit} className="flex gap-2">
@@ -119,12 +119,12 @@ export default function NewsletterCapture({
           placeholder="your@email.com"
           aria-label="Email address for newsletter subscription"
           required
-          className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-forge-cyan/50 transition-colors text-sm"
+          className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-gray-500 focus:outline-hidden focus:border-forge-cyan/50 transition-colors text-sm"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="px-5 py-2.5 bg-gradient-to-r from-forge-purple to-forge-cyan text-white font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 text-sm whitespace-nowrap"
+          className="px-5 py-2.5 bg-linear-to-r from-forge-purple to-forge-cyan text-white font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 text-sm whitespace-nowrap"
         >
           {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
         </button>

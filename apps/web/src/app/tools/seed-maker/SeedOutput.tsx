@@ -40,7 +40,7 @@ export default function SeedOutput({
           <button
             onClick={onDownload}
             disabled={!result}
-            className="px-3 py-1 rounded text-xs font-medium bg-white/10 hover:bg-white/20 transition-all disabled:opacity-50"
+            className="px-3 py-1 rounded-sm text-xs font-medium bg-white/10 hover:bg-white/20 transition-all disabled:opacity-50"
           >
             Download
           </button>

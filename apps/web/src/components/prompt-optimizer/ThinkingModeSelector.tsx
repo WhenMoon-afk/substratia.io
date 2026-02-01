@@ -18,6 +18,7 @@ export default function ThinkingModeSelector({
         {thinkingModes.map((mode) => (
           <label
             key={mode.id}
+            htmlFor={`thinking-mode-${mode.id}`}
             className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all ${
               value === mode.id
                 ? "bg-forge-cyan/20 border border-forge-cyan"
@@ -25,6 +26,7 @@ export default function ThinkingModeSelector({
             }`}
           >
             <input
+              id={`thinking-mode-${mode.id}`}
               type="radio"
               name="thinkingMode"
               value={mode.id}

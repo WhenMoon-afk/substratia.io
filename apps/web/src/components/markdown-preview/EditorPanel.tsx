@@ -24,7 +24,7 @@ export default function EditorPanel({ markdown, onChange }: EditorPanelProps) {
         value={markdown}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Type or paste your markdown here..."
-        className="w-full h-80 sm:h-[500px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-forge-cyan text-white font-mono text-sm resize-none"
+        className="w-full h-80 sm:h-[500px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white font-mono text-sm resize-none"
       />
     </div>
   )

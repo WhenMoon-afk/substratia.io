@@ -28,14 +28,14 @@ export default function GetStarted({ apiKeys, onExpandApiSection }: GetStartedPr
           <div className="flex items-center gap-2 mb-2">
             <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm flex items-center justify-center">1</span>
             <h3 className="text-white font-medium">Install Memory Plugin</h3>
-            <span className="text-xs text-green-400 bg-green-400/10 px-2 py-0.5 rounded">Free</span>
+            <span className="text-xs text-green-400 bg-green-400/10 px-2 py-0.5 rounded-sm">Free</span>
           </div>
           <div className="space-y-2 ml-8">
             <div className="flex items-center gap-2 group">
               <code className="text-cyan-400 text-sm flex-1">/plugin marketplace add whenmoon-afk/substratia-marketplace</code>
               <button
                 onClick={() => copyToClipboard('/plugin marketplace add whenmoon-afk/substratia-marketplace')}
-                className="px-2 py-1 text-xs rounded bg-gray-600/50 text-gray-400 hover:bg-cyan-500/20 hover:text-cyan-400 transition-colors"
+                className="px-2 py-1 text-xs rounded-sm bg-gray-600/50 text-gray-400 hover:bg-cyan-500/20 hover:text-cyan-400 transition-colors"
               >
                 {copiedCommand === '/plugin marketplace add whenmoon-afk/substratia-marketplace' ? <span className="text-green-400">Copied!</span> : 'Copy'}
               </button>
@@ -44,7 +44,7 @@ export default function GetStarted({ apiKeys, onExpandApiSection }: GetStartedPr
               <code className="text-cyan-400 text-sm flex-1">/plugin install memory-mcp@substratia-marketplace</code>
               <button
                 onClick={() => copyToClipboard('/plugin install memory-mcp@substratia-marketplace')}
-                className="px-2 py-1 text-xs rounded bg-gray-600/50 text-gray-400 hover:bg-cyan-500/20 hover:text-cyan-400 transition-colors"
+                className="px-2 py-1 text-xs rounded-sm bg-gray-600/50 text-gray-400 hover:bg-cyan-500/20 hover:text-cyan-400 transition-colors"
               >
                 {copiedCommand === '/plugin install memory-mcp@substratia-marketplace' ? <span className="text-green-400">Copied!</span> : 'Copy'}
               </button>
@@ -57,7 +57,7 @@ export default function GetStarted({ apiKeys, onExpandApiSection }: GetStartedPr
           <div className="flex items-center gap-2 mb-2">
             <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm flex items-center justify-center">2</span>
             <h3 className="text-white font-medium">Connect memory-mcp</h3>
-            <span className="text-xs text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded">Setup</span>
+            <span className="text-xs text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded-sm">Setup</span>
           </div>
           <p className="text-gray-400 text-sm ml-8">
             {apiKeys && apiKeys.length > 0 ? (

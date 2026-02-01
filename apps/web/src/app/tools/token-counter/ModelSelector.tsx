@@ -15,12 +15,12 @@ export default function ModelSelector({
 }: ModelSelectorProps) {
   return (
     <div className="mt-4 bg-white/5 border border-white/10 rounded-xl p-4">
-      <label
+      <h3
         id="model-selector-label"
         className="text-sm text-gray-400 block mb-3"
       >
         Select Model
-      </label>
+      </h3>
       <div
         className="grid grid-cols-2 md:grid-cols-3 gap-2"
         role="group"

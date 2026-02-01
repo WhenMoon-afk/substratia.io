@@ -57,7 +57,7 @@ export default function ControlsPanel({
           id="platform-select"
           value={platform}
           onChange={(e) => onPlatformChange(e.target.value as Platform)}
-          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white"
+          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white"
         >
           {platforms.map(p => (
             <option key={p.id} value={p.id} className="bg-forge-dark">
@@ -75,7 +75,7 @@ export default function ControlsPanel({
           value={subject}
           onChange={(e) => onSubjectChange(e.target.value)}
           placeholder="A majestic dragon flying over a medieval castle..."
-          className="w-full h-24 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white resize-none"
+          className="w-full h-24 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white resize-none"
         />
       </div>
 
@@ -86,7 +86,7 @@ export default function ControlsPanel({
           id="aspect-ratio-select"
           value={aspectRatio}
           onChange={(e) => onAspectRatioChange(e.target.value)}
-          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white"
+          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white"
         >
           {aspectRatios.map(ar => (
             <option key={ar.id} value={ar.id} className="bg-forge-dark">
@@ -131,7 +131,7 @@ export default function ControlsPanel({
                 type="checkbox"
                 checked={selectedNegatives.includes(neg.id)}
                 onChange={() => onToggleNegative(neg.id)}
-                className="w-4 h-4 rounded border-white/30 bg-white/10 text-forge-cyan focus:ring-forge-cyan"
+                className="w-4 h-4 rounded-sm border-white/30 bg-white/10 text-forge-cyan focus:ring-forge-cyan"
               />
               <span className="text-sm text-gray-300">{neg.name}</span>
             </label>

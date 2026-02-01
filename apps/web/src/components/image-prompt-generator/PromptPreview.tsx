@@ -44,7 +44,7 @@ export default function PromptPreview({
         <div className="text-xs text-forge-cyan mb-1">Positive</div>
         <div className="bg-black/30 rounded-lg p-3 min-h-[120px]">
           {generatedPrompt.positive ? (
-            <p className="text-sm text-gray-200 whitespace-pre-wrap break-words">
+            <p className="text-sm text-gray-200 whitespace-pre-wrap wrap-break-word">
               {generatedPrompt.positive}
             </p>
           ) : (
@@ -60,7 +60,7 @@ export default function PromptPreview({
         <div className="mb-4">
           <div className="text-xs text-red-400 mb-1">Negative</div>
           <div className="bg-black/30 rounded-lg p-3">
-            <p className="text-sm text-gray-400 whitespace-pre-wrap break-words">
+            <p className="text-sm text-gray-400 whitespace-pre-wrap wrap-break-word">
               {generatedPrompt.negative}
             </p>
           </div>

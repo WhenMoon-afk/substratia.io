@@ -58,7 +58,7 @@ function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
 
   return (
     <div className="relative z-10 py-1" aria-hidden="true">
-      <div className={`h-px bg-gradient-to-r ${gradient} max-w-4xl mx-auto`} />
+      <div className={`h-px bg-linear-to-r ${gradient} max-w-4xl mx-auto`} />
     </div>
   );
 }

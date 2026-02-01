@@ -51,7 +51,7 @@ export default function StatsPanel({
   return (
     <div className="space-y-4">
       {/* Token Count - Main Stat */}
-      <div className="bg-gradient-to-br from-forge-cyan/20 to-forge-purple/20 border border-forge-cyan/30 rounded-xl p-6 text-center">
+      <div className="bg-linear-to-br from-forge-cyan/20 to-forge-purple/20 border border-forge-cyan/30 rounded-xl p-6 text-center">
         <div className="text-5xl font-bold text-forge-cyan mb-1">
           {tokens.toLocaleString()}
         </div>

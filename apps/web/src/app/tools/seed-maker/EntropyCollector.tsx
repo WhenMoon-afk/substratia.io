@@ -13,9 +13,7 @@ export default function EntropyCollector({
 }: EntropyCollectorProps) {
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-      <label className="text-sm text-gray-400 block mb-3">
-        Collect Entropy
-      </label>
+      <h3 className="text-sm text-gray-400 block mb-3">Collect Entropy</h3>
       <div
         onMouseMove={onMouseMove}
         className={`h-32 rounded-lg border-2 border-dashed transition-all flex flex-col items-center justify-center cursor-crosshair ${

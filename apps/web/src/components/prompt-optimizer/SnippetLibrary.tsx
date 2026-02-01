@@ -84,7 +84,7 @@ export default function SnippetLibrary({
                 </div>
               </div>
               <span
-                className={`text-xs px-2 py-0.5 rounded ${categoryStyles[snippet.category].badge} ${categoryStyles[snippet.category].badgeText}`}
+                className={`text-xs px-2 py-0.5 rounded-sm ${categoryStyles[snippet.category].badge} ${categoryStyles[snippet.category].badgeText}`}
               >
                 {categoryLabels[snippet.category].split(" ")[0]}
               </span>

@@ -135,12 +135,20 @@ export default function PromptsPage() {
             >
               {/* Header */}
               <div
+                role="button"
+                tabIndex={0}
                 className="p-4 cursor-pointer"
                 onClick={() =>
                   setExpandedPrompt(
                     expandedPrompt === prompt.id ? null : prompt.id,
                   )
                 }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    setExpandedPrompt(
+                      expandedPrompt === prompt.id ? null : prompt.id,
+                    );
+                }}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -238,7 +246,7 @@ export default function PromptsPage() {
 
         {/* CTA */}
         <div className="max-w-4xl mx-auto mt-12 text-center">
-          <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8">
+          <div className="bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-2xl p-8">
             <h2 className="text-2xl font-bold mb-3">Build Custom Agents</h2>
             <p className="text-gray-400 mb-6 max-w-xl mx-auto">
               Use these prompts as a starting point, then customize with our

@@ -35,7 +35,7 @@ export default function BlogPost() {
             happens: they almost always create a character named Eleanor Chen.
           </p>
 
-          <div className="bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-6 mb-8 border border-white/10">
+          <div className="bg-linear-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-6 mb-8 border border-white/10">
             <h3 className="text-lg font-bold text-white mb-2">Key Findings</h3>
             <ul className="text-gray-300 space-y-1 mb-0 list-disc pl-4">
               <li>

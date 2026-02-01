@@ -42,7 +42,7 @@ export default function SeedHistory({
             <button
               key={i}
               onClick={() => onSelect(item)}
-              className="w-full text-left text-xs font-mono p-2 bg-black/20 hover:bg-black/40 rounded truncate transition-all"
+              className="w-full text-left text-xs font-mono p-2 bg-black/20 hover:bg-black/40 rounded-sm truncate transition-all"
             >
               {item}
             </button>

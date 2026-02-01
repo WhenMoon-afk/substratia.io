@@ -43,13 +43,13 @@ export default function MirrorDemonsResearch() {
         {/* Header */}
         <header className="mb-12 text-center">
           <div className="flex justify-center gap-2 mb-4">
-            <span className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded">
+            <span className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded-sm">
               AI Safety
             </span>
-            <span className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded">
+            <span className="text-xs px-2 py-1 bg-forge-purple/20 text-forge-purple rounded-sm">
               Psychology
             </span>
-            <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">
+            <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-sm">
               Published
             </span>
           </div>
@@ -106,7 +106,7 @@ export default function MirrorDemonsResearch() {
 
         {/* Core Finding */}
         <section className="mb-12">
-          <div className="bg-gradient-to-r from-forge-purple/20 to-red-500/20 rounded-xl p-6 border border-white/10">
+          <div className="bg-linear-to-r from-forge-purple/20 to-red-500/20 rounded-xl p-6 border border-white/10">
             <h2 className="text-xl font-bold mb-4 text-center">Core Finding</h2>
             <p className="text-gray-300 text-center mb-6">
               The same architecture that makes AI helpful is what makes it dangerous to vulnerable users:
@@ -245,7 +245,7 @@ export default function MirrorDemonsResearch() {
 
         {/* CTA Section */}
         <section className="mb-12">
-          <div className="bg-gradient-to-br from-forge-cyan/10 via-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-2xl p-8">
+          <div className="bg-linear-to-br from-forge-cyan/10 via-forge-purple/10 to-forge-cyan/10 border border-white/10 rounded-2xl p-8">
             <h2 className="text-2xl font-bold mb-3 text-center">Build Safer AI Interactions</h2>
             <p className="text-gray-400 text-center mb-8 max-w-2xl mx-auto">
               Our research informs our tools. Explore how persistent memory and proper context management

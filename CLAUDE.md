@@ -101,8 +101,8 @@ Manual deploy: `npx vercel --prod --token $VERCEL_TOKEN`
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Next.js 15 (App Router, SSR)
-- **Styling**: Tailwind CSS 3.4
+- **Framework**: Next.js 16 (App Router, SSR, Turbopack)
+- **Styling**: Tailwind CSS 4.1
 - **Backend**: Convex (real-time database)
 - **Auth**: Clerk (custom domain: clerk.substratia.io)
 - **Package Manager**: Bun
@@ -164,7 +164,7 @@ src/
 - **Tagline**: "Open-Source Developer Tools for Claude Code"
 - **Philosophy**: "Intelligence is substrate-agnostic"
 
-### Colors (tailwind.config.js)
+### Colors (globals.css @theme)
 ```
 forge-dark:   #1a1a2e
 forge-purple: #7b2cbf / #7c3aed
@@ -202,8 +202,8 @@ All responses include:
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy` - Camera/mic/geolocation disabled
 
-### Route Protection (middleware.ts)
-- Server-side auth protection for `/dashboard` routes
+### Route Protection (proxy.ts)
+- Server-side auth protection for `/dashboard` routes (Next.js 16 network boundary convention)
 - Unauthenticated users redirected to sign-in at edge
 - Defense-in-depth beyond client-side checks
 

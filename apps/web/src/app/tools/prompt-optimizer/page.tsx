@@ -158,7 +158,7 @@ export default function PromptOptimizerPage() {
                 value={userPrompt}
                 onChange={(e) => setUserPrompt(e.target.value)}
                 placeholder="Describe what you want Claude Code to do..."
-                className="w-full h-32 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-forge-cyan text-white text-sm resize-none"
+                className="w-full h-32 px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-hidden focus:border-forge-cyan text-white text-sm resize-none"
               />
             </div>
 
