@@ -17,8 +17,8 @@ function generateRSS(): string {
       (post) => `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${SITE_URL}/blog/${post.slug}/</link>
-      <guid isPermaLink="true">${SITE_URL}/blog/${post.slug}/</guid>
+      <link>${escapeXml(SITE_URL)}/blog/${escapeXml(post.slug)}/</link>
+      <guid isPermaLink="true">${escapeXml(SITE_URL)}/blog/${escapeXml(post.slug)}/</guid>
       <description><![CDATA[${post.excerpt}]]></description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <category>${escapeXml(post.tags[0] ?? "Blog")}</category>
@@ -30,11 +30,11 @@ function generateRSS(): string {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Substratia Blog</title>
-    <link>${SITE_URL}/blog</link>
+    <link>${escapeXml(SITE_URL)}/blog</link>
     <description>Tutorials, comparisons, and best practices for AI developer tools, MCP servers, and agent configuration.</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${escapeXml(SITE_URL)}/feed.xml" rel="self" type="application/rss+xml"/>
     ${items}
   </channel>
 </rss>`;
