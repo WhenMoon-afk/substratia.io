@@ -1,119 +1,58 @@
-'use client'
+"use client";
 
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
-import Link from 'next/link'
-import ShareButton from '@/components/ShareButton'
-import NewsletterCapture from '@/components/NewsletterCapture'
-import CopyButton from '@/components/CopyButton'
-import RelatedTools from '@/components/RelatedTools'
-import { downloadText as downloadTxtFile } from '@/lib/file-utils'
-
-// Strip markdown formatting from text
-function stripMarkdown(text: string): string {
-  if (!text) return ''
-
-  let result = text
-
-  // Remove code blocks (``` ... ```)
-  result = result.replace(/```[\s\S]*?```/g, (match) => {
-    // Keep the code content, just remove the backticks
-    return match.replace(/```\w*\n?/g, '').replace(/```/g, '')
-  })
-
-  // Remove inline code (`code`)
-  result = result.replace(/`([^`]+)`/g, '$1')
-
-  // Remove images ![alt](url)
-  result = result.replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
-
-  // Remove links [text](url) - keep the text
-  result = result.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-
-  // Remove reference links [text][ref]
-  result = result.replace(/\[([^\]]+)\]\[[^\]]*\]/g, '$1')
-
-  // Remove reference definitions [ref]: url
-  result = result.replace(/^\[[^\]]+\]:\s*\S+.*$/gm, '')
-
-  // Remove headers (# ## ### etc)
-  result = result.replace(/^#{1,6}\s+/gm, '')
-
-  // Remove bold/italic (**text**, *text*, __text__, _text_)
-  result = result.replace(/(\*\*|__)(.*?)\1/g, '$2')
-  result = result.replace(/(\*|_)(.*?)\1/g, '$2')
-
-  // Remove strikethrough ~~text~~
-  result = result.replace(/~~(.*?)~~/g, '$1')
-
-  // Remove blockquotes (> text)
-  result = result.replace(/^>\s*/gm, '')
-
-  // Remove horizontal rules (---, ***, ___)
-  result = result.replace(/^[-*_]{3,}\s*$/gm, '')
-
-  // Remove unordered list markers (-, *, +)
-  result = result.replace(/^[\s]*[-*+]\s+/gm, '')
-
-  // Remove ordered list markers (1., 2., etc)
-  result = result.replace(/^[\s]*\d+\.\s+/gm, '')
-
-  // Remove task list markers [ ] and [x]
-  result = result.replace(/\[[ x]\]\s*/gi, '')
-
-  // Remove HTML tags
-  result = result.replace(/<[^>]+>/g, '')
-
-  // Remove extra blank lines (collapse multiple newlines to max 2)
-  result = result.replace(/\n{3,}/g, '\n\n')
-
-  // Trim whitespace
-  result = result.trim()
-
-  return result
-}
+import { useState, useCallback, useMemo, useEffect } from "react";
+import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
+import NewsletterCapture from "@/components/NewsletterCapture";
+import CopyButton from "@/components/CopyButton";
+import RelatedTools from "@/components/RelatedTools";
+import { downloadText as downloadTxtFile } from "@/lib/file-utils";
+import { stripMarkdown } from "@/lib/strip-markdown";
+import StripperStats from "./StripperStats";
+import WhatGetsStripped from "./WhatGetsStripped";
 
 export default function MarkdownStripperPage() {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState("");
 
-  const strippedText = useMemo(() => stripMarkdown(input), [input])
+  const strippedText = useMemo(() => stripMarkdown(input), [input]);
 
   const clearAll = useCallback(() => {
-    setInput('')
-  }, [])
+    setInput("");
+  }, []);
 
   const pasteFromClipboard = useCallback(async () => {
     try {
-      const text = await navigator.clipboard.readText()
-      setInput(text)
+      const text = await navigator.clipboard.readText();
+      setInput(text);
     } catch {
       // Clipboard access denied
     }
-  }, [])
+  }, []);
 
   const downloadText = useCallback(() => {
-    if (!strippedText) return
-    downloadTxtFile(strippedText, 'stripped-text.txt')
-  }, [strippedText])
+    if (!strippedText) return;
+    downloadTxtFile(strippedText, "stripped-text.txt");
+  }, [strippedText]);
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd/Ctrl+K: Clear
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        clearAll()
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        clearAll();
       }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [clearAll])
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [clearAll]);
 
-  const charDiff = input.length - strippedText.length
-  const percentReduced = input.length > 0
-    ? Math.round((charDiff / input.length) * 100)
-    : 0
-  const inputWords = input.trim() ? input.trim().split(/\s+/).length : 0
-  const outputWords = strippedText.trim() ? strippedText.trim().split(/\s+/).length : 0
+  const charDiff = input.length - strippedText.length;
+  const percentReduced =
+    input.length > 0 ? Math.round((charDiff / input.length) * 100) : 0;
+  const inputWords = input.trim() ? input.trim().split(/\s+/).length : 0;
+  const outputWords = strippedText.trim()
+    ? strippedText.trim().split(/\s+/).length
+    : 0;
 
   return (
     <main className="min-h-screen text-white">
@@ -121,7 +60,10 @@ export default function MarkdownStripperPage() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+            <Link
+              href="/tools"
+              className="text-forge-cyan hover:underline text-sm"
+            >
               &larr; Back to Tools
             </Link>
             <ShareButton title="Markdown Stripper - Substratia" />
@@ -130,7 +72,8 @@ export default function MarkdownStripperPage() {
             Markdown <span className="text-forge-cyan">Stripper</span>
           </h1>
           <p className="text-gray-400">
-            Paste markdown text, get clean plain text instantly. Removes all formatting.
+            Paste markdown text, get clean plain text instantly. Removes all
+            formatting.
           </p>
         </div>
 
@@ -139,7 +82,9 @@ export default function MarkdownStripperPage() {
           {/* Input */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-sm font-medium text-gray-400">Markdown Input</h3>
+              <h3 className="text-sm font-medium text-gray-400">
+                Markdown Input
+              </h3>
               <div className="flex gap-2">
                 <button
                   onClick={pasteFromClipboard}
@@ -152,14 +97,16 @@ export default function MarkdownStripperPage() {
                   className="px-3 py-1 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all flex items-center gap-1"
                 >
                   Clear
-                  <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">⌘K</kbd>
+                  <kbd className="hidden sm:inline px-1 py-0.5 text-[10px] bg-red-500/20 rounded">
+                    ⌘K
+                  </kbd>
                 </button>
               </div>
             </div>
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Paste your markdown here...
+              placeholder={`Paste your markdown here...
 
 # Example Heading
 This is **bold** and *italic* text.
@@ -168,7 +115,7 @@ This is **bold** and *italic* text.
 
 [Link text](https://example.com)
 
-`inline code`"
+\`inline code\``}
               className="w-full h-64 sm:h-[400px] px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-forge-cyan text-white font-mono text-sm resize-none"
             />
             <div className="mt-2 text-xs text-gray-500">
@@ -179,7 +126,9 @@ This is **bold** and *italic* text.
           {/* Output */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-sm font-medium text-gray-400">Plain Text Output</h3>
+              <h3 className="text-sm font-medium text-gray-400">
+                Plain Text Output
+              </h3>
               <div className="flex gap-2">
                 <CopyButton
                   text={strippedText}
@@ -212,67 +161,24 @@ This is **bold** and *italic* text.
               {strippedText.length.toLocaleString()} characters
               {charDiff > 0 && (
                 <span className="text-forge-cyan ml-2">
-                  ({charDiff.toLocaleString()} chars removed, {percentReduced}% reduction)
+                  ({charDiff.toLocaleString()} chars removed, {percentReduced}%
+                  reduction)
                 </span>
               )}
             </div>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="mt-6 bg-white/5 border border-white/10 rounded-xl p-4">
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
-            <div>
-              <div className="text-2xl font-bold text-white">{input.length.toLocaleString()}</div>
-              <div className="text-xs text-gray-500">Input Chars</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-forge-cyan">{strippedText.length.toLocaleString()}</div>
-              <div className="text-xs text-gray-500">Output Chars</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-forge-purple">{charDiff.toLocaleString()}</div>
-              <div className="text-xs text-gray-500">Removed</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-green-400">{percentReduced}%</div>
-              <div className="text-xs text-gray-500">Reduction</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-white">{inputWords.toLocaleString()}</div>
-              <div className="text-xs text-gray-500">Input Words</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-forge-cyan">{outputWords.toLocaleString()}</div>
-              <div className="text-xs text-gray-500">Output Words</div>
-            </div>
-          </div>
-        </div>
+        <StripperStats
+          inputLength={input.length}
+          outputLength={strippedText.length}
+          charsRemoved={charDiff}
+          percentReduced={percentReduced}
+          inputWords={inputWords}
+          outputWords={outputWords}
+        />
 
-        {/* What Gets Stripped */}
-        <div className="mt-6 bg-gradient-to-r from-forge-purple/20 to-forge-cyan/20 rounded-xl p-4">
-          <h3 className="font-medium mb-3">What Gets Stripped</h3>
-          <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-400">
-            <ul className="space-y-1">
-              <li>- Headers (#, ##, ###)</li>
-              <li>- Bold (**text**)</li>
-              <li>- Italic (*text*)</li>
-              <li>- Strikethrough (~~text~~)</li>
-            </ul>
-            <ul className="space-y-1">
-              <li>- Links [text](url)</li>
-              <li>- Images ![alt](url)</li>
-              <li>- Code blocks (```)</li>
-              <li>- Inline code (`code`)</li>
-            </ul>
-            <ul className="space-y-1">
-              <li>- Lists (-, *, 1.)</li>
-              <li>- Blockquotes (&gt;)</li>
-              <li>- Horizontal rules (---)</li>
-              <li>- HTML tags</li>
-            </ul>
-          </div>
-        </div>
+        <WhatGetsStripped />
 
         {/* Related Tools */}
         <RelatedTools currentPath="/tools/markdown-stripper" />
@@ -304,5 +210,5 @@ This is **bold** and *italic* text.
         </div>
       </div>
     </main>
-  )
+  );
 }

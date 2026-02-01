@@ -1,94 +1,62 @@
-'use client'
+"use client";
 
-import { useState, useCallback, useEffect } from 'react'
-import Link from 'next/link'
-import ShareButton from '@/components/ShareButton'
-import NewsletterCapture from '@/components/NewsletterCapture'
-import CopyButton from '@/components/CopyButton'
-import RelatedTools from '@/components/RelatedTools'
-import { downloadMarkdown } from '@/lib/file-utils'
-
-// Simple token estimation (GPT-style: ~4 chars per token on average)
-// More accurate would use tiktoken, but this is client-side friendly
-function estimateTokens(text: string): number {
-  if (!text) return 0
-  // Better estimation: count words and punctuation
-  const words = text.trim().split(/\s+/).filter(w => w.length > 0)
-  const wordTokens = words.reduce((acc, word) => {
-    // Short words ~1 token, long words ~1 token per 4 chars
-    if (word.length <= 4) return acc + 1
-    return acc + Math.ceil(word.length / 4)
-  }, 0)
-  // Add tokens for punctuation and special chars
-  const specialChars = (text.match(/[^\w\s]/g) || []).length
-  return wordTokens + Math.ceil(specialChars / 2)
-}
-
-// Model context windows and pricing (per 1M tokens, updated Jan 2026)
-const models = [
-  { name: 'Claude Opus 4.5', context: 200000, inputPrice: 5, outputPrice: 25 },
-  { name: 'Claude Sonnet 4.5', context: 200000, inputPrice: 3, outputPrice: 15 },
-  { name: 'Claude Haiku 4.5', context: 200000, inputPrice: 1, outputPrice: 5 },
-  { name: 'Claude Opus 4', context: 200000, inputPrice: 15, outputPrice: 75 },
-  { name: 'GPT-4o', context: 128000, inputPrice: 2.50, outputPrice: 10 },
-  { name: 'GPT-4 Turbo', context: 128000, inputPrice: 10, outputPrice: 30 },
-]
+import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
+import NewsletterCapture from "@/components/NewsletterCapture";
+import RelatedTools from "@/components/RelatedTools";
+import { downloadMarkdown } from "@/lib/file-utils";
+import { models, estimateTokens } from "@/data/tokenCounterData";
+import ModelSelector from "./ModelSelector";
+import StatsPanel from "./StatsPanel";
+import TokenTips from "./TokenTips";
 
 export default function TokenCounterPage() {
-  const [text, setText] = useState('')
-  const [selectedModel, setSelectedModel] = useState(models[0])
-  const [copied, setCopied] = useState(false)
-  const [shared, setShared] = useState(false)
-  const [urlTooLong, setUrlTooLong] = useState(false)
+  const [text, setText] = useState("");
+  const [selectedModel, setSelectedModel] = useState(models[0]);
+  const [shared, setShared] = useState(false);
+  const [urlTooLong, setUrlTooLong] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd/Ctrl+K: Clear
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setText('')
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setText("");
       }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Load state from URL on mount
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const params = new URLSearchParams(window.location.search)
-    const stateParam = params.get('token')
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const stateParam = params.get("token");
     if (stateParam) {
       try {
-        const decoded = JSON.parse(atob(stateParam))
+        const decoded = JSON.parse(atob(stateParam));
         if (decoded) {
-          if (decoded.text) setText(decoded.text)
+          if (decoded.text) setText(decoded.text);
           if (decoded.model) {
-            const found = models.find(m => m.name === decoded.model)
-            if (found) setSelectedModel(found)
+            const found = models.find((m) => m.name === decoded.model);
+            if (found) setSelectedModel(found);
           }
         }
       } catch {
         // Invalid state param, ignore
       }
     }
-  }, [])
+  }, []);
 
-  const tokens = estimateTokens(text)
-  const chars = text.length
-  const words = text.trim() ? text.trim().split(/\s+/).length : 0
-  const lines = text ? text.split('\n').length : 0
+  const tokens = estimateTokens(text);
+  const chars = text.length;
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const lines = text ? text.split("\n").length : 0;
 
-  const contextPercentage = (tokens / selectedModel.context) * 100
-  const estimatedCost = (tokens / 1000000) * selectedModel.inputPrice
-
-  const getContextColor = (percentage: number) => {
-    if (percentage < 25) return 'text-green-400'
-    if (percentage < 50) return 'text-yellow-400'
-    if (percentage < 75) return 'text-orange-400'
-    return 'text-red-400'
-  }
+  const contextPercentage = (tokens / selectedModel.context) * 100;
+  const estimatedCost = (tokens / 1000000) * selectedModel.inputPrice;
 
   const getStats = useCallback(() => {
     return `Tokens: ${tokens.toLocaleString()}
@@ -97,8 +65,16 @@ Words: ${words.toLocaleString()}
 Lines: ${lines.toLocaleString()}
 Model: ${selectedModel.name}
 Context Used: ${contextPercentage.toFixed(2)}%
-Est. Cost: $${estimatedCost.toFixed(6)}`
-  }, [tokens, chars, words, lines, selectedModel, contextPercentage, estimatedCost])
+Est. Cost: $${estimatedCost.toFixed(6)}`;
+  }, [
+    tokens,
+    chars,
+    words,
+    lines,
+    selectedModel,
+    contextPercentage,
+    estimatedCost,
+  ]);
 
   const downloadStats = useCallback(() => {
     const content = `# Token Count Analysis
@@ -108,32 +84,29 @@ ${getStats()}
 ---
 Text analyzed:
 \`\`\`
-${text.slice(0, 1000)}${text.length > 1000 ? '\n...(truncated)' : ''}
+${text.slice(0, 1000)}${text.length > 1000 ? "\n...(truncated)" : ""}
 \`\`\`
 
 Generated by substratia.io/tools/token-counter
-`
-    downloadMarkdown(content, 'token-analysis.md')
-  }, [getStats, text])
+`;
+    downloadMarkdown(content, "token-analysis.md");
+  }, [getStats, text]);
 
   // Share via URL (with length validation)
-  const MAX_URL_LENGTH = 2000
+  const MAX_URL_LENGTH = 2000;
   const shareState = useCallback(async () => {
-    const state = {
-      text,
-      model: selectedModel.name,
-    }
-    const stateStr = btoa(JSON.stringify(state))
-    const shareUrl = `${window.location.origin}${window.location.pathname}?token=${stateStr}`
+    const state = { text, model: selectedModel.name };
+    const stateStr = btoa(JSON.stringify(state));
+    const shareUrl = `${window.location.origin}${window.location.pathname}?token=${stateStr}`;
     if (shareUrl.length > MAX_URL_LENGTH) {
-      setUrlTooLong(true)
-      setTimeout(() => setUrlTooLong(false), 4000)
-      return
+      setUrlTooLong(true);
+      setTimeout(() => setUrlTooLong(false), 4000);
+      return;
     }
-    await navigator.clipboard.writeText(shareUrl)
-    setShared(true)
-    setTimeout(() => setShared(false), 2000)
-  }, [text, selectedModel])
+    await navigator.clipboard.writeText(shareUrl);
+    setShared(true);
+    setTimeout(() => setShared(false), 2000);
+  }, [text, selectedModel]);
 
   return (
     <main className="min-h-screen text-white">
@@ -141,7 +114,10 @@ Generated by substratia.io/tools/token-counter
         {/* Header */}
         <div className="max-w-4xl mx-auto mb-8">
           <div className="flex items-center justify-between mb-4">
-            <Link href="/tools" className="text-forge-cyan hover:underline text-sm">
+            <Link
+              href="/tools"
+              className="text-forge-cyan hover:underline text-sm"
+            >
               ← Back to Tools
             </Link>
             <ShareButton title="Token Counter - Substratia" />
@@ -150,7 +126,8 @@ Generated by substratia.io/tools/token-counter
             Token <span className="text-forge-cyan">Counter</span>
           </h1>
           <p className="text-gray-400">
-            Estimate token count, context usage, and cost for Claude, GPT-4, and other models.
+            Estimate token count, context usage, and cost for Claude, GPT-4, and
+            other models.
           </p>
         </div>
 
@@ -159,13 +136,20 @@ Generated by substratia.io/tools/token-counter
           <div className="lg:col-span-2">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <div className="flex justify-between items-center mb-3">
-                <label htmlFor="token-text-input" className="text-sm text-gray-400">Paste your text</label>
+                <label
+                  htmlFor="token-text-input"
+                  className="text-sm text-gray-400"
+                >
+                  Paste your text
+                </label>
                 <button
-                  onClick={() => setText('')}
+                  onClick={() => setText("")}
                   className="text-xs text-gray-500 hover:text-white transition-all flex items-center gap-1"
                 >
                   Clear
-                  <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] bg-white/10 rounded">⌘K</kbd>
+                  <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] bg-white/10 rounded">
+                    ⌘K
+                  </kbd>
                 </button>
               </div>
               <textarea
@@ -177,152 +161,31 @@ Generated by substratia.io/tools/token-counter
               />
             </div>
 
-            {/* Model Selector */}
-            <div className="mt-4 bg-white/5 border border-white/10 rounded-xl p-4">
-              <label id="model-selector-label" className="text-sm text-gray-400 block mb-3">Select Model</label>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2" role="group" aria-labelledby="model-selector-label">
-                {models.map((model) => (
-                  <button
-                    key={model.name}
-                    onClick={() => setSelectedModel(model)}
-                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                      selectedModel.name === model.name
-                        ? 'bg-forge-cyan text-forge-dark'
-                        : 'bg-white/5 hover:bg-white/10 text-gray-300'
-                    }`}
-                  >
-                    {model.name}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <ModelSelector
+              models={models}
+              selectedModel={selectedModel}
+              onSelect={setSelectedModel}
+            />
           </div>
 
-          {/* Stats Panel */}
-          <div className="space-y-4">
-            {/* Token Count - Main Stat */}
-            <div className="bg-gradient-to-br from-forge-cyan/20 to-forge-purple/20 border border-forge-cyan/30 rounded-xl p-6 text-center">
-              <div className="text-5xl font-bold text-forge-cyan mb-1">
-                {tokens.toLocaleString()}
-              </div>
-              <div className="text-sm text-gray-400">tokens (estimated)</div>
-            </div>
-
-            {/* Secondary Stats */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-400 text-sm">Characters</span>
-                <span className="font-mono">{chars.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400 text-sm">Words</span>
-                <span className="font-mono">{words.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400 text-sm">Lines</span>
-                <span className="font-mono">{lines.toLocaleString()}</span>
-              </div>
-            </div>
-
-            {/* Context Usage */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-gray-400 text-sm">Context Window</span>
-                <span className={`font-mono text-sm ${getContextColor(contextPercentage)}`}>
-                  {contextPercentage.toFixed(1)}%
-                </span>
-              </div>
-              <div className="w-full bg-white/10 rounded-full h-2 mb-2">
-                <div
-                  className={`h-2 rounded-full transition-all ${
-                    contextPercentage < 25 ? 'bg-green-400' :
-                    contextPercentage < 50 ? 'bg-yellow-400' :
-                    contextPercentage < 75 ? 'bg-orange-400' : 'bg-red-400'
-                  }`}
-                  style={{ width: `${Math.min(contextPercentage, 100)}%` }}
-                />
-              </div>
-              <div className="text-xs text-gray-500">
-                {tokens.toLocaleString()} / {selectedModel.context.toLocaleString()} tokens
-              </div>
-            </div>
-
-            {/* Cost Estimate */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-gray-400 text-sm">Estimated Cost</span>
-                <span className="font-mono text-forge-purple">
-                  ${estimatedCost.toFixed(6)}
-                </span>
-              </div>
-              <div className="text-xs text-gray-500">
-                Input: ${selectedModel.inputPrice}/1M tokens
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2">
-              <CopyButton
-                text={getStats()}
-                label="Copy Stats"
-                successMessage="Stats copied to clipboard!"
-                variant="secondary"
-                className="flex-1"
-              />
-              <button
-                onClick={downloadStats}
-                disabled={!text}
-                className="px-4 py-3 bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan rounded-xl text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Download
-              </button>
-            </div>
-            <button
-              onClick={shareState}
-              disabled={!text}
-              className={`w-full px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                urlTooLong
-                  ? 'bg-amber-500 text-white'
-                  : shared
-                    ? 'bg-green-500 text-white'
-                    : 'bg-forge-purple/20 hover:bg-forge-purple/30 text-forge-purple disabled:opacity-50 disabled:cursor-not-allowed'
-              }`}
-            >
-              {urlTooLong ? 'Too large — download instead' : shared ? 'Link Copied!' : 'Share Results'}
-            </button>
-          </div>
+          <StatsPanel
+            tokens={tokens}
+            chars={chars}
+            words={words}
+            lines={lines}
+            selectedModel={selectedModel}
+            contextPercentage={contextPercentage}
+            estimatedCost={estimatedCost}
+            text={text}
+            getStats={getStats}
+            onDownload={downloadStats}
+            onShare={shareState}
+            shared={shared}
+            urlTooLong={urlTooLong}
+          />
         </div>
 
-        {/* Tips Section */}
-        <div className="max-w-4xl mx-auto mt-12">
-          <h2 className="text-xl font-bold mb-4">Token Tips</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h3 className="font-semibold text-forge-cyan mb-2">What are tokens?</h3>
-              <p className="text-sm text-gray-400">
-                Tokens are pieces of text that AI models process. A token is roughly 4 characters
-                or ¾ of a word. &ldquo;Hello world&rdquo; is about 2 tokens.
-              </p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h3 className="font-semibold text-forge-cyan mb-2">Context Window</h3>
-              <p className="text-sm text-gray-400">
-                The context window is the maximum tokens a model can process at once.
-                Claude Sonnet 4.5 supports 200K tokens (~150K words).
-              </p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h3 className="font-semibold text-forge-cyan mb-2">Save Context</h3>
-              <p className="text-sm text-gray-400">
-                Running out of context? Use{' '}
-                <Link href="/templates" className="text-forge-purple hover:underline">
-                  momentum
-                </Link>{' '}
-                to snapshot and restore your conversation state instantly.
-              </p>
-            </div>
-          </div>
-        </div>
+        <TokenTips />
 
         {/* Related Tools */}
         <RelatedTools currentPath="/tools/token-counter" />
@@ -333,7 +196,8 @@ Generated by substratia.io/tools/token-counter
             <h2 className="text-2xl font-bold mb-3">Running Out of Context?</h2>
             <p className="text-gray-400 mb-6 max-w-xl mx-auto">
               Our free memory tools help you manage context efficiently.
-              Snapshot conversations, persist facts across sessions, never lose progress.
+              Snapshot conversations, persist facts across sessions, never lose
+              progress.
             </p>
             <Link
               href="/templates"
@@ -350,5 +214,5 @@ Generated by substratia.io/tools/token-counter
         </div>
       </div>
     </main>
-  )
+  );
 }
