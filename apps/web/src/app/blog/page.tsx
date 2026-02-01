@@ -117,10 +117,18 @@ export default function BlogPage() {
   const [sharedSlug, setSharedSlug] = useState<string | null>(null);
 
   const sharePost = useCallback(async (post: (typeof posts)[0]) => {
-    const shareUrl = `${window.location.origin}/blog/${post.slug}`;
-    await navigator.clipboard.writeText(shareUrl);
-    setSharedSlug(post.slug);
-    setTimeout(() => setSharedSlug(null), 2000);
+    try {
+      const shareUrl = `${window.location.origin}/blog/${post.slug}`;
+      await navigator.clipboard.writeText(shareUrl);
+      setSharedSlug(post.slug);
+      setTimeout(() => setSharedSlug(null), 2000);
+    } catch {
+      // Clipboard unavailable — fall back to native share or silently fail
+      const shareUrl = `${window.location.origin}/blog/${post.slug}`;
+      if (navigator.share) {
+        navigator.share({ title: post.title, url: shareUrl }).catch(() => {});
+      }
+    }
   }, []);
 
   const featuredPosts = posts.filter((p) => p.featured);

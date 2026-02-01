@@ -157,12 +157,27 @@ export default function StartHerePage() {
   }, [completedSteps]);
 
   const shareProgress = useCallback(async () => {
-    const progress = `${completedSteps.size}/${learningPath.length}`;
-    const shareUrl = `${window.location.origin}${window.location.pathname}`;
-    const shareText = `I've completed ${progress} steps of the Claude Code learning path! ${shareUrl}`;
-    await navigator.clipboard.writeText(shareText);
-    setSharedProgress(true);
-    setTimeout(() => setSharedProgress(false), 2000);
+    try {
+      const progress = `${completedSteps.size}/${learningPath.length}`;
+      const shareUrl = `${window.location.origin}${window.location.pathname}`;
+      const shareText = `I've completed ${progress} steps of the Claude Code learning path! ${shareUrl}`;
+      await navigator.clipboard.writeText(shareText);
+      setSharedProgress(true);
+      setTimeout(() => setSharedProgress(false), 2000);
+    } catch {
+      // Clipboard unavailable — fall back to native share or silently fail
+      if (navigator.share) {
+        const progress = `${completedSteps.size}/${learningPath.length}`;
+        const shareUrl = `${window.location.origin}${window.location.pathname}`;
+        navigator
+          .share({
+            title: "Claude Code Learning Progress",
+            text: `I've completed ${progress} steps!`,
+            url: shareUrl,
+          })
+          .catch(() => {});
+      }
+    }
   }, [completedSteps.size]);
 
   const resetProgress = useCallback(() => {

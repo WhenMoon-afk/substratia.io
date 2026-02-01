@@ -4,6 +4,20 @@ import Link from "next/link";
 import ShareButton from "@/components/ShareButton";
 import CtaSection from "@/components/home/CtaSection";
 
+// Static class map — avoids dynamic Tailwind class purging in production
+const toolColorClasses = {
+  purple: {
+    hoverBorder: "hover:border-forge-purple/50",
+    iconBg: "bg-forge-purple/20",
+    iconText: "text-forge-purple",
+  },
+  cyan: {
+    hoverBorder: "hover:border-forge-cyan/50",
+    iconBg: "bg-forge-cyan/20",
+    iconText: "text-forge-cyan",
+  },
+} as const;
+
 const tools = [
   {
     name: "Memory Demo",
@@ -337,7 +351,7 @@ export default function ToolsIndexPage() {
               <Link
                 key={tool.name}
                 href={tool.href}
-                className={`group glass rounded-xl p-6 transition-all relative hover:scale-[1.02] hover:border-forge-${tool.color}/50 animate-fade-up`}
+                className={`group glass rounded-xl p-6 transition-all relative hover:scale-[1.02] ${toolColorClasses[tool.color].hoverBorder} animate-fade-up`}
                 style={{ animationDelay: `${Math.min(i * 50, 300)}ms` }}
               >
                 {tool.badge && (
@@ -354,7 +368,7 @@ export default function ToolsIndexPage() {
                   </span>
                 )}
                 <div
-                  className={`w-12 h-12 rounded-xl bg-forge-${tool.color}/20 flex items-center justify-center text-forge-${tool.color} mb-4 group-hover:scale-110 transition-transform`}
+                  className={`w-12 h-12 rounded-xl ${toolColorClasses[tool.color].iconBg} flex items-center justify-center ${toolColorClasses[tool.color].iconText} mb-4 group-hover:scale-110 transition-transform`}
                   aria-hidden="true"
                 >
                   {tool.icon}
