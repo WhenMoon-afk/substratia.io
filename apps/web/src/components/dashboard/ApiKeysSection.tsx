@@ -37,8 +37,8 @@ export default function ApiKeysSection({
       const result = await onCreateKey(newKeyName.trim());
       setNewKeyValue(result.key);
       setNewKeyName("");
-    } catch (error) {
-      console.error("Failed to create API key:", error);
+    } catch {
+      // Silently handled — UI shows previous state
     } finally {
       setIsCreating(false);
     }
@@ -53,8 +53,8 @@ export default function ApiKeysSection({
       return;
     try {
       await onRevokeKey(keyId as ApiKeyId);
-    } catch (error) {
-      console.error("Failed to revoke API key:", error);
+    } catch {
+      // Silently handled — key remains in list
     }
   };
 

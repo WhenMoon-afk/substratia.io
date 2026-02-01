@@ -34,13 +34,13 @@ export default function Home() {
         .then((data) => {
           if (data.downloads) setNpmDownloads(data.downloads);
         })
-        .catch((err) => console.warn("Failed to fetch npm downloads:", err)),
+        .catch(() => {}),
       fetch("https://api.github.com/repos/WhenMoon-afk/claude-memory-mcp")
         .then((res) => res.json())
         .then((data) => {
           if (data.stargazers_count) setGithubStars(data.stargazers_count);
         })
-        .catch((err) => console.warn("Failed to fetch GitHub stars:", err)),
+        .catch(() => {}),
     ]).finally(() => setStatsLoading(false));
   }, []);
 

@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+
 const directories = [
   { name: "PulseMCP", url: "https://pulsemcp.com/servers/whenmoon-memory" },
   {
@@ -52,7 +54,7 @@ function ExternalIcon() {
   );
 }
 
-export default function CommunitySection({
+export default memo(function CommunitySection({
   githubStars,
   npmDownloads,
   statsLoading,
@@ -133,4 +135,4 @@ export default function CommunitySection({
       </div>
     </section>
   );
-}
+});

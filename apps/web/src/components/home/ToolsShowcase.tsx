@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 
@@ -178,7 +179,7 @@ function ToolCard({ tool }: { tool: Tool }) {
   return <div className={cardClasses}>{content}</div>;
 }
 
-export default function ToolsShowcase() {
+export default memo(function ToolsShowcase() {
   return (
     <section
       aria-label="Featured tools"
@@ -204,4 +205,4 @@ export default function ToolsShowcase() {
       </div>
     </section>
   );
-}
+});
