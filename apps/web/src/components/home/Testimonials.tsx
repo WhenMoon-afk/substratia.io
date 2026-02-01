@@ -63,9 +63,9 @@ export default function Testimonials() {
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {testimonials.map((t, i) => (
+          {testimonials.map((t) => (
             <div
-              key={i}
+              key={t.initials}
               className="group gradient-border rounded-xl p-6 bg-forge-dark-lighter/30 transition-all duration-300 hover:-translate-y-1"
             >
               <svg
