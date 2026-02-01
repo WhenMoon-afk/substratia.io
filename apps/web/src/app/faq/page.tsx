@@ -4,126 +4,7 @@ import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 import { siteConfig } from '@/lib/site-config'
-
-interface FAQItem {
-  id: string
-  question: string
-  answer: string | React.ReactNode
-  answerText: string  // Plain text version for copying
-  category: 'general' | 'tools' | 'technical'
-}
-
-const faqs: FAQItem[] = [
-  // General
-  {
-    id: 'what-is-claude-code',
-    category: 'general',
-    question: 'What is Claude Code?',
-    answer: 'Claude Code is Anthropic\'s official CLI tool for AI-assisted software development. It allows developers to interact with Claude directly from the terminal to write, edit, and debug code. It\'s available with Claude Pro ($20/mo) and Claude Max ($100-200/mo) subscriptions.',
-    answerText: 'Claude Code is Anthropic\'s official CLI tool for AI-assisted software development. It allows developers to interact with Claude directly from the terminal to write, edit, and debug code. It\'s available with Claude Pro ($20/mo) and Claude Max ($100-200/mo) subscriptions.',
-  },
-  {
-    id: 'what-is-substratia',
-    category: 'general',
-    question: 'What is Substratia?',
-    answer: 'Substratia is a collection of free, open-source tools for Claude Code and AI memory management. Our tools help developers manage context, persist memory, and build better AI workflows.',
-    answerText: 'Substratia is a collection of free, open-source tools for Claude Code and AI memory management. Our tools help developers manage context, persist memory, and build better AI workflows.',
-  },
-  {
-    id: 'are-tools-free',
-    category: 'general',
-    question: 'Are these tools free?',
-    answer: 'Yes, all tools are completely free and open source under the MIT license. This includes momentum, memory-mcp, and all web tools at substratia.io/tools. They will remain free forever.',
-    answerText: 'Yes, all tools are completely free and open source under the MIT license. This includes momentum, memory-mcp, and all web tools at substratia.io/tools. They will remain free forever.',
-  },
-  // Tools
-  {
-    id: 'what-is-momentum',
-    category: 'tools',
-    question: 'What is momentum?',
-    answer: (
-      <span>
-        momentum is a Claude Code plugin for fast context recovery. It takes snapshots of your working state and can restore them in under 5 milliseconds after using /clear. Install with: <code className="bg-white/10 px-2 py-0.5 rounded text-sm">/plugin install momentum@substratia-marketplace</code>
-      </span>
-    ),
-    answerText: 'momentum is a Claude Code plugin for fast context recovery. It takes snapshots of your working state and can restore them in under 5 milliseconds after using /clear. Install with: /plugin install momentum@substratia-marketplace',
-  },
-  {
-    id: 'what-is-memory-mcp',
-    category: 'tools',
-    question: 'What is memory-mcp?',
-    answer: (
-      <span>
-        memory-mcp is an MCP server that gives Claude persistent memory across sessions. Claude can store facts, recall information, and search memories using natural language. It uses SQLite with FTS5 full-text search. Install with: <code className="bg-white/10 px-2 py-0.5 rounded text-sm">npx @whenmoon-afk/memory-mcp</code>
-      </span>
-    ),
-    answerText: 'memory-mcp is an MCP server that gives Claude persistent memory across sessions. Claude can store facts, recall information, and search memories using natural language. It uses SQLite with FTS5 full-text search. Install with: npx @whenmoon-afk/memory-mcp',
-  },
-  {
-    id: 'momentum-vs-memory-mcp',
-    category: 'tools',
-    question: 'What\'s the difference between momentum and memory-mcp?',
-    answer: 'momentum is for short-term context recovery within sessions (snapshot your work, restore after /clear). memory-mcp is for long-term persistent memory across sessions (store facts, recall them tomorrow). They work together as complementary tools.',
-    answerText: 'momentum is for short-term context recovery within sessions (snapshot your work, restore after /clear). memory-mcp is for long-term persistent memory across sessions (store facts, recall them tomorrow). They work together as complementary tools.',
-  },
-  {
-    id: 'need-both-tools',
-    category: 'tools',
-    question: 'Do I need both momentum and memory-mcp?',
-    answer: 'No, they serve different purposes. Use momentum if you want fast context recovery within sessions. Use memory-mcp if you want Claude to remember facts across sessions. Many users find value in both.',
-    answerText: 'No, they serve different purposes. Use momentum if you want fast context recovery within sessions. Use memory-mcp if you want Claude to remember facts across sessions. Many users find value in both.',
-  },
-  {
-    id: 'where-is-data-stored',
-    category: 'tools',
-    question: 'Where is my data stored?',
-    answer: 'All data is stored locally on your machine in SQLite databases. momentum stores snapshots in ~/.local/share/momentum/ (Linux/macOS) or %LOCALAPPDATA%/momentum (Windows). memory-mcp stores memories in a similar location. Nothing is sent to the cloud.',
-    answerText: 'All data is stored locally on your machine in SQLite databases. momentum stores snapshots in ~/.local/share/momentum/ (Linux/macOS) or %LOCALAPPDATA%/momentum (Windows). memory-mcp stores memories in a similar location. Nothing is sent to the cloud.',
-  },
-  // Technical
-  {
-    id: 'context-window',
-    category: 'technical',
-    question: 'What is a context window?',
-    answer: 'The context window is Claude\'s working memory during a conversation—approximately 200,000 tokens. Everything you say, files Claude reads, and Claude\'s responses consume context. When it fills up, Claude compacts (summarizes) the conversation, which can lose details.',
-    answerText: 'The context window is Claude\'s working memory during a conversation—approximately 200,000 tokens. Everything you say, files Claude reads, and Claude\'s responses consume context. When it fills up, Claude compacts (summarizes) the conversation, which can lose details.',
-  },
-  {
-    id: 'what-is-compaction',
-    category: 'technical',
-    question: 'What is compaction?',
-    answer: 'When the context window fills up, Claude Code automatically summarizes the conversation to free up space. This is called compaction. It\'s lossy—details get dropped. Tools like momentum help preserve context across compaction events.',
-    answerText: 'When the context window fills up, Claude Code automatically summarizes the conversation to free up space. This is called compaction. It\'s lossy—details get dropped. Tools like momentum help preserve context across compaction events.',
-  },
-  {
-    id: 'what-is-claude-md',
-    category: 'technical',
-    question: 'What is CLAUDE.md?',
-    answer: 'CLAUDE.md is a configuration file in your project root that gives Claude context about your project. It survives compaction and is read at the start of every session. Include project overview, coding standards, key directories, and a "Do NOT" section for constraints.',
-    answerText: 'CLAUDE.md is a configuration file in your project root that gives Claude context about your project. It survives compaction and is read at the start of every session. Include project overview, coding standards, key directories, and a "Do NOT" section for constraints.',
-  },
-  {
-    id: 'what-is-mcp',
-    category: 'technical',
-    question: 'What is MCP?',
-    answer: 'MCP (Model Context Protocol) is a standard for connecting AI assistants to external tools and data sources. MCP servers like memory-mcp add capabilities to Claude Code. They\'re configured in ~/.claude/claude_desktop_config.json.',
-    answerText: 'MCP (Model Context Protocol) is a standard for connecting AI assistants to external tools and data sources. MCP servers like memory-mcp add capabilities to Claude Code. They\'re configured in ~/.claude/claude_desktop_config.json.',
-  },
-  {
-    id: 'why-sqlite',
-    category: 'technical',
-    question: 'Why SQLite instead of a vector database?',
-    answer: 'For most AI memory use cases, SQLite with FTS5 (full-text search) is sufficient and has major advantages: instant startup, zero dependencies, no API costs, works offline, and data stays on your machine. Vector embeddings add complexity without proportional benefit for typical usage.',
-    answerText: 'For most AI memory use cases, SQLite with FTS5 (full-text search) is sufficient and has major advantages: instant startup, zero dependencies, no API costs, works offline, and data stays on your machine. Vector embeddings add complexity without proportional benefit for typical usage.',
-  },
-]
-
-const categories = [
-  { id: 'all', label: 'All' },
-  { id: 'general', label: 'General' },
-  { id: 'tools', label: 'Tools' },
-  { id: 'technical', label: 'Technical' },
-]
+import { faqs, categories, type FAQItem } from '@/data/faqData'
 
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -155,7 +36,10 @@ export default function FAQPage() {
   }, [])
 
   const copyAnswer = useCallback(async (faq: FAQItem) => {
-    await navigator.clipboard.writeText(`Q: ${faq.question}\nA: ${faq.answerText}`)
+    const fullAnswer = faq.code
+      ? `Q: ${faq.question}\nA: ${faq.answer} Install with: ${faq.code}`
+      : `Q: ${faq.question}\nA: ${faq.answer}`
+    await navigator.clipboard.writeText(fullAnswer)
     setCopiedId(faq.id)
     setTimeout(() => setCopiedId(null), 2000)
   }, [])
@@ -243,6 +127,9 @@ export default function FAQPage() {
                     <div id={`faq-panel-${faq.id}`} role="region" aria-labelledby={faq.id} className="px-6 pb-4">
                       <div className="text-gray-300 mb-3">
                         {faq.answer}
+                        {faq.code && (
+                          <> Install with: <code className="bg-white/10 px-2 py-0.5 rounded text-sm">{faq.code}</code></>
+                        )}
                       </div>
                       <div className="flex gap-2 pt-2 border-t border-white/10">
                         <button
