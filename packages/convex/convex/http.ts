@@ -19,7 +19,7 @@ async function hashApiKey(key: string): Promise<string> {
  */
 async function validateApiKey(
   ctx: any,
-  request: Request
+  request: Request,
 ): Promise<{ userId: any; keyId: any } | null> {
   const authHeader = request.headers.get("Authorization");
   if (!authHeader?.startsWith("Bearer ")) {
@@ -54,7 +54,9 @@ async function validateApiKey(
  * Map numeric importance (0-10) to string literal
  * Used for memory-mcp which uses numeric importance scores
  */
-function mapImportance(importance: unknown): "critical" | "high" | "normal" | "low" {
+function mapImportance(
+  importance: unknown,
+): "critical" | "high" | "normal" | "low" {
   // If already a valid string, return it
   const validStrings = ["critical", "high", "normal", "low"];
   if (typeof importance === "string" && validStrings.includes(importance)) {
@@ -79,10 +81,13 @@ http.route({
   path: "/api/health",
   method: "GET",
   handler: httpAction(async () => {
-    return new Response(JSON.stringify({ status: "ok", timestamp: Date.now() }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ status: "ok", timestamp: Date.now() }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }),
 });
 
@@ -112,42 +117,58 @@ http.route({
     }
 
     // Validate required fields
-    const { projectPath, summary, context, decisions, nextSteps, filesTouched, importance, createdAt } = body;
+    const {
+      projectPath,
+      summary,
+      context,
+      decisions,
+      nextSteps,
+      filesTouched,
+      importance,
+      createdAt,
+    } = body;
 
     if (!projectPath || !summary || !context) {
       return new Response(
-        JSON.stringify({ error: "Missing required fields: projectPath, summary, context" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        JSON.stringify({
+          error: "Missing required fields: projectPath, summary, context",
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     // Validate importance value
     const validImportance = ["critical", "important", "normal", "reference"];
-    const safeImportance = validImportance.includes(importance) ? importance : "normal";
+    const safeImportance = validImportance.includes(importance)
+      ? importance
+      : "normal";
 
     // Insert snapshot
     try {
-      const snapshotId = await ctx.runMutation(internal.snapshotsInternal.insertFromApi, {
-        userId: auth.userId,
-        projectPath,
-        summary,
-        context,
-        decisions: decisions || undefined,
-        nextSteps: nextSteps || undefined,
-        filesTouched: filesTouched || undefined,
-        importance: safeImportance,
-        createdAt: createdAt || Date.now(),
-      });
-
-      return new Response(
-        JSON.stringify({ success: true, snapshotId }),
-        { status: 201, headers: { "Content-Type": "application/json" } }
+      const snapshotId = await ctx.runMutation(
+        internal.snapshotsInternal.insertFromApi,
+        {
+          userId: auth.userId,
+          projectPath,
+          summary,
+          context,
+          decisions: decisions || undefined,
+          nextSteps: nextSteps || undefined,
+          filesTouched: filesTouched || undefined,
+          importance: safeImportance,
+          createdAt: createdAt || Date.now(),
+        },
       );
+
+      return new Response(JSON.stringify({ success: true, snapshotId }), {
+        status: 201,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to insert snapshot:", error);
       return new Response(
         JSON.stringify({ error: "Failed to save snapshot" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -180,7 +201,7 @@ http.route({
     if (!Array.isArray(snapshots)) {
       return new Response(
         JSON.stringify({ error: "snapshots must be an array" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -188,7 +209,7 @@ http.route({
     if (snapshots.length > 100) {
       return new Response(
         JSON.stringify({ error: "Maximum 100 snapshots per request" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -209,7 +230,9 @@ http.route({
           decisions: snap.decisions || undefined,
           nextSteps: snap.nextSteps || undefined,
           filesTouched: snap.filesTouched || undefined,
-          importance: validImportance.includes(snap.importance) ? snap.importance : "normal",
+          importance: validImportance.includes(snap.importance)
+            ? snap.importance
+            : "normal",
           createdAt: snap.createdAt || Date.now(),
         });
         synced++;
@@ -220,7 +243,7 @@ http.route({
 
     return new Response(
       JSON.stringify({ success: true, synced, total: snapshots.length }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
+      { status: 200, headers: { "Content-Type": "application/json" } },
     );
   }),
 });
@@ -239,9 +262,12 @@ http.route({
     }
 
     // Check tier limits before allowing sync
-    const tierCheck = await ctx.runQuery(internal.memoriesInternal.checkTierLimit, {
-      userId: auth.userId,
-    });
+    const tierCheck = await ctx.runQuery(
+      internal.memoriesInternal.checkTierLimit,
+      {
+        userId: auth.userId,
+      },
+    );
 
     if (!tierCheck.allowed) {
       return new Response(
@@ -252,7 +278,7 @@ http.route({
           current: tierCheck.current,
           upgradeUrl: "https://substratia.io/",
         }),
-        { status: 402, headers: { "Content-Type": "application/json" } }
+        { status: 402, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -266,12 +292,23 @@ http.route({
       });
     }
 
-    const { content, summary, type, context, importance, tags, metadata, createdAt, lastAccessed, accessCount } = body;
+    const {
+      content,
+      summary,
+      type,
+      context,
+      importance,
+      tags,
+      metadata,
+      createdAt,
+      lastAccessed,
+      accessCount,
+    } = body;
 
     if (!content) {
       return new Response(
         JSON.stringify({ error: "Missing required field: content" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -279,31 +316,35 @@ http.route({
     const safeImportance = mapImportance(importance);
 
     // Build context from summary and type if not provided
-    const finalContext = context || (summary ? `[${type || 'memory'}] ${summary}` : undefined);
+    const finalContext =
+      context || (summary ? `[${type || "memory"}] ${summary}` : undefined);
 
     // Extract tags from metadata if not provided directly
     const finalTags = tags || (metadata?.tags as string[] | undefined);
 
     try {
-      const memoryId = await ctx.runMutation(internal.memoriesInternal.insertFromApi, {
-        userId: auth.userId,
-        content,
-        context: finalContext,
-        importance: safeImportance,
-        tags: finalTags,
-        createdAt: createdAt || Date.now(),
-      });
-
-      return new Response(
-        JSON.stringify({ success: true, memoryId }),
-        { status: 201, headers: { "Content-Type": "application/json" } }
+      const memoryId = await ctx.runMutation(
+        internal.memoriesInternal.insertFromApi,
+        {
+          userId: auth.userId,
+          content,
+          context: finalContext,
+          importance: safeImportance,
+          tags: finalTags,
+          createdAt: createdAt || Date.now(),
+        },
       );
+
+      return new Response(JSON.stringify({ success: true, memoryId }), {
+        status: 201,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to insert memory:", error);
-      return new Response(
-        JSON.stringify({ error: "Failed to save memory" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Failed to save memory" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
   }),
 });
@@ -322,9 +363,12 @@ http.route({
     }
 
     // Check tier limits before allowing sync
-    const tierCheck = await ctx.runQuery(internal.memoriesInternal.checkTierLimit, {
-      userId: auth.userId,
-    });
+    const tierCheck = await ctx.runQuery(
+      internal.memoriesInternal.checkTierLimit,
+      {
+        userId: auth.userId,
+      },
+    );
 
     if (!tierCheck.allowed) {
       return new Response(
@@ -335,7 +379,7 @@ http.route({
           current: tierCheck.current,
           upgradeUrl: "https://substratia.io/",
         }),
-        { status: 402, headers: { "Content-Type": "application/json" } }
+        { status: 402, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -353,7 +397,7 @@ http.route({
     if (!Array.isArray(memories)) {
       return new Response(
         JSON.stringify({ error: "memories must be an array" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -361,7 +405,7 @@ http.route({
     if (memories.length > 100) {
       return new Response(
         JSON.stringify({ error: "Maximum 100 memories per request" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -378,7 +422,7 @@ http.route({
             requestedCount: memories.length,
             upgradeUrl: "https://substratia.io/",
           }),
-          { status: 402, headers: { "Content-Type": "application/json" } }
+          { status: 402, headers: { "Content-Type": "application/json" } },
         );
       }
     }
@@ -391,10 +435,13 @@ http.route({
       }
 
       // Build context from summary and type if not provided
-      const finalContext = mem.context || (mem.summary ? `[${mem.type || 'memory'}] ${mem.summary}` : undefined);
+      const finalContext =
+        mem.context ||
+        (mem.summary ? `[${mem.type || "memory"}] ${mem.summary}` : undefined);
 
       // Extract tags from metadata if not provided directly
-      const finalTags = mem.tags || (mem.metadata?.tags as string[] | undefined);
+      const finalTags =
+        mem.tags || (mem.metadata?.tags as string[] | undefined);
 
       try {
         await ctx.runMutation(internal.memoriesInternal.insertFromApi, {
@@ -413,7 +460,7 @@ http.route({
 
     return new Response(
       JSON.stringify({ success: true, synced, total: memories.length }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
+      { status: 200, headers: { "Content-Type": "application/json" } },
     );
   }),
 });
@@ -436,21 +483,24 @@ http.route({
     const importance = url.searchParams.get("importance") as any;
 
     try {
-      const memories = await ctx.runQuery(internal.memoriesInternal.listByUser, {
-        userId: auth.userId,
-        limit: Math.min(limit, 100),
-        importance: importance || undefined,
-      });
-
-      return new Response(
-        JSON.stringify({ memories }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+      const memories = await ctx.runQuery(
+        internal.memoriesInternal.listByUser,
+        {
+          userId: auth.userId,
+          limit: Math.min(limit, 100),
+          importance: importance || undefined,
+        },
       );
+
+      return new Response(JSON.stringify({ memories }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to list memories:", error);
       return new Response(
         JSON.stringify({ error: "Failed to list memories" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -476,26 +526,29 @@ http.route({
     if (!query) {
       return new Response(
         JSON.stringify({ error: "Missing required parameter: q" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     try {
-      const memories = await ctx.runQuery(internal.memoriesInternal.searchByContent, {
-        userId: auth.userId,
-        query,
-        limit: Math.min(limit, 50),
-      });
-
-      return new Response(
-        JSON.stringify({ memories }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+      const memories = await ctx.runQuery(
+        internal.memoriesInternal.searchByContent,
+        {
+          userId: auth.userId,
+          query,
+          limit: Math.min(limit, 50),
+        },
       );
+
+      return new Response(JSON.stringify({ memories }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to search memories:", error);
       return new Response(
         JSON.stringify({ error: "Failed to search memories" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -528,32 +581,237 @@ http.route({
     if (!id) {
       return new Response(
         JSON.stringify({ error: "Missing required field: id" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     try {
-      const result = await ctx.runMutation(internal.memoriesInternal.deleteById, {
-        memoryId: id,
-        userId: auth.userId,
-      });
+      const result = await ctx.runMutation(
+        internal.memoriesInternal.deleteById,
+        {
+          memoryId: id,
+          userId: auth.userId,
+        },
+      );
 
       if (!result.success) {
-        return new Response(
-          JSON.stringify({ error: result.error }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
-        );
+        return new Response(JSON.stringify({ error: result.error }), {
+          status: 404,
+          headers: { "Content-Type": "application/json" },
+        });
       }
 
-      return new Response(
-        JSON.stringify({ success: true }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to delete memory:", error);
       return new Response(
         JSON.stringify({ error: "Failed to delete memory" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
+      );
+    }
+  }),
+});
+
+// ============================================================================
+// Identity & Context Bridge
+// ============================================================================
+
+// Get agent identity (narratives + preferences)
+http.route({
+  path: "/api/identity",
+  method: "GET",
+  handler: httpAction(async (ctx, request) => {
+    const auth = await validateApiKey(ctx, request);
+    if (!auth) {
+      return new Response(JSON.stringify({ error: "Invalid API key" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    try {
+      const identity = await ctx.runQuery(
+        internal.identityInternal.getIdentity,
+        {
+          userId: auth.userId,
+        },
+      );
+
+      return new Response(JSON.stringify(identity), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Failed to get identity:", error);
+      return new Response(JSON.stringify({ error: "Failed to get identity" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  }),
+});
+
+// Create/update a narrative
+http.route({
+  path: "/api/identity/narrative",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const auth = await validateApiKey(ctx, request);
+    if (!auth) {
+      return new Response(JSON.stringify({ error: "Invalid API key" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const { type, title, text, sourceIds, timeSpan } = body;
+    const validTypes = [
+      "identity",
+      "capability",
+      "relationship",
+      "trajectory",
+      "milestone",
+    ];
+
+    if (!type || !validTypes.includes(type) || !title || !text) {
+      return new Response(
+        JSON.stringify({
+          error: `Required: type (${validTypes.join("/")}), title, text`,
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
+      );
+    }
+
+    try {
+      const narrativeId = await ctx.runMutation(
+        internal.identityInternal.upsertNarrative,
+        {
+          userId: auth.userId,
+          type,
+          title,
+          text,
+          sourceIds: sourceIds || undefined,
+          timeSpan: timeSpan || undefined,
+        },
+      );
+
+      return new Response(JSON.stringify({ success: true, narrativeId }), {
+        status: 201,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Failed to save narrative:", error);
+      return new Response(
+        JSON.stringify({ error: "Failed to save narrative" }),
+        { status: 500, headers: { "Content-Type": "application/json" } },
+      );
+    }
+  }),
+});
+
+// Set preferences (merge)
+http.route({
+  path: "/api/identity/preferences",
+  method: "PUT",
+  handler: httpAction(async (ctx, request) => {
+    const auth = await validateApiKey(ctx, request);
+    if (!auth) {
+      return new Response(JSON.stringify({ error: "Invalid API key" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (!body || typeof body !== "object") {
+      return new Response(
+        JSON.stringify({
+          error: "Body must be a JSON object of key-value pairs",
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
+      );
+    }
+
+    const preferences = Object.entries(body).map(([key, value]) => ({
+      key,
+      value: String(value),
+    }));
+
+    try {
+      const result = await ctx.runMutation(
+        internal.identityInternal.setPreferences,
+        {
+          userId: auth.userId,
+          preferences,
+        },
+      );
+
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Failed to set preferences:", error);
+      return new Response(
+        JSON.stringify({ error: "Failed to set preferences" }),
+        { status: 500, headers: { "Content-Type": "application/json" } },
+      );
+    }
+  }),
+});
+
+// Context bridge — full restart continuity package
+http.route({
+  path: "/api/bridge",
+  method: "GET",
+  handler: httpAction(async (ctx, request) => {
+    const auth = await validateApiKey(ctx, request);
+    if (!auth) {
+      return new Response(JSON.stringify({ error: "Invalid API key" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    try {
+      const bridge = await ctx.runQuery(
+        internal.identityInternal.contextBridge,
+        {
+          userId: auth.userId,
+        },
+      );
+
+      return new Response(JSON.stringify(bridge), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Failed to build context bridge:", error);
+      return new Response(
+        JSON.stringify({ error: "Failed to build context bridge" }),
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -570,7 +828,7 @@ http.route({
 async function verifyStripeSignature(
   payload: string,
   signature: string,
-  secret: string
+  secret: string,
 ): Promise<boolean> {
   // Parse the signature header
   const parts = signature.split(",");
@@ -602,12 +860,12 @@ async function verifyStripeSignature(
     encoder.encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
-    ["sign"]
+    ["sign"],
   );
   const signatureBuffer = await crypto.subtle.sign(
     "HMAC",
     key,
-    encoder.encode(signedPayload)
+    encoder.encode(signedPayload),
   );
   const expectedSignature = Array.from(new Uint8Array(signatureBuffer))
     .map((b) => b.toString(16).padStart(2, "0"))
@@ -648,10 +906,10 @@ http.route({
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     if (!webhookSecret) {
       console.error("STRIPE_WEBHOOK_SECRET not configured");
-      return new Response(
-        JSON.stringify({ error: "Webhook not configured" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Webhook not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Get signature from headers
@@ -659,7 +917,7 @@ http.route({
     if (!signature) {
       return new Response(
         JSON.stringify({ error: "Missing stripe-signature header" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -667,13 +925,17 @@ http.route({
     const payload = await request.text();
 
     // Verify signature
-    const isValid = await verifyStripeSignature(payload, signature, webhookSecret);
+    const isValid = await verifyStripeSignature(
+      payload,
+      signature,
+      webhookSecret,
+    );
     if (!isValid) {
       console.error("Invalid Stripe webhook signature");
-      return new Response(
-        JSON.stringify({ error: "Invalid signature" }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Invalid signature" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Parse event
@@ -681,10 +943,10 @@ http.route({
     try {
       event = JSON.parse(payload);
     } catch {
-      return new Response(
-        JSON.stringify({ error: "Invalid JSON" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     console.log(`Stripe webhook received: ${event.type}`);
@@ -694,7 +956,8 @@ http.route({
         case "checkout.session.completed": {
           // User completed checkout - link customer and activate subscription
           const session = event.data.object;
-          const customerEmail = session.customer_details?.email || session.customer_email;
+          const customerEmail =
+            session.customer_details?.email || session.customer_email;
           const customerId = session.customer;
           const subscriptionId = session.subscription;
 
@@ -741,9 +1004,12 @@ http.route({
           const priceId = subscription.items?.data?.[0]?.price?.id;
 
           // Find user by Stripe customer ID
-          const user = await ctx.runMutation(internal.users.getByStripeCustomer, {
-            stripeCustomerId: customerId,
-          });
+          const user = await ctx.runMutation(
+            internal.users.getByStripeCustomer,
+            {
+              stripeCustomerId: customerId,
+            },
+          );
 
           if (!user) {
             console.error(`No user found for Stripe customer: ${customerId}`);
@@ -751,7 +1017,9 @@ http.route({
           }
 
           // Determine tier from price ID
-          let tier: "free" | "pro" | "team" = priceId ? priceIdToTier(priceId) : "free";
+          let tier: "free" | "pro" | "team" = priceId
+            ? priceIdToTier(priceId)
+            : "free";
 
           // If subscription is not active, downgrade to free
           if (status !== "active" && status !== "trialing") {
@@ -773,9 +1041,12 @@ http.route({
           const subscription = event.data.object;
           const customerId = subscription.customer;
 
-          const user = await ctx.runMutation(internal.users.getByStripeCustomer, {
-            stripeCustomerId: customerId,
-          });
+          const user = await ctx.runMutation(
+            internal.users.getByStripeCustomer,
+            {
+              stripeCustomerId: customerId,
+            },
+          );
 
           if (!user) {
             console.error(`No user found for Stripe customer: ${customerId}`);
@@ -789,7 +1060,9 @@ http.route({
             tier: "free",
           });
 
-          console.log(`User ${user.email} subscription cancelled, downgraded to free`);
+          console.log(
+            `User ${user.email} subscription cancelled, downgraded to free`,
+          );
           break;
         }
 
@@ -798,9 +1071,12 @@ http.route({
           const invoice = event.data.object;
           const customerId = invoice.customer;
 
-          const user = await ctx.runMutation(internal.users.getByStripeCustomer, {
-            stripeCustomerId: customerId,
-          });
+          const user = await ctx.runMutation(
+            internal.users.getByStripeCustomer,
+            {
+              stripeCustomerId: customerId,
+            },
+          );
 
           if (user) {
             console.warn(`Payment failed for user ${user.email}`);
@@ -814,15 +1090,15 @@ http.route({
           console.log(`Unhandled Stripe event: ${event.type}`);
       }
 
-      return new Response(
-        JSON.stringify({ received: true }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ received: true }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Error processing Stripe webhook:", error);
       return new Response(
         JSON.stringify({ error: "Webhook processing failed" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),

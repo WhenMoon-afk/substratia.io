@@ -18,13 +18,24 @@ export const checkTierLimit = internalQuery({
       return { allowed: true, reason: null, limit: null, current: null };
     }
 
-    // Free tier: limited access
-    return {
-      allowed: false,
-      reason: "This feature requires Pro. Free tier uses local-only storage with unlimited local memories.",
-      limit: 0,
-      current: 0,
-    };
+    // Free tier: 500 memories (generous — genuinely useful, not crippled trial)
+    const FREE_TIER_LIMIT = 500;
+    const memoryCount = await ctx.db
+      .query("memories")
+      .withIndex("by_user", (q) => q.eq("userId", args.userId))
+      .collect();
+
+    const current = memoryCount.length;
+    if (current >= FREE_TIER_LIMIT) {
+      return {
+        allowed: false,
+        reason: `Free tier limit reached (${FREE_TIER_LIMIT} memories). Upgrade to Pro for unlimited.`,
+        limit: FREE_TIER_LIMIT,
+        current,
+      };
+    }
+
+    return { allowed: true, reason: null, limit: FREE_TIER_LIMIT, current };
   },
 });
 
@@ -38,7 +49,7 @@ export const insertFromApi = internalMutation({
       v.literal("critical"),
       v.literal("high"),
       v.literal("normal"),
-      v.literal("low")
+      v.literal("low"),
     ),
     tags: v.optional(v.array(v.string())),
     createdAt: v.number(),
@@ -63,12 +74,14 @@ export const listByUser = internalQuery({
   args: {
     userId: v.id("users"),
     limit: v.optional(v.number()),
-    importance: v.optional(v.union(
-      v.literal("critical"),
-      v.literal("high"),
-      v.literal("normal"),
-      v.literal("low")
-    )),
+    importance: v.optional(
+      v.union(
+        v.literal("critical"),
+        v.literal("high"),
+        v.literal("normal"),
+        v.literal("low"),
+      ),
+    ),
   },
   handler: async (ctx, args) => {
     let query = ctx.db
@@ -117,7 +130,7 @@ export const searchByContent = internalQuery({
     const results = await ctx.db
       .query("memories")
       .withSearchIndex("search_content", (q) =>
-        q.search("content", args.query).eq("userId", args.userId)
+        q.search("content", args.query).eq("userId", args.userId),
       )
       .take(args.limit || 10);
 

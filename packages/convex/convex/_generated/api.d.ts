@@ -11,6 +11,7 @@
 import type * as apiKeys from "../apiKeys.js";
 import type * as apiKeysInternal from "../apiKeysInternal.js";
 import type * as http from "../http.js";
+import type * as identityInternal from "../identityInternal.js";
 import type * as memories from "../memories.js";
 import type * as memoriesInternal from "../memoriesInternal.js";
 import type * as snapshots from "../snapshots.js";
@@ -28,6 +29,7 @@ declare const fullApi: ApiFromModules<{
   apiKeys: typeof apiKeys;
   apiKeysInternal: typeof apiKeysInternal;
   http: typeof http;
+  identityInternal: typeof identityInternal;
   memories: typeof memories;
   memoriesInternal: typeof memoriesInternal;
   snapshots: typeof snapshots;

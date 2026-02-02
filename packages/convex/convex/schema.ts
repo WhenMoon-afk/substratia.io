@@ -29,7 +29,7 @@ export default defineSchema({
       v.literal("critical"),
       v.literal("important"),
       v.literal("normal"),
-      v.literal("reference")
+      v.literal("reference"),
     ),
     createdAt: v.number(),
     synced: v.boolean(),
@@ -47,7 +47,7 @@ export default defineSchema({
       v.literal("critical"),
       v.literal("high"),
       v.literal("normal"),
-      v.literal("low")
+      v.literal("low"),
     ),
     tags: v.optional(v.array(v.string())),
     accessCount: v.number(),
@@ -83,6 +83,36 @@ export default defineSchema({
   })
     .index("by_email", ["email"])
     .index("by_tier", ["tier"]),
+
+  // Identity narratives (self-model for agents)
+  narratives: defineTable({
+    userId: v.id("users"),
+    type: v.union(
+      v.literal("identity"),
+      v.literal("capability"),
+      v.literal("relationship"),
+      v.literal("trajectory"),
+      v.literal("milestone"),
+    ),
+    title: v.string(),
+    text: v.string(),
+    sourceIds: v.optional(v.array(v.string())),
+    timeSpan: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_user_type", ["userId", "type"]),
+
+  // Agent preferences (key-value config)
+  agentPreferences: defineTable({
+    userId: v.id("users"),
+    key: v.string(),
+    value: v.string(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_user_key", ["userId", "key"]),
 
   // API keys for external tool sync (momentum, memory-mcp)
   apiKeys: defineTable({
