@@ -32,5 +32,8 @@
 // Re-export all types
 export * from "./types/index.js";
 
+// Re-export storage interface
+export * from "./storage/index.js";
+
 // Version for runtime checks
 export const VERSION = "0.1.0";
