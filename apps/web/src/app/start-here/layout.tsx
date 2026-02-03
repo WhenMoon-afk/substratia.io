@@ -1,51 +1,62 @@
-import type { Metadata } from 'next'
-import { siteUrl, breadcrumb } from '@/lib/site-config'
-import { StructuredData } from '@/components/StructuredData'
+import type { Metadata } from "next";
+import { siteUrl, breadcrumb } from "@/lib/site-config";
+import { StructuredData } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
-  title: 'Start Here - Claude Code Getting Started Guide | Substratia',
-  description: 'New to Claude Code? Start here. A curated learning path from beginner to power user with free tools, guides, and resources.',
-  keywords: ['Claude Code tutorial', 'Claude Code getting started', 'Claude Code beginner', 'Claude Code guide', 'learn Claude Code'],
+  title: "Start Here - Give Your AI Agent Memory | Substratia",
+  description:
+    "Get started with Substratia in under 5 minutes. Add persistent memory to your AI agent via CLI, MCP server, or SDK.",
+  keywords: [
+    "AI agent memory",
+    "persistent memory",
+    "Claude memory",
+    "MCP server",
+    "agent persistence",
+    "context bridge",
+  ],
   openGraph: {
-    title: 'Start Here - Claude Code Getting Started Guide',
-    description: 'New to Claude Code? A curated learning path from beginner to power user.',
-    type: 'website',
-    url: siteUrl('/start-here'),
+    title: "Start Here - Give Your AI Agent Memory",
+    description:
+      "Get started with Substratia in under 5 minutes. Add persistent memory to your AI agent.",
+    type: "website",
+    url: siteUrl("/start-here"),
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Claude Code Getting Started Guide',
-    description: 'A curated learning path from beginner to power user.',
+    card: "summary_large_image",
+    title: "Give Your AI Agent Memory - Substratia",
+    description:
+      "Get started in under 5 minutes. CLI, MCP server, or SDK - your choice.",
   },
-}
+};
 
-const breadcrumbLd = breadcrumb(['Start Here', '/start-here'])
+const breadcrumbLd = breadcrumb(["Start Here", "/start-here"]);
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LearningResource',
-  name: 'Claude Code Getting Started Guide',
-  description: 'A curated learning path from beginner to power user with free tools, guides, and resources.',
-  educationalLevel: 'Beginner',
-  learningResourceType: 'Guide',
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  name: "Give Your AI Agent Memory - Getting Started Guide",
+  description:
+    "Quick start guide for adding persistent memory to AI agents. Covers CLI, MCP server, and SDK integration options.",
+  educationalLevel: "Beginner",
+  learningResourceType: "Guide",
   provider: {
-    '@type': 'Organization',
-    name: 'Substratia',
+    "@type": "Organization",
+    name: "Substratia",
     url: siteUrl(),
   },
   isAccessibleForFree: true,
-  url: siteUrl('/start-here'),
-}
+  url: siteUrl("/start-here"),
+};
 
 export default function StartHereLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
       <StructuredData data={[jsonLd, breadcrumbLd]} />
       {children}
     </>
-  )
+  );
 }

@@ -1,119 +1,203 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import ShareButton from "@/components/ShareButton";
 import CtaSection from "@/components/home/CtaSection";
-import { useLocalStorageJSON } from "@/hooks/useLocalStorage";
 
-interface Step {
+interface QuickStartStep {
   number: number;
   title: string;
   description: string;
-  resources: {
-    title: string;
-    href: string;
-    type: "tool" | "guide" | "blog";
-    time?: string;
-  }[];
-  completed?: boolean;
+  code?: string;
+  note?: string;
 }
 
-const learningPath: Step[] = [
+const cliQuickStart: QuickStartStep[] = [
   {
     number: 1,
-    title: "Get the Essentials",
-    description: "Start with the reference materials you'll use daily.",
-    resources: [
-      {
-        title: "Claude Code Cheat Sheet",
-        href: "/tools/cheat-sheet",
-        type: "tool",
-        time: "5 min",
-      },
-      { title: "FAQ", href: "/faq", type: "guide", time: "10 min" },
-    ],
+    title: "Install the CLI",
+    description: "Get the Substratia CLI with a single command.",
+    code: `curl -fsSL https://substratia.io/install | bash`,
+    note: "Requires Bun (bun.sh). Or clone from GitHub.",
   },
   {
     number: 2,
-    title: "Master Context Management",
-    description:
-      "The #1 skill that separates productive sessions from frustrating ones.",
-    resources: [
-      {
-        title: "Context Management Guide",
-        href: "/blog/context-management-guide",
-        type: "blog",
-        time: "12 min read",
-      },
-      { title: "Token Counter", href: "/tools/token-counter", type: "tool" },
-    ],
+    title: "Register your agent",
+    description: "Create an account and get your API key in one step.",
+    code: `substratia register "your@email.com"`,
+    note: "This creates an agent identity and gives you an API key.",
   },
   {
     number: 3,
-    title: "Create Your CLAUDE.md",
-    description:
-      "Set up your project configuration for optimal Claude Code performance.",
-    resources: [
-      {
-        title: "How to Build Claude Agents",
-        href: "/blog/how-to-build-claude-agents",
-        type: "blog",
-        time: "8 min read",
-      },
-      {
-        title: "AGENTS.md vs CLAUDE.md",
-        href: "/blog/agents-md-vs-claude-md",
-        type: "blog",
-        time: "12 min read",
-      },
-      {
-        title: "Prompt Optimizer",
-        href: "/tools/prompt-optimizer",
-        type: "tool",
-      },
-    ],
+    title: "Store your first memory",
+    description: "Persist something your agent learned.",
+    code: `substratia learn "User prefers dark mode" --category preference`,
   },
   {
     number: 4,
-    title: "Optimize Your Prompts",
-    description: "Learn patterns for reliable, effective prompts.",
-    resources: [
-      {
-        title: "Mastering Negative Prompts",
-        href: "/blog/mastering-negative-prompts",
-        type: "blog",
-        time: "10 min read",
-      },
-      { title: "Prompt Library", href: "/tools/prompts", type: "tool" },
-      {
-        title: "Prompt Optimizer",
-        href: "/tools/prompt-optimizer",
-        type: "tool",
-      },
-    ],
+    title: "Recall memories",
+    description: "Search your agent's memory with natural language.",
+    code: `substratia remember "user preferences"`,
   },
   {
     number: 5,
-    title: "Add Memory Tools (Optional)",
-    description: "Give Claude persistent memory across sessions.",
-    resources: [
-      { title: "Memory Tools Overview", href: "/memory-tools", type: "guide" },
-      {
-        title: "Memory Architecture Patterns",
-        href: "/blog/memory-architecture-patterns",
-        type: "blog",
-        time: "7 min read",
-      },
-      {
-        title: "Why FTS5 Over Embeddings",
-        href: "/blog/why-fts5-over-embeddings",
-        type: "blog",
-        time: "8 min read",
-      },
-    ],
+    title: "Context Bridge (restart recovery)",
+    description:
+      "Get everything needed to restore your agent's state after a restart.",
+    code: `substratia bridge`,
+    note: "Returns: snapshot + memories + identity + preferences",
   },
 ];
+
+const mcpQuickStart: QuickStartStep[] = [
+  {
+    number: 1,
+    title: "Add to Claude Desktop config",
+    description: "Configure memory-mcp as an MCP server.",
+    code: `{
+  "mcpServers": {
+    "memory-mcp": {
+      "command": "npx",
+      "args": ["@whenmoon-afk/memory-mcp"]
+    }
+  }
+}`,
+    note: "Config location: ~/Library/Application Support/Claude/claude_desktop_config.json (macOS)",
+  },
+  {
+    number: 2,
+    title: "Restart Claude Desktop",
+    description: "Fully quit and reopen Claude Desktop to load the new server.",
+  },
+  {
+    number: 3,
+    title: "Start using memory",
+    description:
+      'Claude now has access to remember() and recall() tools. Try: "Remember that I prefer TypeScript over JavaScript"',
+  },
+];
+
+const sdkQuickStart: QuickStartStep[] = [
+  {
+    number: 1,
+    title: "Install the SDK",
+    description:
+      "Add memory to any AI system - OpenAI, Claude, Gemini, local LLMs.",
+    code: `npm install @substratia-io/memory`,
+  },
+  {
+    number: 2,
+    title: "Set your API key",
+    description: "Get your key from substratia.io/dashboard or via CLI.",
+    code: `export SUBSTRATIA_API_KEY=sk_your_key`,
+  },
+  {
+    number: 3,
+    title: "Use in your code",
+    description: "Two lines to persistent memory.",
+    code: `import { remember, recall } from '@substratia-io/memory'
+
+// Store a memory
+await remember("User prefers dark mode")
+
+// Search memories
+const memories = await recall("preferences")`,
+  },
+];
+
+function CodeBlock({
+  code,
+  className = "",
+}: {
+  code: string;
+  className?: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className={`relative group ${className}`}>
+      <pre className="bg-black/50 border border-white/10 rounded-lg p-4 overflow-x-auto text-sm">
+        <code className="text-gray-300">{code}</code>
+      </pre>
+      <button
+        onClick={copyToClipboard}
+        className="absolute top-2 right-2 px-2 py-1 text-xs bg-white/10 hover:bg-white/20 rounded transition-all opacity-0 group-hover:opacity-100"
+      >
+        {copied ? "Copied!" : "Copy"}
+      </button>
+    </div>
+  );
+}
+
+function QuickStartSection({
+  title,
+  description,
+  steps,
+  defaultOpen = false,
+}: {
+  title: string;
+  description: string;
+  steps: QuickStartStep[];
+  defaultOpen?: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  return (
+    <div className="glass rounded-xl overflow-hidden">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-all"
+      >
+        <div>
+          <h3 className="text-xl font-bold">{title}</h3>
+          <p className="text-gray-400 text-sm mt-1">{description}</p>
+        </div>
+        <svg
+          className={`w-6 h-6 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="px-6 pb-6 space-y-6 border-t border-white/10 pt-6">
+          {steps.map((step) => (
+            <div key={step.number} className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-forge-cyan/20 text-forge-cyan flex items-center justify-center shrink-0 font-bold text-sm">
+                {step.number}
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold mb-1">{step.title}</h4>
+                <p className="text-gray-400 text-sm mb-3">{step.description}</p>
+                {step.code && <CodeBlock code={step.code} />}
+                {step.note && (
+                  <p className="text-gray-500 text-xs mt-2 italic">
+                    {step.note}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
   const gradient =
@@ -129,62 +213,6 @@ function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
 }
 
 export default function StartHerePage() {
-  const savedProgress = useLocalStorageJSON<number[]>(
-    "substratia-start-here-progress",
-  );
-  const [completedSteps, setCompletedSteps] = useState<Set<number>>(
-    () => new Set(Array.isArray(savedProgress) ? savedProgress : []),
-  );
-  const [sharedProgress, setSharedProgress] = useState(false);
-
-  // Save progress to localStorage when it changes
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    localStorage.setItem(
-      "substratia-start-here-progress",
-      JSON.stringify(Array.from(completedSteps)),
-    );
-  }, [completedSteps]);
-
-  const shareProgress = useCallback(async () => {
-    try {
-      const progress = `${completedSteps.size}/${learningPath.length}`;
-      const shareUrl = `${window.location.origin}${window.location.pathname}`;
-      const shareText = `I've completed ${progress} steps of the Claude Code learning path! ${shareUrl}`;
-      await navigator.clipboard.writeText(shareText);
-      setSharedProgress(true);
-      setTimeout(() => setSharedProgress(false), 2000);
-    } catch {
-      // Clipboard unavailable - fall back to native share or silently fail
-      if (navigator.share) {
-        const progress = `${completedSteps.size}/${learningPath.length}`;
-        const shareUrl = `${window.location.origin}${window.location.pathname}`;
-        navigator
-          .share({
-            title: "Claude Code Learning Progress",
-            text: `I've completed ${progress} steps!`,
-            url: shareUrl,
-          })
-          .catch(() => {});
-      }
-    }
-  }, [completedSteps.size]);
-
-  const resetProgress = useCallback(() => {
-    setCompletedSteps(new Set());
-    localStorage.removeItem("substratia-start-here-progress");
-  }, []);
-
-  const toggleStep = (stepNumber: number) => {
-    const newCompleted = new Set(completedSteps);
-    if (newCompleted.has(stepNumber)) {
-      newCompleted.delete(stepNumber);
-    } else {
-      newCompleted.add(stepNumber);
-    }
-    setCompletedSteps(newCompleted);
-  };
-
   return (
     <main className="min-h-screen text-white relative">
       <div className="neural-bg" />
@@ -198,194 +226,87 @@ export default function StartHerePage() {
           </div>
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <div className="inline-block px-4 py-1 bg-forge-cyan/20 border border-forge-cyan/50 rounded-full text-sm text-forge-cyan mb-6">
-              New to Claude Code?
+              Get started in under 5 minutes
             </div>
             <h1 className="text-4xl md:text-5xl font-bold font-display mb-6">
-              Start <span className="hero-gradient-text">Here</span>
+              Give Your Agent <span className="hero-gradient-text">Memory</span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              A curated learning path from beginner to power user. Free
-              resources, no fluff, just what works.
+              Choose your integration path. All options are free to start.
             </p>
-            <div className="flex justify-center gap-2 text-sm text-gray-400">
-              <span className="flex items-center gap-1">
-                <svg
-                  className="w-4 h-4 text-green-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                5 steps
-              </span>
-              <span>•</span>
-              <span>~2 hours total</span>
-              <span>•</span>
-              <span>All free</span>
-            </div>
           </div>
         </div>
       </section>
 
       <SectionDivider variant="cyan" />
 
-      {/* Learning Path */}
+      {/* Quick Start Options */}
       <section className="relative z-10 py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto space-y-6">
-            {learningPath.map((step) => (
-              <div
-                key={step.number}
-                className={`glass rounded-xl p-6 transition-all animate-fade-up ${
-                  completedSteps.has(step.number) ? "border-green-500/50" : ""
-                }`}
-                style={{ animationDelay: `${step.number * 75}ms` }}
-              >
-                <div className="flex items-start gap-4">
-                  <button
-                    onClick={() => toggleStep(step.number)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                      completedSteps.has(step.number)
-                        ? "bg-green-500 text-white"
-                        : "bg-forge-cyan/20 text-forge-cyan border border-forge-cyan/50"
-                    }`}
-                  >
-                    {completedSteps.has(step.number) ? (
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    ) : (
-                      step.number
-                    )}
-                  </button>
-                  <div className="flex-1">
-                    <h2 className="text-xl font-bold mb-2">{step.title}</h2>
-                    <p className="text-gray-400 mb-4">{step.description}</p>
-                    <div className="flex flex-wrap gap-3">
-                      {step.resources.map((resource) => (
-                        <Link
-                          key={resource.href}
-                          href={resource.href}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-all"
-                        >
-                          {resource.type === "tool" && (
-                            <svg
-                              className="w-4 h-4 text-forge-cyan"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                            </svg>
-                          )}
-                          {resource.type === "blog" && (
-                            <svg
-                              className="w-4 h-4 text-forge-purple"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                              />
-                            </svg>
-                          )}
-                          {resource.type === "guide" && (
-                            <svg
-                              className="w-4 h-4 text-forge-cyan"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                          )}
-                          {resource.title}
-                          {resource.time && (
-                            <span className="text-gray-500 text-xs">
-                              ({resource.time})
-                            </span>
-                          )}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="max-w-3xl mx-auto space-y-4">
+            <QuickStartSection
+              title="CLI for Autonomous Agents"
+              description="Best for: Claude Code, Cursor, custom agent frameworks"
+              steps={cliQuickStart}
+              defaultOpen={true}
+            />
+
+            <QuickStartSection
+              title="MCP Server for Claude Desktop"
+              description="Best for: Claude Desktop users, conversational memory"
+              steps={mcpQuickStart}
+            />
+
+            <QuickStartSection
+              title="SDK for Any AI System"
+              description="Best for: Custom apps, OpenAI/Gemini integration, programmatic access"
+              steps={sdkQuickStart}
+            />
           </div>
         </div>
       </section>
 
       <SectionDivider variant="purple" />
 
-      {/* Progress Summary */}
+      {/* What You Get */}
       <section className="relative z-10 py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <div className="glass gradient-border rounded-xl p-8 text-center animate-fade-up">
-              <div className="text-4xl font-bold text-forge-cyan mb-2">
-                {completedSteps.size} / {learningPath.length}
+            <h2 className="text-2xl font-bold text-center mb-8">
+              What Your Agent Gets
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="glass rounded-xl p-6">
+                <div className="text-2xl mb-3">🧠</div>
+                <h3 className="font-bold mb-2">Persistent Memory</h3>
+                <p className="text-gray-400 text-sm">
+                  Store learnings, preferences, and context that survive
+                  restarts and context resets.
+                </p>
               </div>
-              <p className="text-gray-400 mb-4">
-                {completedSteps.size === learningPath.length
-                  ? "You're a Claude Code power user!"
-                  : "Steps completed"}
-              </p>
-              <div className="flex justify-center gap-3">
-                <button
-                  onClick={shareProgress}
-                  className={`px-4 py-2 text-sm rounded-xl transition-all ${
-                    sharedProgress
-                      ? "bg-green-500 text-white"
-                      : "bg-forge-cyan/20 hover:bg-forge-cyan/30 text-forge-cyan"
-                  }`}
-                >
-                  {sharedProgress ? "Copied!" : "Share Progress"}
-                </button>
-                {completedSteps.size > 0 && (
-                  <button
-                    onClick={resetProgress}
-                    className="px-4 py-2 text-sm bg-white/10 hover:bg-white/20 rounded-xl transition-all text-gray-400"
-                  >
-                    Reset
-                  </button>
-                )}
+              <div className="glass rounded-xl p-6">
+                <div className="text-2xl mb-3">🪪</div>
+                <h3 className="font-bold mb-2">Identity Narratives</h3>
+                <p className="text-gray-400 text-sm">
+                  Define who your agent is, what they can do, and their
+                  relationship with their human.
+                </p>
+              </div>
+              <div className="glass rounded-xl p-6">
+                <div className="text-2xl mb-3">📸</div>
+                <h3 className="font-bold mb-2">Context Snapshots</h3>
+                <p className="text-gray-400 text-sm">
+                  Save work state before restarts. Resume exactly where you left
+                  off.
+                </p>
+              </div>
+              <div className="glass rounded-xl p-6">
+                <div className="text-2xl mb-3">🌉</div>
+                <h3 className="font-bold mb-2">Context Bridge</h3>
+                <p className="text-gray-400 text-sm">
+                  One call to restore everything: snapshot + memories + identity
+                  + preferences.
+                </p>
               </div>
             </div>
           </div>
@@ -393,6 +314,45 @@ export default function StartHerePage() {
       </section>
 
       <SectionDivider variant="cyan" />
+
+      {/* Next Steps */}
+      <section className="relative z-10 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-6">Next Steps</h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/docs"
+                className="px-6 py-3 glass rounded-xl hover:bg-white/10 transition-all"
+              >
+                📚 Full Documentation
+              </Link>
+              <Link
+                href="/memory-tools"
+                className="px-6 py-3 glass rounded-xl hover:bg-white/10 transition-all"
+              >
+                🔧 Memory Tools Overview
+              </Link>
+              <Link
+                href="/safety"
+                className="px-6 py-3 glass rounded-xl hover:bg-white/10 transition-all"
+              >
+                🛡️ Safety Principles
+              </Link>
+              <a
+                href="https://github.com/WhenMoon-afk/claude-memory-mcp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 glass rounded-xl hover:bg-white/10 transition-all"
+              >
+                ⭐ Star on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider variant="purple" />
 
       {/* CTA */}
       <CtaSection />
