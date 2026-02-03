@@ -757,12 +757,34 @@ export class SQLiteStorage implements MemoryStorage {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // PROVENANCE (placeholder implementations)
+  // PROVENANCE
   // ─────────────────────────────────────────────────────────────────────────
 
-  async getProvenance(_entityId: EntityId): Promise<ProvenanceEntry[]> {
+  async getProvenance(entityId: EntityId): Promise<ProvenanceEntry[]> {
     this.ensureInitialized();
-    throw new Error("Not implemented: getProvenance");
+
+    const rows = this.all<{
+      id: string;
+      entity_id: string;
+      entity_type: string;
+      event_type: string;
+      event_data: string;
+      timestamp: number;
+      actor: string | null;
+      session_id: string | null;
+    }>("SELECT * FROM provenance WHERE entity_id = ? ORDER BY timestamp ASC", [
+      entityId,
+    ]);
+
+    return rows.map((row) => ({
+      id: row.id,
+      memoryId: row.entity_id,
+      eventType: row.event_type as ProvenanceEntry["eventType"],
+      eventData: JSON.parse(row.event_data),
+      agentVersion: row.actor ?? undefined,
+      sessionId: row.session_id ?? undefined,
+      createdAt: row.timestamp,
+    }));
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -875,17 +897,80 @@ export class SQLiteStorage implements MemoryStorage {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // MAINTENANCE (placeholder implementations)
+  // MAINTENANCE
   // ─────────────────────────────────────────────────────────────────────────
 
-  async markConsolidated(_ids: EntityId[]): Promise<void> {
+  async markConsolidated(ids: EntityId[]): Promise<void> {
     this.ensureInitialized();
-    throw new Error("Not implemented: markConsolidated");
+
+    if (ids.length === 0) return;
+
+    const placeholders = ids.map(() => "?").join(",");
+    this.exec(
+      `UPDATE memories SET is_consolidated = 1 WHERE id IN (${placeholders})`,
+      ids,
+    );
   }
 
-  async prune(_policy: PrunePolicy): Promise<number> {
+  async prune(policy: PrunePolicy): Promise<number> {
     this.ensureInitialized();
-    throw new Error("Not implemented: prune");
+
+    // Build WHERE conditions
+    const conditions: string[] = ["deleted_at IS NULL"];
+    const params: unknown[] = [];
+
+    if (policy.minAccessCount !== undefined) {
+      conditions.push("access_count < ?");
+      params.push(policy.minAccessCount);
+    }
+
+    if (policy.staleAfterDays !== undefined) {
+      const cutoff = Date.now() - policy.staleAfterDays * 24 * 60 * 60 * 1000;
+      conditions.push("(last_accessed IS NULL OR last_accessed < ?)");
+      params.push(cutoff);
+    }
+
+    if (policy.preserveImportance?.length) {
+      const placeholders = policy.preserveImportance.map(() => "?").join(",");
+      conditions.push(`importance NOT IN (${placeholders})`);
+      params.push(...policy.preserveImportance);
+    }
+
+    // Count candidates
+    const countSql = `SELECT COUNT(*) as count FROM memories WHERE ${conditions.join(" AND ")}`;
+    const total = this.get<{ count: number }>(countSql, params)?.count ?? 0;
+
+    // Calculate how many to delete (keep minimum)
+    const keepMin = policy.keepMinimum ?? 0;
+    const currentTotal =
+      this.get<{ count: number }>(
+        "SELECT COUNT(*) as count FROM memories WHERE deleted_at IS NULL",
+      )?.count ?? 0;
+
+    const toDelete = Math.max(0, Math.min(total, currentTotal - keepMin));
+
+    if (policy.dryRun || toDelete === 0) {
+      return toDelete;
+    }
+
+    // Get IDs to delete (oldest first by last_accessed, then created_at)
+    const selectSql = `
+      SELECT id FROM memories
+      WHERE ${conditions.join(" AND ")}
+      ORDER BY COALESCE(last_accessed, created_at) ASC
+      LIMIT ?
+    `;
+    const idsToDelete = this.all<{ id: string }>(selectSql, [
+      ...params,
+      toDelete,
+    ]);
+
+    // Soft delete
+    for (const row of idsToDelete) {
+      await this.deleteMemory(row.id);
+    }
+
+    return idsToDelete.length;
   }
 
   async vacuum(): Promise<void> {
