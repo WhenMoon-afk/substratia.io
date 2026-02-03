@@ -15,6 +15,16 @@ export const metadata: Metadata = {
       "Midjourney vs DALL-E 3 vs Stable Diffusion vs Grok. Which AI image generator is best for you?",
     type: "article",
     url: siteUrl("/reviews/ai-image-generators"),
+    images: [
+      {
+        url: siteUrl(
+          "/api/og?title=AI%20Image%20Generators&subtitle=2026%20Comparison",
+        ),
+        width: 1200,
+        height: 630,
+        alt: "Best AI Image Generators 2026 - Complete Comparison",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

@@ -1,5 +1,5 @@
 {
-  "name": "Substratia - Memory Infrastructure for AI",
+  "name": "Substratia - Memory Infrastructure for AI Agents",
   "short_name": "Substratia",
   "description": "Free open-source tools: momentum (context recovery), memory-mcp (persistent memory), and dev utilities",
   "start_url": "/",

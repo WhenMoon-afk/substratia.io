@@ -15,6 +15,16 @@ export const metadata: Metadata = {
       "Compare Claude Code, Cursor, GitHub Copilot, Codeium, and Windsurf. Find the best AI coding assistant for your needs.",
     type: "article",
     url: siteUrl("/reviews/ai-coding-assistants"),
+    images: [
+      {
+        url: siteUrl(
+          "/api/og?title=AI%20Coding%20Assistants&subtitle=2026%20Comparison",
+        ),
+        width: 1200,
+        height: 630,
+        alt: "Best AI Coding Assistants 2026 - Complete Comparison",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

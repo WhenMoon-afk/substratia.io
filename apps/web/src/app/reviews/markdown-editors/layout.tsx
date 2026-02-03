@@ -15,6 +15,16 @@ export const metadata: Metadata = {
       "Compare Obsidian, Notion, Typora, VS Code, and iA Writer. Find the best markdown editor for your workflow.",
     type: "article",
     url: siteUrl("/reviews/markdown-editors"),
+    images: [
+      {
+        url: siteUrl(
+          "/api/og?title=Markdown%20Editors&subtitle=2026%20Comparison",
+        ),
+        width: 1200,
+        height: 630,
+        alt: "Best Markdown Editors 2026 - Complete Comparison",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

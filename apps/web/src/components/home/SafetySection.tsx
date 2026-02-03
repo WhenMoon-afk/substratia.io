@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 const principles = [
   {
     icon: "🔍",
@@ -56,28 +54,9 @@ export default function SafetySection() {
 
           {/* Quote */}
           <div className="text-center animate-fade-up delay-400">
-            <blockquote className="text-xl md:text-2xl font-display text-gray-300 italic mb-6">
+            <blockquote className="text-xl md:text-2xl font-display text-gray-300 italic">
               &ldquo;Memory = accountability = safety.&rdquo;
             </blockquote>
-            <Link
-              href="/safety"
-              className="inline-flex items-center gap-2 text-forge-purple hover:text-forge-purple/80 font-medium transition-colors"
-            >
-              Read our Safety Principles
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </Link>
           </div>
         </div>
       </div>

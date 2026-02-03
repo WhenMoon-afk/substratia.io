@@ -15,6 +15,16 @@ export const metadata: Metadata = {
       "Runway Gen-3 vs Pika vs Luma vs Kling vs Grok. Which AI video generator is best for you?",
     type: "article",
     url: siteUrl("/reviews/ai-video-generators"),
+    images: [
+      {
+        url: siteUrl(
+          "/api/og?title=AI%20Video%20Generators&subtitle=2026%20Comparison",
+        ),
+        width: 1200,
+        height: 630,
+        alt: "Best AI Video Generators 2026 - Complete Comparison",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

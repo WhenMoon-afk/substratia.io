@@ -334,10 +334,10 @@ export default function StartHerePage() {
                 🔧 Memory Tools Overview
               </Link>
               <Link
-                href="/safety"
+                href="/faq"
                 className="px-6 py-3 glass rounded-xl hover:bg-white/10 transition-all"
               >
-                🛡️ Safety Principles
+                ❓ FAQ
               </Link>
               <a
                 href="https://github.com/WhenMoon-afk/claude-memory-mcp"
