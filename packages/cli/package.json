@@ -1,0 +1,46 @@
+{
+  "name": "@substratia-io/cli",
+  "version": "0.1.0",
+  "description": "Substratia CLI - Persistent memory for AI agents",
+  "type": "module",
+  "bin": {
+    "substratia": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "memory",
+    "llm",
+    "cli",
+    "claude",
+    "agent",
+    "persistent-memory",
+    "substratia"
+  ],
+  "author": "Substratia",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/substratia-io/cli.git"
+  },
+  "homepage": "https://substratia.io",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
