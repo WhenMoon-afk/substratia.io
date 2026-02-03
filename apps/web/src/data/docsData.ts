@@ -44,7 +44,7 @@ substratia init --api-key sk_xxx`,
           { name: "register", desc: "Sign up and get an API key (one step)" },
           {
             name: "learn",
-            desc: 'Store a memory: substratia learn "Something important" --category technical',
+            desc: 'Store a memory: substratia learn "Something important" --importance high',
           },
           {
             name: "remember",

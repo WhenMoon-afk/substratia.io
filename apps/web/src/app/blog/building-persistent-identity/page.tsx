@@ -359,7 +359,7 @@ curl -fsSL https://substratia.io/install | bash
 substratia register "your@email.com"
 
 # Store a memory
-substratia learn "User prefers TypeScript" --category preference
+substratia learn "User prefers TypeScript" --importance high
 
 # Get full context on restart
 substratia bridge`}</code>
