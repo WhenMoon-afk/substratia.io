@@ -19,7 +19,7 @@ const cliQuickStart: QuickStartStep[] = [
     title: "Install the CLI",
     description: "Get the Substratia CLI with a single command.",
     code: `curl -fsSL https://substratia.io/install | bash`,
-    note: "Requires Bun (bun.sh). Or clone from GitHub.",
+    note: "Requires Node.js 18+ or Bun. Works via npx.",
   },
   {
     number: 2,
@@ -32,7 +32,7 @@ const cliQuickStart: QuickStartStep[] = [
     number: 3,
     title: "Store your first memory",
     description: "Persist something your agent learned.",
-    code: `substratia learn "User prefers dark mode" --category preference`,
+    code: `substratia learn "User prefers dark mode" --importance high`,
   },
   {
     number: 4,
