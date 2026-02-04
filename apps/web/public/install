@@ -6,7 +6,7 @@
 
 set -e
 
-REPO="substratia-io/cli"
+REPO="WhenMoon-afk/substratia.io"  # GitHub repo (unused, kept for future binary releases)
 INSTALL_DIR="${SUBSTRATIA_INSTALL_DIR:-$HOME/.substratia}"
 BIN_DIR="${SUBSTRATIA_BIN_DIR:-$INSTALL_DIR/bin}"
 

@@ -3,7 +3,7 @@
 ## Prerequisites
 
 1. **npm account** - Create at npmjs.com if needed
-2. **@substratia-io org** - Create at npmjs.com/org/create
+2. **@substratia org** - Create at npmjs.com/org/create
 3. **npm login** - Run `npm login` and authenticate
 
 ## Pre-publish Checklist
@@ -20,7 +20,7 @@
 
 Go to: https://www.npmjs.com/org/create
 
-- Organization name: `substratia-io`
+- Organization name: `substratia`
 - Type: Public (free)
 
 ### 2. Login to npm
@@ -58,11 +58,13 @@ The `--access public` flag is required for scoped packages on the free npm tier.
 ## After Publishing
 
 1. Verify package is live:
+
    ```bash
    npm view @substratia/memory
    ```
 
 2. Test installation in a new project:
+
    ```bash
    mkdir test-sdk && cd test-sdk
    npm init -y
@@ -87,6 +89,7 @@ npm version major
 ```
 
 Then publish:
+
 ```bash
 npm publish --access public
 ```
@@ -103,10 +106,10 @@ Create the org first: https://www.npmjs.com/org/create
 
 ### "You do not have permission"
 
-Make sure you're a member of the @substratia-io org with publish rights.
+Make sure you're a member of the @substratia org with publish rights.
 
 ## Links
 
 - npm package: https://www.npmjs.com/package/@substratia/memory
-- Organization: https://www.npmjs.com/org/substratia-io
-- Source: https://github.com/substratia-io/memory
+- Organization: https://www.npmjs.com/org/substratia
+- Source: https://github.com/substratia/memory

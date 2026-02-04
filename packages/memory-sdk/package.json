@@ -35,7 +35,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/substratia-io/memory.git"
+    "url": "git+https://github.com/WhenMoon-afk/substratia.io.git",
+    "directory": "packages/memory-sdk"
   },
   "homepage": "https://substratia.io",
   "engines": {

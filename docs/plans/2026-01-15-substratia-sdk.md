@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Build `@substratia-io/memory` SDK - "3 lines of code" memory for any AI system.
+**Goal:** Build `@substratia/memory` SDK - "3 lines of code" memory for any AI system.
 
 **Architecture:** Thin HTTP wrapper around Convex API. Same backend as MCP plugins.
 
@@ -13,6 +13,7 @@
 ## Task 1: Add Internal Query Functions to Convex
 
 **Files:**
+
 - Modify: `packages/convex/convex/memoriesInternal.ts`
 
 **Step 1: Add list, get, search, and delete functions**
@@ -30,12 +31,14 @@ export const listByUser = internalQuery({
   args: {
     userId: v.id("users"),
     limit: v.optional(v.number()),
-    importance: v.optional(v.union(
-      v.literal("critical"),
-      v.literal("high"),
-      v.literal("normal"),
-      v.literal("low")
-    )),
+    importance: v.optional(
+      v.union(
+        v.literal("critical"),
+        v.literal("high"),
+        v.literal("normal"),
+        v.literal("low"),
+      ),
+    ),
   },
   handler: async (ctx, args) => {
     let query = ctx.db
@@ -84,7 +87,7 @@ export const searchByContent = internalQuery({
     const results = await ctx.db
       .query("memories")
       .withSearchIndex("search_content", (q) =>
-        q.search("content", args.query).eq("userId", args.userId)
+        q.search("content", args.query).eq("userId", args.userId),
       )
       .take(args.limit || 10);
 
@@ -118,6 +121,7 @@ Run: `cd /home/local-user/Github/company-overseer/repos/substratia.io/packages/c
 ## Task 2: Add HTTP Endpoints for SDK
 
 **Files:**
+
 - Modify: `packages/convex/convex/http.ts`
 
 **Step 1: Add GET /api/memories endpoint (list)**
@@ -143,21 +147,24 @@ http.route({
     const importance = url.searchParams.get("importance") as any;
 
     try {
-      const memories = await ctx.runQuery(internal.memoriesInternal.listByUser, {
-        userId: auth.userId,
-        limit: Math.min(limit, 100),
-        importance: importance || undefined,
-      });
-
-      return new Response(
-        JSON.stringify({ memories }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+      const memories = await ctx.runQuery(
+        internal.memoriesInternal.listByUser,
+        {
+          userId: auth.userId,
+          limit: Math.min(limit, 100),
+          importance: importance || undefined,
+        },
       );
+
+      return new Response(JSON.stringify({ memories }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to list memories:", error);
       return new Response(
         JSON.stringify({ error: "Failed to list memories" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -187,26 +194,29 @@ http.route({
     if (!query) {
       return new Response(
         JSON.stringify({ error: "Missing required parameter: q" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     try {
-      const memories = await ctx.runQuery(internal.memoriesInternal.searchByContent, {
-        userId: auth.userId,
-        query,
-        limit: Math.min(limit, 50),
-      });
-
-      return new Response(
-        JSON.stringify({ memories }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+      const memories = await ctx.runQuery(
+        internal.memoriesInternal.searchByContent,
+        {
+          userId: auth.userId,
+          query,
+          limit: Math.min(limit, 50),
+        },
       );
+
+      return new Response(JSON.stringify({ memories }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to search memories:", error);
       return new Response(
         JSON.stringify({ error: "Failed to search memories" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -245,32 +255,35 @@ http.route({
     if (!id) {
       return new Response(
         JSON.stringify({ error: "Missing required field: id" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     try {
-      const result = await ctx.runMutation(internal.memoriesInternal.deleteById, {
-        memoryId: id,
-        userId: auth.userId,
-      });
+      const result = await ctx.runMutation(
+        internal.memoriesInternal.deleteById,
+        {
+          memoryId: id,
+          userId: auth.userId,
+        },
+      );
 
       if (!result.success) {
-        return new Response(
-          JSON.stringify({ error: result.error }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
-        );
+        return new Response(JSON.stringify({ error: result.error }), {
+          status: 404,
+          headers: { "Content-Type": "application/json" },
+        });
       }
 
-      return new Response(
-        JSON.stringify({ success: true }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
       console.error("Failed to delete memory:", error);
       return new Response(
         JSON.stringify({ error: "Failed to delete memory" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   }),
@@ -286,6 +299,7 @@ Run: `cd /home/local-user/Github/company-overseer/repos/substratia.io/packages/c
 ## Task 3: Create SDK Package
 
 **Files:**
+
 - Create: `packages/memory-sdk/package.json`
 - Create: `packages/memory-sdk/tsconfig.json`
 - Create: `packages/memory-sdk/src/index.ts`
@@ -295,7 +309,7 @@ Run: `cd /home/local-user/Github/company-overseer/repos/substratia.io/packages/c
 
 ```json
 {
-  "name": "@substratia-io/memory",
+  "name": "@substratia/memory",
   "version": "0.1.0",
   "description": "Memory for AI - 3 lines of code to add persistent memory to any AI system",
   "type": "module",
@@ -307,11 +321,7 @@ Run: `cd /home/local-user/Github/company-overseer/repos/substratia.io/packages/c
       "types": "./dist/index.d.ts"
     }
   },
-  "files": [
-    "dist/",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist/", "README.md", "LICENSE"],
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build"
@@ -443,7 +453,7 @@ export class Substratia {
 
   private async request<T>(
     path: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseUrl}${path}`;
     const response = await fetch(url, {
@@ -469,7 +479,10 @@ export class Substratia {
    * @param options - Optional settings (context, importance, tags)
    * @returns The created memory with ID
    */
-  async add(content: string, options: AddOptions = {}): Promise<{ memoryId: string }> {
+  async add(
+    content: string,
+    options: AddOptions = {},
+  ): Promise<{ memoryId: string }> {
     return this.request<{ memoryId: string }>("/api/memories/sync", {
       method: "POST",
       body: JSON.stringify({
@@ -493,7 +506,7 @@ export class Substratia {
     if (options.limit) params.set("limit", String(options.limit));
 
     const result = await this.request<{ memories: Memory[] }>(
-      `/api/memories/search?${params}`
+      `/api/memories/search?${params}`,
     );
     return result.memories;
   }
@@ -532,24 +545,25 @@ export default Substratia;
 
 **Step 5: Create README.md**
 
-```markdown
-# @substratia-io/memory
+````markdown
+# @substratia/memory
 
 Memory for AI - add persistent memory to any AI system in 3 lines of code.
 
 ## Quick Start
 
 ```typescript
-import { Substratia } from '@substratia-io/memory'
+import { Substratia } from "@substratia/memory";
 
-const memory = new Substratia({ apiKey: 'sk_your_key_here' })
-await memory.add("User prefers dark mode")
+const memory = new Substratia({ apiKey: "sk_your_key_here" });
+await memory.add("User prefers dark mode");
 ```
+````
 
 ## Installation
 
 ```bash
-npm install @substratia-io/memory
+npm install @substratia/memory
 ```
 
 ## Get an API Key
@@ -565,59 +579,59 @@ npm install @substratia-io/memory
 ```typescript
 await memory.add("User is vegetarian", {
   importance: "high",
-  tags: ["preferences", "diet"]
-})
+  tags: ["preferences", "diet"],
+});
 ```
 
 ### Search Memories
 
 ```typescript
-const results = await memory.search("diet preferences")
+const results = await memory.search("diet preferences");
 // Returns memories matching the search query
 ```
 
 ### List All Memories
 
 ```typescript
-const all = await memory.list({ limit: 20 })
-const critical = await memory.list({ importance: "critical" })
+const all = await memory.list({ limit: 20 });
+const critical = await memory.list({ importance: "critical" });
 ```
 
 ### Delete a Memory
 
 ```typescript
-await memory.delete("memory_id_here")
+await memory.delete("memory_id_here");
 ```
 
 ## API Reference
 
 ### `new Substratia(config)`
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `apiKey` | string | Yes | Your API key (starts with sk_) |
-| `baseUrl` | string | No | Custom API URL |
+| Option    | Type   | Required | Description                     |
+| --------- | ------ | -------- | ------------------------------- |
+| `apiKey`  | string | Yes      | Your API key (starts with sk\_) |
+| `baseUrl` | string | No       | Custom API URL                  |
 
 ### `add(content, options?)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `context` | string | - | Additional context |
-| `importance` | string | "normal" | critical, high, normal, low |
-| `tags` | string[] | - | Categorization tags |
+| Option       | Type     | Default  | Description                 |
+| ------------ | -------- | -------- | --------------------------- |
+| `context`    | string   | -        | Additional context          |
+| `importance` | string   | "normal" | critical, high, normal, low |
+| `tags`       | string[] | -        | Categorization tags         |
 
 ### `search(query, options?)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `limit` | number | 10 | Max results (max 50) |
+| Option  | Type   | Default | Description          |
+| ------- | ------ | ------- | -------------------- |
+| `limit` | number | 10      | Max results (max 50) |
 
 ### `list(options?)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `limit` | number | 50 | Max results (max 100) |
-| `importance` | string | - | Filter by importance |
+| Option       | Type   | Default | Description           |
+| ------------ | ------ | ------- | --------------------- |
+| `limit`      | number | 50      | Max results (max 100) |
+| `importance` | string | -       | Filter by importance  |
 
 ### `delete(id)`
 
@@ -640,7 +654,8 @@ Deletes a memory by ID.
 ## License
 
 MIT
-```
+
+````
 
 **Step 6: Build and verify**
 
@@ -649,7 +664,7 @@ Run:
 cd /home/local-user/Github/company-overseer/repos/substratia.io/packages/memory-sdk
 npm install
 npm run build
-```
+````
 
 ---
 
@@ -700,6 +715,7 @@ test().catch(console.error);
 **Step 2: Run test**
 
 Run:
+
 ```bash
 cd /home/local-user/Github/company-overseer/repos/substratia.io/packages/memory-sdk
 SUBSTRATIA_API_KEY=sk_your_key npx tsx test.ts
@@ -721,7 +737,7 @@ git commit -m "feat: add GET/DELETE endpoints for SDK"
 
 ```bash
 git add packages/memory-sdk/
-git commit -m "feat: add @substratia-io/memory SDK package"
+git commit -m "feat: add @substratia/memory SDK package"
 ```
 
 **Step 3: Publish to npm (when ready)**
@@ -739,16 +755,18 @@ After completing all tasks:
 
 ```typescript
 // This now works:
-import { Substratia } from '@substratia-io/memory'
+import { Substratia } from "@substratia/memory";
 
-const memory = new Substratia({ apiKey: 'sk_xxx' })
-await memory.add("User prefers dark mode")
+const memory = new Substratia({ apiKey: "sk_xxx" });
+await memory.add("User prefers dark mode");
 ```
 
 **Endpoints added:**
+
 - GET /api/memories - List memories
 - GET /api/memories/search - Search memories
 - POST /api/memories/delete - Delete memory
 
 **Package created:**
-- @substratia-io/memory - Thin HTTP wrapper (~150 lines)
+
+- @substratia/memory - Thin HTTP wrapper (~150 lines)
