@@ -1,6 +1,6 @@
-# @substratia/memory-local
+# @substratia/memory
 
-Local-first memory infrastructure for AI agents. Part of the [Substratia](https://substratia.io) ecosystem.
+Unified memory infrastructure for AI agents — local-first SQLite, cloud HTTP SDK, CLI, dashboard, and Self-Schema. Part of the [Substratia](https://substratia.io) ecosystem.
 
 ## Features
 
@@ -8,20 +8,24 @@ Local-first memory infrastructure for AI agents. Part of the [Substratia](https:
 - **Three memory types**: Episodic (events), Semantic (facts), Procedural (skills)
 - **Self-Schema support**: Identity statements, autobiographical narrative, reconsolidation
 - **Full-text search**: FTS5-powered search without embedding overhead
+- **CLI**: `substratia learn`, `substratia remember`, `substratia bridge`, and more
+- **Local dashboard**: `substratia dashboard` — web UI for memory visualization
+- **Portable sharing**: `substratia share` — generate standalone HTML memory panels
+- **Cloud SDK**: Optional Substratia.io cloud sync via HTTP API
 - **Audit trail**: Append-only provenance for compliance and debugging
 - **WAL mode**: Safe concurrent reads with single writer
 
 ## Installation
 
 ```bash
-npm install @substratia/memory-local
+npm install @substratia/memory
 # or
-bun add @substratia/memory-local
+bun add @substratia/memory
 ```
 
 ### SQLite Driver
 
-The package requires a SQLite driver. Choose one:
+The local storage requires a SQLite driver. Choose one:
 
 - **Bun** (recommended): Built-in `bun:sqlite`, no extra install needed
 - **Node.js**: Install `better-sqlite3`:
@@ -29,10 +33,45 @@ The package requires a SQLite driver. Choose one:
   npm install better-sqlite3
   ```
 
-## Quick Start
+## CLI
+
+The package includes a CLI for managing memories from the terminal:
+
+```bash
+# Register and get an API key (for cloud features)
+substratia register "you@example.com"
+
+# Store a memory
+substratia learn "User prefers dark mode" --importance high --tags "preferences,ui"
+
+# Search memories
+substratia remember "user preferences" --limit 5
+
+# Full context restore (memories + identity + snapshots)
+substratia bridge
+
+# Local web dashboard
+substratia dashboard
+
+# Generate a portable HTML memory panel
+substratia share --with-identity --name "My Agent"
+
+# Show configuration
+substratia config
+```
+
+### Environment Variables
+
+| Variable             | Description                        |
+| -------------------- | ---------------------------------- |
+| `SUBSTRATIA_API_KEY` | Override config file API key       |
+| `SUBSTRATIA_API_URL` | Override default API endpoint      |
+| `SUBSTRATIA_DB_PATH` | Custom database path for dashboard |
+
+## Quick Start (Library)
 
 ```typescript
-import { SQLiteStorage } from "@substratia/memory-local";
+import { SQLiteStorage } from "@substratia/memory";
 
 // Initialize storage
 const storage = new SQLiteStorage({ dbPath: "./agent-memory.db" });
@@ -149,6 +188,46 @@ await storage.updateNarrative({
 const schema = await storage.getSelfSchema();
 ```
 
+## Cloud SDK
+
+Optional cloud sync via Substratia.io:
+
+```typescript
+import { Substratia } from "@substratia/memory/cloud";
+
+const client = new Substratia({ apiKey: "your-api-key" });
+
+// Store in cloud
+await client.add("User prefers dark mode", { importance: "high" });
+
+// Search cloud memories
+const results = await client.search("preferences");
+```
+
+## Dashboard
+
+Launch a local web dashboard to visualize memories and identity:
+
+```typescript
+import { startDashboard } from "@substratia/memory/dashboard";
+
+await startDashboard({ port: 3847, open: true });
+```
+
+## Portable Sharing
+
+Generate standalone HTML files to share agent memory state:
+
+```typescript
+import { shareToFile } from "@substratia/memory/share";
+
+const filePath = await shareToFile("./agent-memory.db", {
+  withIdentity: true,
+  agentName: "My Agent",
+  output: "./memory-panel.html",
+});
+```
+
 ## Maintenance
 
 ```typescript
@@ -169,30 +248,20 @@ const stats = await storage.stats();
 // { totalMemories: 150, byType: { episodic: 80, semantic: 50, procedural: 20 }, ... }
 ```
 
-## Cloud Sync (Coming Soon)
-
-Substratia.io provides optional cloud sync for backup and cross-device access:
+## Subpath Exports
 
 ```typescript
-// Coming in @substratia/memory-sync
-import { SyncManager } from "@substratia/memory-sync";
-
-const sync = new SyncManager({
-  storage,
-  apiKey: "your-substratia-api-key",
-});
-
-await sync.start(); // Background sync
+import { SQLiteStorage } from "@substratia/memory"; // Core local storage
+import { Substratia } from "@substratia/memory/cloud"; // Cloud HTTP SDK
+import type { Memory } from "@substratia/memory/types"; // Type definitions
+import type { SelfSchema } from "@substratia/memory/types/self-schema";
+import { startDashboard } from "@substratia/memory/dashboard"; // Web dashboard
+import { shareToFile } from "@substratia/memory/share"; // Portable panels
 ```
 
 ## License
 
 MIT - See [LICENSE](./LICENSE) for details.
-
-## Related Packages
-
-- `@substratia/cli` - Command-line interface for memory management
-- `@substratia/memory-sync` - Cloud sync (coming soon)
 
 ## Links
 

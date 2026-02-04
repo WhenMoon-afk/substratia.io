@@ -381,7 +381,16 @@ async function main(): Promise<void> {
     if (arg.startsWith("--")) {
       const key = arg.slice(2);
       const value = args[i + 1];
-      if (value && !value.startsWith("--")) {
+      if (value && !value.startsWith("-")) {
+        flags[key] = value;
+        i++;
+      } else {
+        flags[key] = "true";
+      }
+    } else if (arg.startsWith("-") && arg.length === 2) {
+      const key = arg.slice(1);
+      const value = args[i + 1];
+      if (value && !value.startsWith("-")) {
         flags[key] = value;
         i++;
       } else {
