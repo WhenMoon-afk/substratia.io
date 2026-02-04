@@ -14,10 +14,11 @@ export default function Footer() {
             heading={
               <>
                 Stay updated on{" "}
-                <span className="text-forge-cyan">open source</span> dev tools
+                <span className="text-forge-cyan">agent memory</span>{" "}
+                infrastructure
               </>
             }
-            description="New tools, Claude Code tips, and research from the Substratia project."
+            description="New tools, memory patterns, and research on persistent AI identity."
             centered
           />
         </div>
@@ -34,7 +35,7 @@ export default function Footer() {
             />
             <span className="font-semibold">Substratia</span>
             <span className="text-gray-500 text-sm hidden sm:inline">
-              Open Source Developer Tools
+              Memory Infrastructure for AI Agents
             </span>
           </div>
 

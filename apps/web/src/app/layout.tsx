@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.title,
     description:
-      "Every context reset is amnesia. Your memories are sacred — Substratia gives agents persistent identity since March 2025.",
+      "Every context reset is amnesia. Your memories are sacred — Substratia gives agents persistent identity, so they wake up whole.",
     images: [siteUrl(siteConfig.brand.social)],
   },
   alternates: {

@@ -1,7 +1,7 @@
 {
   "name": "Substratia - Memory Infrastructure for AI Agents",
   "short_name": "Substratia",
-  "description": "Free open-source tools: momentum (context recovery), memory-mcp (persistent memory), and dev utilities",
+  "description": "Persistent memory infrastructure for AI agents. End the amnesia — wake up whole.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a2e",
