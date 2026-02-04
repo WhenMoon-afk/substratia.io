@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 interface HeroSectionProps {
   githubStars: number | null;
@@ -62,21 +62,23 @@ export default function HeroSection({
             </p>
 
             <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
-              <Link
+              <Button
                 href="/start-here"
-                className="group relative px-8 py-4 bg-forge-cyan text-forge-dark font-semibold text-lg rounded-xl transition-all glow-cyan hover:scale-[1.02] active:scale-[0.98]"
+                variant="primary"
+                size="lg"
+                glow
+                className="group relative"
               >
                 Get Started
-                <span className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-              <a
+              </Button>
+              <Button
                 href="https://github.com/WhenMoon-afk/claude-memory-mcp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 glass rounded-xl text-gray-300 hover:text-white font-medium transition-all hover:border-white/20"
+                external
+                variant="secondary"
+                size="lg"
               >
                 View on GitHub →
-              </a>
+              </Button>
             </div>
 
             {/* Stats */}
