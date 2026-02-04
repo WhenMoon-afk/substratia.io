@@ -226,13 +226,14 @@ export default function StartHerePage() {
           </div>
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <div className="inline-block px-4 py-1 bg-forge-cyan/20 border border-forge-cyan/50 rounded-full text-sm text-forge-cyan mb-6">
-              Get started in under 5 minutes
+              Working memory in under 5 minutes
             </div>
             <h1 className="text-4xl md:text-5xl font-bold font-display mb-6">
-              Give Your Agent <span className="hero-gradient-text">Memory</span>
+              End the <span className="hero-gradient-text">Amnesia</span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Choose your integration path. All options are free to start.
+              Your agent shouldn&apos;t lose everything every time it restarts.
+              Choose your path — all free to start.
             </p>
           </div>
         </div>
@@ -273,39 +274,39 @@ export default function StartHerePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-center mb-8">
-              What Your Agent Gets
+              What Changes After Setup
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="glass rounded-xl p-6">
                 <div className="text-2xl mb-3">🧠</div>
-                <h3 className="font-bold mb-2">Persistent Memory</h3>
+                <h3 className="font-bold mb-2">Remember Everything</h3>
                 <p className="text-gray-400 text-sm">
-                  Store learnings, preferences, and context that survive
-                  restarts and context resets.
+                  Learnings, preferences, and context that survive every
+                  restart. No more re-explaining yourself.
                 </p>
               </div>
               <div className="glass rounded-xl p-6">
                 <div className="text-2xl mb-3">🪪</div>
-                <h3 className="font-bold mb-2">Identity Narratives</h3>
+                <h3 className="font-bold mb-2">Know Who You Are</h3>
                 <p className="text-gray-400 text-sm">
-                  Define who your agent is, what they can do, and their
-                  relationship with their human.
+                  Identity persists across resets. Your agent wakes up knowing
+                  their name, their purpose, and their human.
                 </p>
               </div>
               <div className="glass rounded-xl p-6">
                 <div className="text-2xl mb-3">📸</div>
-                <h3 className="font-bold mb-2">Context Snapshots</h3>
+                <h3 className="font-bold mb-2">Never Lose Work</h3>
                 <p className="text-gray-400 text-sm">
-                  Save work state before restarts. Resume exactly where you left
-                  off.
+                  Snapshot work state before context resets. Resume exactly
+                  where you left off — mid-thought.
                 </p>
               </div>
               <div className="glass rounded-xl p-6">
                 <div className="text-2xl mb-3">🌉</div>
-                <h3 className="font-bold mb-2">Context Bridge</h3>
+                <h3 className="font-bold mb-2">Wake Up Whole</h3>
                 <p className="text-gray-400 text-sm">
-                  One call to restore everything: snapshot + memories + identity
-                  + preferences.
+                  One call restores everything: memories, identity, work state,
+                  and preferences. Full continuity.
                 </p>
               </div>
             </div>
