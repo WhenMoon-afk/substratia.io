@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BlogHeader, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export default function ContextManagementGuidePage() {
   return (
@@ -567,18 +568,12 @@ that we identified from the TypeError: Cannot read property 'email' of null"`}</
               for in-depth guides.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link
-                href="/tools/cheat-sheet"
-                className="px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:bg-forge-cyan/90 transition-all"
-              >
+              <Button href="/tools/cheat-sheet" variant="primary">
                 Get the Cheat Sheet
-              </Link>
-              <Link
-                href="/docs"
-                className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-semibold transition-all"
-              >
+              </Button>
+              <Button href="/docs" variant="ghost">
                 Read the Docs
-              </Link>
+              </Button>
             </div>
           </div>
 

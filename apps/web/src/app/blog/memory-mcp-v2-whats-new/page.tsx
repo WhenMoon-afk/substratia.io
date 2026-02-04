@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title:
@@ -236,14 +237,13 @@ export default function BlogPost() {
               required.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a
+              <Button
                 href={siteConfig.links.repos.memoryMcp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:bg-forge-cyan/80 transition-all"
+                external
+                variant="primary"
               >
                 View on GitHub
-              </a>
+              </Button>
             </div>
           </div>
         </div>

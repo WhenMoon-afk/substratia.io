@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Memory Architecture Patterns for AI Assistants | Substratia",
@@ -336,20 +337,12 @@ Zero ML dependencies`}</pre>
               </div>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Link
-                href="/memory-tools"
-                className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:bg-forge-cyan/80 transition-all"
-              >
+              <Button href="/memory-tools" variant="primary">
                 View All Tools
-              </Link>
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-white/10 hover:bg-white/20 font-semibold rounded-xl transition-all"
-              >
+              </Button>
+              <Button href={siteConfig.links.github} external variant="ghost">
                 GitHub
-              </a>
+              </Button>
             </div>
           </div>
         </div>

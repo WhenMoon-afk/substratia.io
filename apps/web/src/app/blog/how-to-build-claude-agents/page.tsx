@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title:
@@ -182,12 +183,9 @@ Brief description of the agent's purpose.
             <p className="text-gray-400 mb-4">
               Explore our free tools to help you write better CLAUDE.md files.
             </p>
-            <Link
-              href="/tools"
-              className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-xl font-semibold transition-all"
-            >
+            <Button href="/tools" variant="purple">
               Browse Free Tools
-            </Link>
+            </Button>
           </div>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">

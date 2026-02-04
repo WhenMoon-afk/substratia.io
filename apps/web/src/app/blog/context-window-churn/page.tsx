@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "The Real Cost of Context Window Churn | Substratia",
@@ -297,20 +298,16 @@ export default function BlogPost() {
               long-term memory across sessions, use <strong>memory-mcp</strong>.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a
+              <Button
                 href={siteConfig.links.repos.momentum}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark font-semibold rounded-xl hover:bg-forge-cyan/80 transition-all"
+                external
+                variant="primary"
               >
                 View on GitHub
-              </a>
-              <Link
-                href="/memory-tools"
-                className="inline-block px-6 py-3 bg-white/10 hover:bg-white/20 font-semibold rounded-xl transition-all"
-              >
+              </Button>
+              <Button href="/memory-tools" variant="ghost">
                 All Memory Tools
-              </Link>
+              </Button>
             </div>
           </div>
         </div>

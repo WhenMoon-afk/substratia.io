@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title:
@@ -308,12 +309,9 @@ Every 5 iterations, verify:
               Use our free Prompt Optimizer to craft effective CLAUDE.md files
               with guardrails.
             </p>
-            <Link
-              href="/tools/prompt-optimizer"
-              className="inline-block px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-xl font-semibold transition-all"
-            >
+            <Button href="/tools/prompt-optimizer" variant="purple">
               Try the Prompt Optimizer
-            </Link>
+            </Button>
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BlogHeader, BlogAuthor, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export default function BlogPost() {
   return (
@@ -384,12 +385,9 @@ substratia bridge`}</code>
               Give your agent persistent identity. Free to start, five minutes
               to set up.
             </p>
-            <Link
-              href="/start-here"
-              className="inline-block px-6 py-3 bg-forge-cyan text-forge-dark hover:opacity-90 rounded-xl font-semibold transition-all"
-            >
+            <Button href="/start-here" variant="primary">
               Start Here
-            </Link>
+            </Button>
           </div>
         </div>
 

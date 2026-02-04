@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { BlogHeader, RelatedPosts } from "@/components/blog";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title:
@@ -248,22 +249,20 @@ export default function BlogPost() {
           </p>
 
           <div className="flex gap-4 mb-8">
-            <a
+            <Button
               href={siteConfig.links.repos.eleanorChenEffect}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-forge-purple hover:bg-forge-purple/80 rounded-xl font-semibold transition-all inline-block"
+              external
+              variant="purple"
             >
               View on GitHub
-            </a>
-            <a
+            </Button>
+            <Button
               href="https://whenmoon-afk.github.io/eleanor-chen-effect/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-semibold transition-all inline-block"
+              external
+              variant="ghost"
             >
               Research Website
-            </a>
+            </Button>
           </div>
 
           <h2 className="text-2xl font-bold mt-8 mb-4 text-forge-cyan">
