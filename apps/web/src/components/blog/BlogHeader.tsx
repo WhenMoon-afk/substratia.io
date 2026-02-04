@@ -47,7 +47,9 @@ export default function BlogHeader({
             );
           })}
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
+          {title}
+        </h1>
         {subtitle && <p className="text-xl text-gray-400 mb-4">{subtitle}</p>}
         <div className="flex items-center gap-4 text-gray-400">
           <span>{date}</span>

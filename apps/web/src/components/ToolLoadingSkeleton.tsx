@@ -1,6 +1,6 @@
 export default function ToolLoadingSkeleton() {
   return (
-    <main className="min-h-screen text-white bg-[#0a0a14]">
+    <main className="min-h-screen text-white bg-forge-dark">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header skeleton */}
         <div className="mb-8">
@@ -30,7 +30,10 @@ export default function ToolLoadingSkeleton() {
               <div className="h-5 w-32 bg-gray-700 rounded-sm animate-pulse mb-4" />
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-16 bg-gray-700/30 rounded-lg animate-pulse" />
+                  <div
+                    key={i}
+                    className="h-16 bg-gray-700/30 rounded-lg animate-pulse"
+                  />
                 ))}
               </div>
             </div>
@@ -48,5 +51,5 @@ export default function ToolLoadingSkeleton() {
         </div>
       </div>
     </main>
-  )
+  );
 }

@@ -10,13 +10,14 @@ function SignInContent() {
         appearance={{
           elements: {
             rootBox: "mx-auto",
-            card: "bg-gray-800/50 border border-gray-700",
+            card: "bg-white/5 border border-white/10",
             headerTitle: "text-white",
             headerSubtitle: "text-gray-400",
-            socialButtonsBlockButton: "bg-gray-700 text-white hover:bg-gray-600",
+            socialButtonsBlockButton:
+              "bg-gray-700 text-white hover:bg-gray-600",
             formFieldLabel: "text-gray-300",
             formFieldInput: "bg-gray-700 text-white border-gray-600",
-            footerActionLink: "text-cyan-400 hover:text-cyan-300",
+            footerActionLink: "text-forge-cyan hover:text-forge-cyan",
           },
         }}
         afterSignInUrl="/dashboard"
@@ -33,9 +34,14 @@ export default function SignInPage() {
     return (
       <div className="min-h-screen bg-forge-dark flex items-center justify-center">
         <div className="text-center text-white">
-          <h1 className="text-2xl font-bold mb-4">Authentication Not Configured</h1>
+          <h1 className="text-2xl font-bold mb-4">
+            Authentication Not Configured
+          </h1>
           <p className="text-gray-400">Clerk is not set up yet.</p>
-          <Link href="/" className="text-cyan-400 hover:underline mt-4 inline-block">
+          <Link
+            href="/"
+            className="text-forge-cyan hover:underline mt-4 inline-block"
+          >
             ← Back to home
           </Link>
         </div>

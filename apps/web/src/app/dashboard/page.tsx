@@ -103,7 +103,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="mt-4 ml-16">
-            <p className="text-cyan-400 text-sm">
+            <p className="text-forge-cyan text-sm">
               Next: Create an API key below to connect your Claude Code.
             </p>
           </div>

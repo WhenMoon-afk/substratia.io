@@ -84,7 +84,7 @@ export default function ApiKeysSection({
       className={`mt-8 rounded-xl p-6 border ${
         apiKeys && apiKeys.length === 0
           ? "bg-cyan-500/10 border-cyan-500/30"
-          : "bg-gray-800/50 border-gray-700"
+          : "bg-white/5 border-white/10"
       }`}
     >
       <div className="flex items-center justify-between mb-4">
@@ -109,7 +109,7 @@ export default function ApiKeysSection({
       {showApiSection && (
         <>
           {apiKeys && apiKeys.length === 0 ? (
-            <div className="text-cyan-300/80 text-sm mb-4">
+            <div className="text-forge-cyan/80 text-sm mb-4">
               <strong>Next step:</strong> Create an API key to connect
               memory-mcp.
             </div>
@@ -177,12 +177,12 @@ export default function ApiKeysSection({
                   Or copy key manually
                 </summary>
                 <div className="mt-2 flex items-center gap-2">
-                  <code className="bg-gray-900 px-3 py-2 rounded-sm text-cyan-400 font-mono text-sm flex-1 overflow-x-auto">
+                  <code className="bg-gray-900 px-3 py-2 rounded-sm text-forge-cyan font-mono text-sm flex-1 overflow-x-auto">
                     {newKeyValue}
                   </code>
                   <button
                     onClick={() => copyToClipboard(newKeyValue)}
-                    className="px-3 py-2 bg-cyan-500/20 text-cyan-400 rounded-sm hover:bg-cyan-500/30 transition-colors text-sm"
+                    className="px-3 py-2 bg-cyan-500/20 text-forge-cyan rounded-sm hover:bg-cyan-500/30 transition-colors text-sm"
                   >
                     Copy
                   </button>
@@ -275,7 +275,7 @@ export default function ApiKeysSection({
               <p className="text-gray-500 text-sm">
                 Claude will automatically configure memory-mcp to connect to
                 your dashboard. Config is saved to{" "}
-                <code className="text-cyan-400">
+                <code className="text-forge-cyan">
                   ~/.config/substratia/credentials.json
                 </code>
               </p>

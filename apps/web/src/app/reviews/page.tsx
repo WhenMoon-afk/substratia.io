@@ -64,7 +64,7 @@ export default function ReviewsPage() {
           <div className="inline-block px-4 py-1 bg-forge-purple/20 border border-forge-purple/50 rounded-full text-sm text-forge-purple mb-4">
             Honest Reviews
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
             AI Tool <span className="text-forge-cyan">Comparisons</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">

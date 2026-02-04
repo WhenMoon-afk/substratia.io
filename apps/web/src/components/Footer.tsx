@@ -5,7 +5,7 @@ import NewsletterCapture from "@/components/NewsletterCapture";
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-white/10 py-12 bg-[#0a0a14]">
+    <footer className="relative z-10 border-t border-white/10 py-12 bg-forge-dark">
       <div className="container mx-auto px-4">
         {/* Newsletter Section */}
         <div className="mb-10 pb-10 border-b border-white/5">

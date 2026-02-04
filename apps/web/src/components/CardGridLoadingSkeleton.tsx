@@ -1,6 +1,6 @@
 export default function CardGridLoadingSkeleton() {
   return (
-    <main className="min-h-screen text-white bg-[#0a0a14]">
+    <main className="min-h-screen text-white bg-forge-dark">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Page title skeleton */}
         <div className="mb-8 text-center">

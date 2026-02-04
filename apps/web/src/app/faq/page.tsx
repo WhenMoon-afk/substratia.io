@@ -77,7 +77,7 @@ export default function FAQPage() {
               </Link>
               <ShareButton title="FAQ - Substratia" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold font-display text-center mb-4">
               Frequently Asked{" "}
               <span className="text-forge-cyan">Questions</span>
             </h1>

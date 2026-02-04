@@ -12,7 +12,7 @@ export default function MemoryDemoPage() {
   const [activeTab, setActiveTab] = useState<"without" | "with">("without");
 
   return (
-    <main className="min-h-screen text-white bg-[#0a0a14]">
+    <main className="min-h-screen text-white bg-forge-dark">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">

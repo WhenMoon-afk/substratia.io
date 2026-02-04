@@ -3,19 +3,7 @@
 import Link from "next/link";
 import ShareButton from "@/components/ShareButton";
 import CtaSection from "@/components/home/CtaSection";
-
-function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
-  const gradient =
-    variant === "cyan"
-      ? "from-transparent via-forge-cyan/20 to-transparent"
-      : "from-transparent via-forge-purple/20 to-transparent";
-
-  return (
-    <div className="relative z-10 py-1" aria-hidden="true">
-      <div className={`h-px bg-linear-to-r ${gradient} max-w-3xl mx-auto`} />
-    </div>
-  );
-}
+import { SectionDivider } from "@/components/SectionDivider";
 
 function CodeBlock({ code, language }: { code: string; language?: string }) {
   return (

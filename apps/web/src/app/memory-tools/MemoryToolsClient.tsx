@@ -146,7 +146,7 @@ export default function MemoryToolsClient() {
           <div className="inline-block px-4 py-1 bg-forge-cyan/20 border border-forge-cyan/50 rounded-full text-sm text-forge-cyan mb-4">
             Open Source / MIT Licensed
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
             Memory <span className="text-forge-cyan">Tools</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">

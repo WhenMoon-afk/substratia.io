@@ -7,6 +7,7 @@ import DocsSection from "@/components/docs/DocsSection";
 import RelatedResources from "@/components/docs/RelatedResources";
 import CtaSection from "@/components/home/CtaSection";
 import { sections } from "@/data/docsData";
+import { SectionDivider } from "@/components/SectionDivider";
 
 function MobileTableOfContents() {
   const [open, setOpen] = useState(false);
@@ -46,19 +47,6 @@ function MobileTableOfContents() {
           ))}
         </nav>
       )}
-    </div>
-  );
-}
-
-function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
-  const gradient =
-    variant === "cyan"
-      ? "from-transparent via-forge-cyan/20 to-transparent"
-      : "from-transparent via-forge-purple/20 to-transparent";
-
-  return (
-    <div className="relative z-10 py-1" aria-hidden="true">
-      <div className={`h-px bg-linear-to-r ${gradient} max-w-4xl mx-auto`} />
     </div>
   );
 }

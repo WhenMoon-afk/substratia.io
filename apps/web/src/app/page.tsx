@@ -8,19 +8,7 @@ import ToolsShowcase from "@/components/home/ToolsShowcase";
 import Testimonials from "@/components/home/Testimonials";
 import CommunitySection from "@/components/home/CommunitySection";
 import CtaSection from "@/components/home/CtaSection";
-
-function SectionDivider({ variant = "cyan" }: { variant?: "cyan" | "purple" }) {
-  const gradient =
-    variant === "cyan"
-      ? "from-transparent via-forge-cyan/20 to-transparent"
-      : "from-transparent via-forge-purple/20 to-transparent";
-
-  return (
-    <div className="relative z-10 py-1" aria-hidden="true">
-      <div className={`h-px bg-linear-to-r ${gradient} max-w-4xl mx-auto`} />
-    </div>
-  );
-}
+import { SectionDivider } from "@/components/SectionDivider";
 
 export default function Home() {
   const [npmDownloads, setNpmDownloads] = useState<number | null>(null);

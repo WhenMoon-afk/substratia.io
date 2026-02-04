@@ -11,7 +11,7 @@ export default function RecentSnapshots({ snapshots }: RecentSnapshotsProps) {
   const [expandedSnapshot, setExpandedSnapshot] = useState<string | null>(null);
 
   return (
-    <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+    <div className="bg-white/5 rounded-xl p-6 border border-white/10">
       <h2 className="text-xl font-bold text-white mb-4">Recent Snapshots</h2>
       {snapshots === undefined ? (
         <div className="animate-pulse space-y-3">
@@ -23,7 +23,7 @@ export default function RecentSnapshots({ snapshots }: RecentSnapshotsProps) {
         <div className="text-center py-8">
           <p className="text-gray-400">No snapshots yet</p>
           <p className="text-gray-500 text-sm mt-2">
-            Use <code className="text-cyan-400">/momentum:save</code> in Claude
+            Use <code className="text-forge-cyan">/momentum:save</code> in Claude
             Code
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function RecentSnapshots({ snapshots }: RecentSnapshotsProps) {
                         <h4 className="text-gray-400 text-xs font-medium uppercase mb-1">
                           Next Steps
                         </h4>
-                        <p className="text-cyan-400 text-sm">
+                        <p className="text-forge-cyan text-sm">
                           {snapshot.nextSteps}
                         </p>
                       </div>
@@ -129,7 +129,7 @@ export default function RecentSnapshots({ snapshots }: RecentSnapshotsProps) {
                             {snapshot.filesTouched.map((f, i) => (
                               <code
                                 key={i}
-                                className="text-xs bg-gray-800 text-cyan-400 px-1.5 py-0.5 rounded-sm"
+                                className="text-xs bg-gray-800 text-forge-cyan px-1.5 py-0.5 rounded-sm"
                               >
                                 {f.split("/").pop()}
                               </code>

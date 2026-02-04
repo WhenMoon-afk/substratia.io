@@ -1,6 +1,6 @@
 export default function ContentLoadingSkeleton() {
   return (
-    <main className="min-h-screen text-white bg-[#0a0a14]">
+    <main className="min-h-screen text-white bg-forge-dark">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Breadcrumb skeleton */}
         <div className="h-4 w-32 bg-gray-700/50 rounded animate-pulse mb-6" />
