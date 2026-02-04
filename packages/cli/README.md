@@ -1,4 +1,4 @@
-# @substratia-io/cli
+# @substratia/cli
 
 Persistent memory for AI agents - command line interface.
 
@@ -9,8 +9,8 @@ Persistent memory for AI agents - command line interface.
 curl -fsSL https://substratia.io/install | bash
 
 # Or via npm/bun
-npm install -g @substratia-io/cli
-bun install -g @substratia-io/cli
+npm install -g @substratia/cli
+bun install -g @substratia/cli
 ```
 
 ## Quick Start
@@ -93,10 +93,10 @@ Config is stored in `~/.substratia/config.json`
 
 ## For Programmatic Use
 
-Use [@substratia-io/memory](https://npmjs.com/package/@substratia-io/memory) instead:
+Use [@substratia/memory](https://npmjs.com/package/@substratia/memory) instead:
 
 ```typescript
-import { remember, recall } from "@substratia-io/memory";
+import { remember, recall } from "@substratia/memory";
 
 await remember("User prefers dark mode");
 const memories = await recall("preferences");

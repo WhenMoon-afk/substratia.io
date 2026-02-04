@@ -1,5 +1,5 @@
 {
-  "name": "@substratia-io/memory-local",
+  "name": "@substratia/memory-local",
   "version": "0.1.0",
   "description": "Local-first memory infrastructure for AI agents — types, storage, and reconsolidation",
   "type": "module",

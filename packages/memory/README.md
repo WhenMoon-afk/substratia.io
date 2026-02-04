@@ -1,4 +1,4 @@
-# @substratia-io/memory-local
+# @substratia/memory-local
 
 Local-first memory infrastructure for AI agents. Part of the [Substratia](https://substratia.io) ecosystem.
 
@@ -14,9 +14,9 @@ Local-first memory infrastructure for AI agents. Part of the [Substratia](https:
 ## Installation
 
 ```bash
-npm install @substratia-io/memory-local
+npm install @substratia/memory-local
 # or
-bun add @substratia-io/memory-local
+bun add @substratia/memory-local
 ```
 
 ### SQLite Driver
@@ -32,7 +32,7 @@ The package requires a SQLite driver. Choose one:
 ## Quick Start
 
 ```typescript
-import { SQLiteStorage } from "@substratia-io/memory-local";
+import { SQLiteStorage } from "@substratia/memory-local";
 
 // Initialize storage
 const storage = new SQLiteStorage({ dbPath: "./agent-memory.db" });
@@ -174,8 +174,8 @@ const stats = await storage.stats();
 Substratia.io provides optional cloud sync for backup and cross-device access:
 
 ```typescript
-// Coming in @substratia-io/memory-sync
-import { SyncManager } from "@substratia-io/memory-sync";
+// Coming in @substratia/memory-sync
+import { SyncManager } from "@substratia/memory-sync";
 
 const sync = new SyncManager({
   storage,
@@ -191,8 +191,8 @@ MIT - See [LICENSE](./LICENSE) for details.
 
 ## Related Packages
 
-- `@substratia-io/cli` - Command-line interface for memory management
-- `@substratia-io/memory-sync` - Cloud sync (coming soon)
+- `@substratia/cli` - Command-line interface for memory management
+- `@substratia/memory-sync` - Cloud sync (coming soon)
 
 ## Links
 

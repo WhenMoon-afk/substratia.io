@@ -1,5 +1,5 @@
 {
-  "name": "@substratia-io/memory",
+  "name": "@substratia/memory",
   "version": "0.1.0",
   "description": "Memory for AI - 2 lines of code to add persistent memory to any AI system",
   "type": "module",

@@ -1,5 +1,5 @@
 {
-  "name": "@substratia-io/cli",
+  "name": "@substratia/cli",
   "version": "0.1.0",
   "description": "Substratia CLI - Persistent memory for AI agents",
   "type": "module",

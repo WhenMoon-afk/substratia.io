@@ -1,16 +1,16 @@
-# @substratia-io/memory
+# @substratia/memory
 
 Memory for AI. 2 lines. That's it.
 
 ```typescript
-import { remember } from '@substratia-io/memory'
+import { remember } from '@substratia/memory'
 await remember("User prefers dark mode")
 ```
 
 ## Installation
 
 ```bash
-npm install @substratia-io/memory
+npm install @substratia/memory
 ```
 
 ## Setup
@@ -28,7 +28,7 @@ Get a key at [substratia.io/dashboard](https://substratia.io/dashboard)
 ### Remember (store)
 
 ```typescript
-import { remember } from '@substratia-io/memory'
+import { remember } from '@substratia/memory'
 
 await remember("User prefers dark mode")
 await remember("User is vegetarian", { importance: "high", tags: ["diet"] })
@@ -37,7 +37,7 @@ await remember("User is vegetarian", { importance: "high", tags: ["diet"] })
 ### Recall (search)
 
 ```typescript
-import { recall } from '@substratia-io/memory'
+import { recall } from '@substratia/memory'
 
 const memories = await recall("diet preferences")
 ```
@@ -45,7 +45,7 @@ const memories = await recall("diet preferences")
 ### Forget (delete)
 
 ```typescript
-import { forget } from '@substratia-io/memory'
+import { forget } from '@substratia/memory'
 
 await forget("memory_id_here")
 ```
@@ -53,7 +53,7 @@ await forget("memory_id_here")
 ### Full API Access
 
 ```typescript
-import { memory } from '@substratia-io/memory'
+import { memory } from '@substratia/memory'
 
 // List all memories
 const all = await memory.list({ limit: 20 })
@@ -73,7 +73,7 @@ await memory.delete(id)
 For multiple instances or custom API keys:
 
 ```typescript
-import { Substratia } from '@substratia-io/memory'
+import { Substratia } from '@substratia/memory'
 
 const memory = new Substratia({ apiKey: 'sk_different_key' })
 await memory.add("Custom instance memory")
