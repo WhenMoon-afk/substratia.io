@@ -60,5 +60,9 @@ export type {
 // shadowing the storage module's types with the same names. Import cloud-specific
 // types from '@substratia/memory/cloud'.
 
+// Re-export dashboard
+export { startDashboard, DASHBOARD_HTML } from "./dashboard/index.js";
+export type { DashboardOptions } from "./dashboard/index.js";
+
 // Version for runtime checks
 export const VERSION = "0.1.0";

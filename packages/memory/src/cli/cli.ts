@@ -334,6 +334,9 @@ ${colors.green}Commands:${colors.reset}
   remember <query>     Search your memories
     --limit            Max results to return (default: 10)
   bridge               Full context restore (memories + identity)
+  dashboard            Open local web dashboard
+    --port             Port to listen on (default: 3847)
+    --no-open          Don't auto-open browser
   config               Show configuration
   help                 Show this help message
 
@@ -412,6 +415,14 @@ async function main(): Promise<void> {
     case "bridge":
       await bridge();
       break;
+
+    case "dashboard": {
+      const dashboardPort = flags.port ? parseInt(flags.port, 10) : undefined;
+      const dashboardOpen = flags["no-open"] !== "true";
+      const { startDashboard } = await import("../dashboard/index.js");
+      await startDashboard({ port: dashboardPort, open: dashboardOpen });
+      break;
+    }
 
     case "config":
       showConfig();
