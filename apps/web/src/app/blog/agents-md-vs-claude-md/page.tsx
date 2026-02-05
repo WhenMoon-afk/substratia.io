@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function AgentsMdVsClaudeMd() {
   return (
     <main className="min-h-screen text-white">
-      <article className="container mx-auto px-4 py-16 max-w-4xl">
+      <article className="container mx-auto px-4 py-12 max-w-4xl">
         <BlogHeader
           title="AGENTS.md vs CLAUDE.md: The Complete Guide to AI Agent Configuration"
           date="January 11, 2026"
