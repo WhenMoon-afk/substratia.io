@@ -21,6 +21,17 @@ export interface BlogPost {
 /** All blog posts, newest first */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "cursor-vs-windsurf-vs-claude-code",
+    title:
+      "Cursor vs Windsurf vs Claude Code: Which AI Coding Assistant Wins in 2026?",
+    excerpt:
+      "Honest comparison of the three leading AI coding assistants. Pricing, features, workflows, and which one actually fits your development style.",
+    date: "2026-03-01",
+    readTime: "14 min read",
+    tags: ["Comparison", "AI Coding", "2026"],
+    featured: true,
+  },
+  {
     slug: "openclaw-security-analysis",
     title: "OpenClaw: Architecture, Security, and Lessons Learned",
     excerpt:

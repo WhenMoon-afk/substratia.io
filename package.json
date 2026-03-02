@@ -6,14 +6,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo dev --filter=!@substratia/mobile",
     "dev:web": "turbo dev --filter=@substratia/web",
     "dev:mobile": "turbo dev --filter=@substratia/mobile",
     "dev:convex": "turbo dev --filter=@substratia/convex",
-    "build": "turbo build",
+    "build": "turbo build --filter=!@substratia/mobile",
     "build:web": "turbo build --filter=@substratia/web",
-    "lint": "turbo lint",
-    "typecheck": "turbo typecheck",
+    "lint": "turbo lint --filter=!@substratia/mobile",
+    "typecheck": "turbo typecheck --filter=!@substratia/mobile",
     "android": "cd apps/mobile && bunx expo run:android",
     "android:build": "cd apps/mobile && bunx eas build --platform android",
     "prepare": "husky"
