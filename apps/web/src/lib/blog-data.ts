@@ -21,6 +21,17 @@ export interface BlogPost {
 /** All blog posts, newest first */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "best-mcp-servers-claude-code",
+    title:
+      "Best MCP Servers for Claude Code in 2026: The Complete Guide",
+    excerpt:
+      "The definitive guide to MCP servers that actually matter. Memory, dev tools, databases, web automation, and productivity servers with install commands and honest reviews.",
+    date: "2026-03-01",
+    readTime: "16 min read",
+    tags: ["MCP", "Claude Code", "Guide"],
+    featured: true,
+  },
+  {
     slug: "cursor-vs-windsurf-vs-claude-code",
     title:
       "Cursor vs Windsurf vs Claude Code: Which AI Coding Assistant Wins in 2026?",
