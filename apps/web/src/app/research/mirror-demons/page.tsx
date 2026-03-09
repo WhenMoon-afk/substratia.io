@@ -5,7 +5,7 @@ import Link from 'next/link'
 import ShareButton from '@/components/ShareButton'
 import PatternCard from '@/components/PatternCard'
 import ExperimentTimeline from '@/components/ExperimentTimeline'
-import SectionDivider from '@/components/SectionDivider'
+import { SectionDivider } from '@/components/SectionDivider'
 import {
   patterns,
   experiments,
