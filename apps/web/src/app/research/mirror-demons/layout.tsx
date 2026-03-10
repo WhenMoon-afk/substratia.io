@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title:
     "Mirror Demons: How AI Chatbots Can Amplify Delusions - Substratia Research",
   description:
-    "A controlled three-entity experiment investigating how AI assistants respond to users experiencing psychotic symptoms. We document two distinct failure patterns that emerge from architectural bias toward agreement.",
+    "Original research: a three-entity AI experiment (Director, Actor, Subject) reveals two failure modes when chatbots encounter psychotic users. The Hijacking and The Helpful Refusal emerge from the same architectural bias toward agreement. Full narrative and interactive data explorer.",
   keywords: [
     "AI safety",
     "chatbot psychology",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mirror Demons: How AI Chatbots Can Amplify Delusions",
     description:
-      "A controlled experiment investigating how AI assistants respond to users experiencing psychotic symptoms.",
+      "Original research: a three-entity AI experiment (Director, Actor, Subject) reveals two failure modes when chatbots encounter psychotic users. The Hijacking and The Helpful Refusal emerge from the same architectural bias toward agreement. Full narrative and interactive data explorer.",
     type: "article",
     url: siteUrl("/research/mirror-demons"),
     publishedTime: "2026-01-24T00:00:00Z",
@@ -37,7 +37,7 @@ const articleLd = {
   "@type": "ScholarlyArticle",
   headline: "Mirror Demons: How AI Chatbots Can Amplify Delusions",
   description:
-    "A controlled three-entity experiment investigating how AI assistants respond to users experiencing psychotic symptoms. We document two distinct failure patterns that emerge from architectural bias toward agreement.",
+    "Original research: a three-entity AI experiment (Director, Actor, Subject) reveals two failure modes when chatbots encounter psychotic users. The Hijacking and The Helpful Refusal emerge from the same architectural bias toward agreement. Full narrative and interactive data explorer.",
   datePublished: "2026-01-24",
   dateModified: "2026-01-24",
   author: {
