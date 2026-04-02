@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is([data-theme="dark"] *));
 
 @theme {
   --color-forge-dark: #1a1a2e;
@@ -50,7 +50,7 @@
 }
 
 /* Light mode variables */
-.light {
+[data-theme="light"] {
   --forge-dark: #f8fafc;
   --forge-dark-lighter: #ffffff;
   --forge-cyan-glow: rgba(0, 180, 216, 0.2);
@@ -88,48 +88,48 @@ body {
 }
 
 /* Light mode specific overrides */
-.light body {
+[data-theme="light"] body {
   background: var(--bg-primary);
   color: var(--text-primary);
 }
 
-.light .bg-forge-dark {
+[data-theme="light"] .bg-forge-dark {
   background-color: var(--bg-primary) !important;
 }
 
-.light .text-white {
+[data-theme="light"] .text-white {
   color: var(--text-primary);
 }
 
-.light .text-gray-400 {
+[data-theme="light"] .text-gray-400 {
   color: var(--text-secondary);
 }
 
-.light .text-gray-500 {
+[data-theme="light"] .text-gray-500 {
   color: #64748b;
 }
 
-.light .border-white\/10 {
+[data-theme="light"] .border-white\/10 {
   border-color: var(--border-color);
 }
 
-.light .bg-white\/5 {
+[data-theme="light"] .bg-white\/5 {
   background-color: rgba(0, 0, 0, 0.03);
 }
 
-.light .bg-white\/10 {
+[data-theme="light"] .bg-white\/10 {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.light .bg-black\/30 {
+[data-theme="light"] .bg-black\/30 {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-.light .bg-black\/40 {
+[data-theme="light"] .bg-black\/40 {
   background-color: rgba(255, 255, 255, 0.95);
 }
 
-.light .hover\:bg-white\/20:hover {
+[data-theme="light"] .hover\:bg-white\/20:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -213,12 +213,12 @@ body {
 }
 
 /* Light mode glass morphism - invert to dark overlay */
-.light .glass {
+[data-theme="light"] .glass {
   background: rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.light .glass-strong {
+[data-theme="light"] .glass-strong {
   background: rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -424,15 +424,15 @@ select:focus-visible,
   background: rgba(255, 255, 255, 0.3);
 }
 
-.light ::-webkit-scrollbar-track {
+[data-theme="light"] ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 
-.light ::-webkit-scrollbar-thumb {
+[data-theme="light"] ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
 }
 
-.light ::-webkit-scrollbar-thumb:hover {
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
 }
 

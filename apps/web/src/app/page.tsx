@@ -1,65 +1,40 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import HeroSection from "@/components/home/HeroSection";
-import PricingSection from "@/components/home/PricingSection";
-import SafetySection from "@/components/home/SafetySection";
-import ToolsShowcase from "@/components/home/ToolsShowcase";
-import Testimonials from "@/components/home/Testimonials";
-import CommunitySection from "@/components/home/CommunitySection";
-import CtaSection from "@/components/home/CtaSection";
-import { SectionDivider } from "@/components/SectionDivider";
+import Link from "next/link";
+import { blogPosts } from "@/lib/blog-data";
 
 export default function Home() {
-  const [npmDownloads, setNpmDownloads] = useState<number | null>(null);
-  const [githubStars, setGithubStars] = useState<number | null>(null);
-  const [statsLoading, setStatsLoading] = useState(true);
-
-  useEffect(() => {
-    Promise.all([
-      fetch(
-        "https://api.npmjs.org/downloads/point/last-month/claude-memory-mcp",
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.downloads) setNpmDownloads(data.downloads);
-        })
-        .catch(() => {}),
-      fetch("https://api.github.com/repos/WhenMoon-afk/claude-memory-mcp")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.stargazers_count) setGithubStars(data.stargazers_count);
-        })
-        .catch(() => {}),
-    ]).finally(() => setStatsLoading(false));
-  }, []);
+  const recentPosts = blogPosts.slice(0, 5);
 
   return (
-    <main className="min-h-screen text-white relative">
-      <div className="neural-bg" />
-      <div className="fixed inset-0 gradient-mesh pointer-events-none z-0" />
+    <section className="container mx-auto px-4 py-16 space-y-10">
+      <div className="space-y-3">
+        <h1 className="text-4xl font-bold">Substratia</h1>
+        <p className="text-gray-300 max-w-2xl">
+          Writing about AI, software, and whatever I am thinking about.
+          Research notes and essays are published here.
+        </p>
+        <div className="flex gap-4 text-forge-cyan">
+          <Link href="/blog" className="hover:underline">Blog</Link>
+          <Link href="/research" className="hover:underline">Research</Link>
+        </div>
+      </div>
 
-      <HeroSection
-        githubStars={githubStars}
-        npmDownloads={npmDownloads}
-        statsLoading={statsLoading}
-      />
-      <SectionDivider variant="cyan" />
-      <PricingSection />
-      <SectionDivider variant="purple" />
-      <SafetySection />
-      <SectionDivider variant="cyan" />
-      <ToolsShowcase />
-      <SectionDivider variant="purple" />
-      <Testimonials />
-      <SectionDivider variant="cyan" />
-      <CommunitySection
-        githubStars={githubStars}
-        npmDownloads={npmDownloads}
-        statsLoading={statsLoading}
-      />
-      <SectionDivider variant="purple" />
-      <CtaSection />
-    </main>
+      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold">Recent posts</h2>
+        {recentPosts.length === 0 ? (
+          <p className="text-gray-400">No posts yet.</p>
+        ) : (
+          <ul className="space-y-3">
+            {recentPosts.map((post) => (
+              <li key={post.slug} className="border border-white/10 rounded-lg p-4">
+                <Link href={`/blog/${post.slug}`} className="text-lg font-medium hover:text-forge-cyan transition-colors">
+                  {post.title}
+                </Link>
+                <p className="text-sm text-gray-400 mt-1">{post.date}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
   );
 }
