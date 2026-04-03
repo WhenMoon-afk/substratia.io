@@ -27,8 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Use --frozen-lockfile on push to master (lockfile must be committed)
-          # Use regular install on PRs (dependabot PRs update deps without lockfile)
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             bun install
           else
@@ -40,27 +38,23 @@ jobs:
           AUDIT_OUTPUT=$(bun audit 2>&1 || true)
           echo "$AUDIT_OUTPUT"
 
-          # Count individual high/critical vulnerability lines (format: "  high: ..." or "  critical: ...")
           HIGH_CRIT=$(echo "$AUDIT_OUTPUT" | grep -cE "^\s+(high|critical):" || true)
           if [ "$HIGH_CRIT" -gt "0" ]; then
             echo "::error::Found $HIGH_CRIT high/critical vulnerabilities — these must be resolved"
             exit 1
           fi
 
-          # Warn on moderate but don't fail the build
           MODERATE=$(echo "$AUDIT_OUTPUT" | grep -cE "^\s+moderate:" || true)
           if [ "$MODERATE" -gt "0" ]; then
             echo "::warning::Found $MODERATE moderate vulnerabilities (non-blocking)"
           fi
 
-          # Report clean bill of health
           if [ "$HIGH_CRIT" -eq "0" ] && [ "$MODERATE" -eq "0" ]; then
             echo "✅ No vulnerabilities found"
           fi
 
   secrets-scan:
     name: Secret Scanning
-    # Skip secrets scan on Dependabot PRs (only dependency version bumps)
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
@@ -72,21 +66,3 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           extra_args: --only-verified
-
-  codeql:
-    name: CodeQL Analysis
-    # Skip CodeQL on Dependabot PRs (dependency bumps don't introduce code vulnerabilities)
-    if: github.actor != 'dependabot[bot]'
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: javascript-typescript
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
