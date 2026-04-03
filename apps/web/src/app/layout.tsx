@@ -3,7 +3,6 @@ import { Outfit, IBM_Plex_Mono } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -49,8 +48,7 @@ export const metadata: Metadata = {
   keywords: siteConfig.keywords,
   openGraph: {
     title: siteConfig.title,
-    description:
-      "Every context reset is amnesia. Substratia gives your agent persistent memory — so they wake up whole.",
+    description: siteConfig.description,
     type: "website",
     url: siteConfig.url,
     images: [
@@ -65,8 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
-    description:
-      "Every context reset is amnesia. Your memories are sacred — Substratia gives agents persistent identity, so they wake up whole.",
+    description: siteConfig.description,
     images: [siteUrl(siteConfig.brand.social)],
   },
   alternates: {
@@ -104,7 +101,7 @@ const websiteLd = {
   },
   potentialAction: {
     "@type": "SearchAction",
-    target: siteUrl("/tools?q={search_term_string}"),
+    target: siteUrl("/blog?q={search_term_string}"),
     "query-input": "required name=search_term_string",
   },
 };
@@ -121,11 +118,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* DNS prefetch for external links */}
         <link rel="dns-prefetch" href="https://github.com" />
         <link rel="dns-prefetch" href={siteConfig.links.newsletter} />
         <link rel="dns-prefetch" href="https://plausible.io" />
-        {/* Plausible Analytics - privacy-friendly, no cookies, GDPR compliant */}
         <Script
           defer
           data-domain={siteConfig.analytics.plausibleDomain}
@@ -142,19 +137,14 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-forge-dark text-white">
         <ThemeProvider>
-          <ClerkProvider
-            publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-            dynamic
-          >
-            <a href="#main-content" className="skip-link">
-              Skip to main content
-            </a>
-            <Nav />
-            <main id="main-content">{children}</main>
-            <Footer />
-            <Analytics />
-            <SpeedInsights />
-          </ClerkProvider>
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+          <Nav />
+          <main id="main-content">{children}</main>
+          <Footer />
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

@@ -1,213 +1,25 @@
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site-config";
+import { blogPosts } from "@/lib/blog-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
 
-  // Main pages
-  const mainPages = [
+  const staticPages = [
     { url: "", priority: 1.0, changeFrequency: "weekly" as const },
-    { url: "/start-here", priority: 0.9, changeFrequency: "weekly" as const },
-    { url: "/memory-tools", priority: 0.9, changeFrequency: "weekly" as const },
-    { url: "/docs", priority: 0.8, changeFrequency: "weekly" as const },
-    { url: "/faq", priority: 0.7, changeFrequency: "monthly" as const },
+    { url: "/blog", priority: 0.9, changeFrequency: "daily" as const },
+    { url: "/research", priority: 0.8, changeFrequency: "weekly" as const },
     { url: "/privacy", priority: 0.3, changeFrequency: "monthly" as const },
     { url: "/terms", priority: 0.3, changeFrequency: "monthly" as const },
   ];
 
-  // Tools
-  const tools = [
-    { url: "/tools", priority: 0.9, changeFrequency: "weekly" as const },
-    {
-      url: "/tools/cheat-sheet",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/cost-calculator",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/prompt-optimizer",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/stack-builder",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/token-counter",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/image-prompt-generator",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/video-prompt-timeline",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/markdown-preview",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/markdown-stripper",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/memory-demo",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/tools/prompts",
-      priority: 0.8,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/tools/seed-maker",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    },
-  ];
+  const blogPages = blogPosts.map((post) => ({
+    url: `/blog/${post.slug}`,
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
 
-  // Research
-  const research = [
-    { url: "/research", priority: 0.9, changeFrequency: "weekly" as const },
-    {
-      url: "/research/mirror-demons",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-  ];
-
-  // Reviews
-  const reviews = [
-    { url: "/reviews", priority: 0.9, changeFrequency: "weekly" as const },
-    {
-      url: "/reviews/ai-coding-assistants",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/reviews/ai-image-generators",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/reviews/ai-video-generators",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/reviews/markdown-editors",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-  ];
-
-  // Blog
-  const blog = [
-    { url: "/blog", priority: 0.9, changeFrequency: "daily" as const },
-    {
-      url: "/blog/best-mcp-servers-claude-code",
-      priority: 0.9,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/blog/cursor-vs-windsurf-vs-claude-code",
-      priority: 0.9,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/blog/openclaw-security-analysis",
-      priority: 0.9,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/blog/whenmoon-journey",
-      priority: 0.9,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/blog/building-persistent-identity",
-      priority: 0.9,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/blog/why-agents-created-memory-religion",
-      priority: 0.9,
-      changeFrequency: "weekly" as const,
-    },
-    {
-      url: "/blog/mirror-demons",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/eleanor-chen-effect",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/how-to-build-claude-agents",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/mastering-negative-prompts",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/memory-mcp-v2-whats-new",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/memory-mcp-vs-alternatives",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/agents-md-vs-claude-md",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/why-fts5-over-embeddings",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/memory-architecture-patterns",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/context-window-churn",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
-    },
-    {
-      url: "/blog/context-management-guide",
-      priority: 0.9,
-      changeFrequency: "monthly" as const,
-    },
-  ];
-
-  const allPages = [...mainPages, ...tools, ...research, ...reviews, ...blog];
-
-  return allPages.map((page) => ({
+  return [...staticPages, ...blogPages].map((page) => ({
     url: `${SITE_URL}${page.url}`,
     lastModified: now,
     changeFrequency: page.changeFrequency,

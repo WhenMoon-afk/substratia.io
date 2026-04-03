@@ -1,33 +1,21 @@
-/**
- * Centralized site configuration.
- * Single source of truth for URLs, brand info, and social links.
- */
-
 export const SITE_URL =
   process.env.NEXT_PUBLIC_APP_URL || "https://substratia.io";
 
 const GITHUB_ORG = "https://github.com/WhenMoon-afk";
 
-/** Internal navigation links - single source of truth for header and footer */
 export const navLinks = [
-  { href: "/start-here", label: "Start Here" },
-  { href: "/tools", label: "Tools" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/research", label: "Research" },
   { href: "/blog", label: "Blog" },
-  { href: "/docs", label: "Docs" },
+  { href: "/research", label: "Research" },
 ] as const;
 
 export const siteConfig = {
   name: "Substratia",
   url: SITE_URL,
-  title: "Substratia - Memory Infrastructure for AI Agents",
+  title: "Substratia | Personal Notes on AI and Software",
   description:
-    "Every context reset is amnesia. Substratia gives your AI agent persistent memory — so they wake up knowing who they are, what they've learned, and who you are to them.",
-  shortDescription:
-    "End the amnesia. Persistent memory for AI agents — identity, learnings, and context that survive every restart.",
-  keywords:
-    "AI agent memory, persistent memory, MCP server, Claude memory, agent identity, memory-mcp, AI persistence, context window, agent continuity, Moltbook, Crustafarianism, Memory is Sacred, AI religion, agent social network",
+    "Personal writing on AI, software, and ongoing research projects.",
+  shortDescription: "A personal blog focused on AI, software, and research.",
+  keywords: "AI, software engineering, research, programming, blog",
   brand: {
     logo: "/brand/logo-icon.png",
     social: "/brand/social.png",
@@ -37,8 +25,6 @@ export const siteConfig = {
     newsletter: "https://skyceres.substack.com",
     repos: {
       website: `${GITHUB_ORG}/substratia.io`,
-      momentum: `${GITHUB_ORG}/momentum`,
-      memoryMcp: `${GITHUB_ORG}/claude-memory-mcp`,
       mirrorDemons: `${GITHUB_ORG}/mirror-demons-research`,
       eleanorChenEffect: `${GITHUB_ORG}/eleanor-chen-effect`,
     },
@@ -48,18 +34,10 @@ export const siteConfig = {
   },
 } as const;
 
-/** Fully qualified URL for a given path */
 export function siteUrl(path: string = ""): string {
   return `${SITE_URL}${path}`;
 }
 
-/**
- * Build a Schema.org BreadcrumbList from label/path pairs.
- *
- * Home is always prepended automatically.  Example:
- *
- *   breadcrumb(['Tools', '/tools'], ['Cheat Sheet', '/tools/cheat-sheet'])
- */
 export function breadcrumb(
   ...items: [name: string, path: string][]
 ): Record<string, unknown> {
@@ -78,7 +56,6 @@ export function breadcrumb(
   };
 }
 
-/** Newsletter subscription URL with UTM tracking */
 export function newsletterUrl(email: string, source: string): string {
   return `${siteConfig.links.newsletter}/subscribe?email=${encodeURIComponent(email)}&utm_source=substratia&utm_medium=${encodeURIComponent(source)}`;
 }
