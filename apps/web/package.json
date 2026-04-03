@@ -13,8 +13,6 @@
     "validate:quick": "../../tools/quick-validate.sh"
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.1.0",
-    "@substratia/memory": "workspace:*",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
     "next": "16.1.6",
