@@ -10,7 +10,7 @@ const GITHUB_ORG = "https://github.com/WhenMoon-afk";
 
 /** Internal navigation links - single source of truth for header and footer */
 export const navLinks = [
-  { href: "/play/harborlight", label: "Play" },
+  { href: "/play/arrow", label: "Play" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/docs", label: "Docs" },
   { href: "/blog", label: "Blog" },

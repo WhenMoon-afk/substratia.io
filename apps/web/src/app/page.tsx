@@ -30,7 +30,7 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/play/harborlight"
+                href="/play/arrow"
                 className="rounded-full bg-forge-cyan px-6 py-4 text-sm font-black uppercase tracking-[0.18em] text-forge-dark transition hover:bg-white"
               >
                 Sign in and play

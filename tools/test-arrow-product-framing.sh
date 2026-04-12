@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 player_facing_files=(
   apps/web/src/app/page.tsx
   apps/web/src/app/dashboard/page.tsx
-  apps/web/src/app/play/harborlight/page.tsx
+  apps/web/src/app/play/arrow/page.tsx
   apps/web/src/components/Footer.tsx
   apps/web/src/lib/site-config.ts
 )

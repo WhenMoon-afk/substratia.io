@@ -135,7 +135,7 @@ export default function DashboardPage() {
             </p>
           </div>
           <Link
-            href="/play/harborlight"
+            href="/play/arrow"
             className="inline-flex items-center justify-center rounded-full bg-forge-cyan px-5 py-3 text-sm font-bold text-forge-dark transition hover:bg-white"
           >
             Launch Arrow Server

@@ -8,8 +8,8 @@ grep -q 'ARROW_ALLOWED_EMAILS' apps/web/src/lib/arrow-access.ts
 grep -q 'isArrowAllowedEmail' apps/web/src/lib/arrow-access.ts
 grep -q 'getArrowAllowedEmails' apps/web/src/lib/arrow-access.ts
 
-grep -q 'isArrowAllowedEmail' apps/web/src/app/play/harborlight/page.tsx
-grep -q 'Arrow Server is invite-only' apps/web/src/app/play/harborlight/page.tsx
+grep -q 'isArrowAllowedEmail' apps/web/src/app/play/arrow/page.tsx
+grep -q 'Arrow Server is invite-only' apps/web/src/app/play/arrow/page.tsx
 grep -q 'ARROW_ALLOWED_EMAILS' .env.example
 
 if rg -n 'emie\\.torphy89@gmail\\.com' \
