@@ -111,7 +111,7 @@ const nextConfig = {
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
               "connect-src 'self' https://*.convex.cloud https://clerk.substratia.io https://*.clerk.accounts.dev wss://*.convex.cloud https://api.npmjs.org https://api.github.com https://plausible.io https://va.vercel-scripts.com",
-              "frame-src 'self' https://clerk.substratia.io https://*.clerk.accounts.dev https://challenges.cloudflare.com",
+              "frame-src 'self' https://rp.substratia.io https://clerk.substratia.io https://*.clerk.accounts.dev https://challenges.cloudflare.com",
               "frame-ancestors 'self'",
               "base-uri 'self'",
               "form-action 'self'",

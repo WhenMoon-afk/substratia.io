@@ -3,6 +3,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 // Routes that require authentication
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
+  '/play(.*)',
 ])
 
 // Routes that should redirect authenticated users (sign-in/sign-up)

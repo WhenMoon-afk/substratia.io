@@ -120,6 +120,29 @@ export default function DashboardPage() {
 
       <StatsGrid stats={stats} />
 
+      <section className="mb-8 rounded-2xl border border-forge-cyan/25 bg-linear-to-br from-forge-cyan/15 via-white/[0.04] to-forge-purple/15 p-6 shadow-xl shadow-black/20">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-forge-cyan">
+              Private playtest
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-white">
+              Harborlight test world
+            </h2>
+            <p className="mt-2 max-w-2xl text-gray-300">
+              Enter the live RP engine demo, create a character, move through
+              the visual world, and interact with the Harborlight Guide.
+            </p>
+          </div>
+          <Link
+            href="/play/harborlight"
+            className="inline-flex items-center justify-center rounded-full bg-forge-cyan px-5 py-3 text-sm font-bold text-forge-dark transition hover:bg-white"
+          >
+            Launch Harborlight
+          </Link>
+        </div>
+      </section>
+
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <RecentSnapshots snapshots={recentSnapshots} />

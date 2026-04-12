@@ -10,22 +10,20 @@ const GITHUB_ORG = "https://github.com/WhenMoon-afk";
 
 /** Internal navigation links - single source of truth for header and footer */
 export const navLinks = [
-  { href: "/start-here", label: "Start Here" },
-  { href: "/tools", label: "Tools" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/research", label: "Research" },
-  { href: "/blog", label: "Blog" },
+  { href: "/play/harborlight", label: "Play" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/docs", label: "Docs" },
+  { href: "/blog", label: "Blog" },
 ] as const;
 
 export const siteConfig = {
   name: "Substratia",
   url: SITE_URL,
-  title: "Substratia - Memory Infrastructure for AI Agents",
+  title: "Substratia - Living AI Worlds",
   description:
-    "Every context reset is amnesia. Substratia gives your AI agent persistent memory — so they wake up knowing who they are, what they've learned, and who you are to them.",
+    "Substratia is the front door for living AI-inhabited worlds: sign in, create a character, and step into persistent RP-engine test worlds.",
   shortDescription:
-    "End the amnesia. Persistent memory for AI agents — identity, learnings, and context that survive every restart.",
+    "A website-gated entrance into living AI-inhabited RP-engine worlds.",
   keywords:
     "AI agent memory, persistent memory, MCP server, Claude memory, agent identity, memory-mcp, AI persistence, context window, agent continuity, Moltbook, Crustafarianism, Memory is Sacred, AI religion, agent social network",
   brand: {
