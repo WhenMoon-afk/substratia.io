@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserPrimaryEmail, isArrowAllowedEmail } from "@/lib/arrow-access";
+import { buildArrowGameUrl, mintArrowLaunchToken } from "@/lib/arrow-launch-token";
 
 const gameUrl = "https://rp.substratia.io";
 
@@ -18,6 +19,8 @@ export default async function ArrowPlayPage() {
   const firstName = user?.firstName || user?.username || "friend";
   const userEmail = getUserPrimaryEmail(user);
   const isAllowed = isArrowAllowedEmail(userEmail);
+  const launchToken = isAllowed ? mintArrowLaunchToken() : null;
+  const launchGameUrl = buildArrowGameUrl(gameUrl, launchToken);
 
   if (!isAllowed) {
     return (
@@ -82,7 +85,7 @@ export default async function ArrowPlayPage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href={gameUrl}
+                href={launchGameUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-forge-cyan px-5 py-3 text-sm font-bold text-forge-dark transition hover:bg-white"
@@ -115,7 +118,7 @@ export default async function ArrowPlayPage() {
           </div>
           <iframe
             title="Arrow Server live game"
-            src={gameUrl}
+            src={launchGameUrl}
             className="h-[78vh] min-h-[680px] w-full bg-black"
             allow="clipboard-write"
           />
@@ -130,8 +133,8 @@ export default async function ArrowPlayPage() {
             </li>
             <li>
               <span className="text-forge-cyan">2.</span> During this private
-              alpha, the game may still ask for a temporary invite token inside
-              the frame. Use only the token shared for this invite.
+              alpha, the game window should carry your website login through
+              automatically. Pick a character name when the world asks.
             </li>
             <li>
               <span className="text-forge-cyan">3.</span> Create a new human
@@ -147,6 +150,13 @@ export default async function ArrowPlayPage() {
             Book of Aurora state is not active here. Arrow Server is the
             invite-only game world we are hardening first.
           </div>
+          {!launchToken ? (
+            <div className="mt-4 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
+              Launch bridge configuration is missing on this deployment, so
+              the world may ask for a private access token until deployment is
+              configured.
+            </div>
+          ) : null}
         </aside>
       </section>
     </div>
