@@ -12,4 +12,4 @@ grep -q '/play/harborlight' apps/web/src/app/dashboard/page.tsx
 grep -q '/play/harborlight' apps/web/src/lib/site-config.ts
 grep -q 'https://rp.substratia.io' apps/web/next.config.js
 
-echo "PASS: Harborlight launch page wiring"
+echo "PASS: Arrow launch page wiring through legacy /play/harborlight route"

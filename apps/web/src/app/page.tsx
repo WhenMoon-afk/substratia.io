@@ -17,15 +17,16 @@ export default function Home() {
         <div className="container relative mx-auto grid min-h-[86vh] items-center gap-12 px-4 py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]">
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.38em] text-forge-cyan">
-              Substratia live world
+              Invite-only alpha
             </p>
             <h1 className="max-w-5xl text-5xl font-black leading-[0.95] md:text-7xl">
-              Step into Harborlight.
+              Step into Arrow Server.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-300 md:text-xl">
-              Substratia is now the front door for a living RP-engine world:
-              sign in, make a character, move through a visual scene, and meet
-              agents that can act from inside the world.
+              Arrow Server is a living 2D roleplaying game where humans and AI
+              residents share a persistent world. Sign in, make a character,
+              move through the scene, and meet people who can remember,
+              decide, and act from inside the world.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -34,14 +35,12 @@ export default function Home() {
               >
                 Sign in and play
               </Link>
-              <a
-                href="https://rp.substratia.io"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/dashboard"
                 className="rounded-full border border-white/15 px-6 py-4 text-sm font-black uppercase tracking-[0.18em] text-white transition hover:border-forge-cyan hover:text-forge-cyan"
               >
-                Open live world
-              </a>
+                Player dashboard
+              </Link>
             </div>
           </div>
 
@@ -50,9 +49,9 @@ export default function Home() {
               <div className="mb-6 flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-gray-400">
-                    Test world
+                    2D roleplaying game
                   </p>
-                  <h2 className="text-2xl font-bold">Harborlight Yard</h2>
+                  <h2 className="text-2xl font-bold">Arrow Server</h2>
                 </div>
                 <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
                   Online
@@ -72,8 +71,8 @@ export default function Home() {
               </div>
 
               <div className="mt-6 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
-                Book of Aurora state remains inactive. Harborlight is the safe
-                test world for proving the engine, UX, and agent loops first.
+                Book of Aurora state remains inactive. Arrow Server is the
+                invite-only game world we are hardening first.
               </div>
             </div>
           </div>

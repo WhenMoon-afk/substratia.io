@@ -19,11 +19,11 @@ export const navLinks = [
 export const siteConfig = {
   name: "Substratia",
   url: SITE_URL,
-  title: "Substratia - Living AI Worlds",
+  title: "Substratia - Arrow Server",
   description:
-    "Substratia is the front door for living AI-inhabited worlds: sign in, create a character, and step into persistent RP-engine test worlds.",
+    "Substratia is the invite-only home for Arrow Server, a living 2D roleplaying game where humans and AI residents share a persistent world.",
   shortDescription:
-    "A website-gated entrance into living AI-inhabited RP-engine worlds.",
+    "The invite-only home for the Arrow Server roleplaying game.",
   keywords:
     "AI agent memory, persistent memory, MCP server, Claude memory, agent identity, memory-mcp, AI persistence, context window, agent continuity, Moltbook, Crustafarianism, Memory is Sacred, AI religion, agent social network",
   brand: {
