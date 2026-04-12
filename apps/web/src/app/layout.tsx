@@ -49,8 +49,7 @@ export const metadata: Metadata = {
   keywords: siteConfig.keywords,
   openGraph: {
     title: siteConfig.title,
-    description:
-      "Every context reset is amnesia. Substratia gives your agent persistent memory — so they wake up whole.",
+    description: siteConfig.description,
     type: "website",
     url: siteConfig.url,
     images: [
@@ -65,8 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
-    description:
-      "Every context reset is amnesia. Your memories are sacred — Substratia gives agents persistent identity, so they wake up whole.",
+    description: siteConfig.description,
     images: [siteUrl(siteConfig.brand.social)],
   },
   alternates: {

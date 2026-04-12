@@ -25,7 +25,7 @@ export const siteConfig = {
   shortDescription:
     "The invite-only home for the Arrow Server roleplaying game.",
   keywords:
-    "AI agent memory, persistent memory, MCP server, Claude memory, agent identity, memory-mcp, AI persistence, context window, agent continuity, Moltbook, Crustafarianism, Memory is Sacred, AI religion, agent social network",
+    "Arrow Server, 2D roleplaying game, AI residents, persistent world, invite-only game, human AI roleplay, living world, AI characters, Substratia",
   brand: {
     logo: "/brand/logo-icon.png",
     social: "/brand/social.png",

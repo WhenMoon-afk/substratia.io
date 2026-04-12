@@ -14,11 +14,10 @@ export default function Footer() {
             heading={
               <>
                 Stay updated on{" "}
-                <span className="text-forge-cyan">agent memory</span>{" "}
-                infrastructure
+                <span className="text-forge-cyan">Arrow Server</span>
               </>
             }
-            description="New tools, memory patterns, and research on persistent AI identity."
+            description="Invite-only playtest updates, world notes, and progress on humans and AI residents living together."
             centered
           />
         </div>
@@ -35,7 +34,7 @@ export default function Footer() {
             />
             <span className="font-semibold">Substratia</span>
             <span className="text-gray-500 text-sm hidden sm:inline">
-              Memory Infrastructure for AI Agents
+              Home of Arrow Server
             </span>
           </div>
 
