@@ -6,23 +6,33 @@ import Link from "next/link";
 function SignUpContent() {
   return (
     <div className="min-h-screen bg-forge-dark flex items-center justify-center p-8">
-      <SignUp
-        appearance={{
-          elements: {
-            rootBox: "mx-auto",
-            card: "bg-white/5 border border-white/10",
-            headerTitle: "text-white",
-            headerSubtitle: "text-gray-400",
-            socialButtonsBlockButton:
-              "bg-gray-700 text-white hover:bg-gray-600",
-            formFieldLabel: "text-gray-300",
-            formFieldInput: "bg-gray-700 text-white border-gray-600",
-            footerActionLink: "text-forge-cyan hover:text-forge-cyan",
-          },
-        }}
-        afterSignUpUrl="/dashboard"
-        signInUrl="/sign-in"
-      />
+      <div className="w-full max-w-md">
+        <div className="mb-6 text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.32em] text-forge-cyan">
+            Arrow Server
+          </p>
+          <h1 className="mt-3 text-3xl font-black text-white">
+            Create your account to enter the world.
+          </h1>
+        </div>
+        <SignUp
+          appearance={{
+            elements: {
+              rootBox: "mx-auto",
+              card: "bg-white/5 border border-white/10",
+              headerTitle: "text-white",
+              headerSubtitle: "text-gray-400",
+              socialButtonsBlockButton:
+                "bg-gray-700 text-white hover:bg-gray-600",
+              formFieldLabel: "text-gray-300",
+              formFieldInput: "bg-gray-700 text-white border-gray-600",
+              footerActionLink: "text-forge-cyan hover:text-forge-cyan",
+            },
+          }}
+          afterSignUpUrl="/play/arrow"
+          signInUrl="/sign-in"
+        />
+      </div>
     </div>
   );
 }

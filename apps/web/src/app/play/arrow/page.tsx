@@ -38,7 +38,7 @@ export default async function ArrowPlayPage() {
               <p className="text-lg leading-8 text-gray-300">
                 You are signed in, but this Google account is not on the
                 current Arrow Server invite list yet. The game is staying
-                private while we harden the first playable world.
+                private while we shape the first stable version of the world.
               </p>
               {userEmail ? (
                 <p className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-gray-300">
@@ -47,14 +47,8 @@ export default async function ArrowPlayPage() {
               ) : null}
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  href="/dashboard"
-                  className="rounded-full bg-forge-cyan px-5 py-3 text-sm font-bold text-forge-dark transition hover:bg-white"
-                >
-                  Back to dashboard
-                </Link>
-                <Link
                   href="/"
-                  className="rounded-full border border-white/15 px-5 py-3 text-sm font-bold text-white transition hover:border-forge-cyan hover:text-forge-cyan"
+                  className="rounded-full bg-forge-cyan px-5 py-3 text-sm font-bold text-forge-dark transition hover:bg-white"
                 >
                   Back to home
                 </Link>
@@ -80,8 +74,8 @@ export default async function ArrowPlayPage() {
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-gray-300">
               Welcome, {firstName}. Make a character, move through the 2D
-              world, talk to the first resident guide, and try the Signal
-              Scanner in the Workshop.
+              world, talk to residents, and try the Signal Scanner in the
+              Workshop.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -93,10 +87,10 @@ export default async function ArrowPlayPage() {
                 Open in a new tab
               </a>
               <Link
-                href="/dashboard"
+                href="/"
                 className="rounded-full border border-white/15 px-5 py-3 text-sm font-bold text-white transition hover:border-forge-cyan hover:text-forge-cyan"
               >
-                Back to dashboard
+                Home
               </Link>
             </div>
           </div>
@@ -129,7 +123,7 @@ export default async function ArrowPlayPage() {
           <ol className="mt-5 space-y-4 text-sm leading-6 text-gray-300">
             <li>
               <span className="text-forge-cyan">1.</span> You are already
-              through the website login gate.
+              signed in through Substratia.
             </li>
             <li>
               <span className="text-forge-cyan">2.</span> During this private
@@ -146,10 +140,6 @@ export default async function ArrowPlayPage() {
               visible feedback.
             </li>
           </ol>
-          <div className="mt-6 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
-            Book of Aurora state is not active here. Arrow Server is the
-            invite-only game world we are hardening first.
-          </div>
           {!launchToken ? (
             <div className="mt-4 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
               Launch bridge configuration is missing on this deployment, so

@@ -1,27 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig, navLinks } from "@/lib/site-config";
-import NewsletterCapture from "@/components/NewsletterCapture";
 
 export default function Footer() {
   return (
     <footer className="relative z-10 border-t border-white/10 py-12 bg-forge-dark">
       <div className="container mx-auto px-4">
-        {/* Newsletter Section */}
-        <div className="mb-10 pb-10 border-b border-white/5">
-          <NewsletterCapture
-            source="footer"
-            heading={
-              <>
-                Stay updated on{" "}
-                <span className="text-forge-cyan">Arrow Server</span>
-              </>
-            }
-            description="Invite-only playtest updates, world notes, and progress on humans and AI residents living together."
-            centered
-          />
-        </div>
-
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
@@ -61,8 +45,10 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
           <div className="text-center md:text-left">
-            <p className="font-mono">Intelligence is substrate-agnostic.</p>
-            <p className="mt-1">Built by practitioners.</p>
+            <p className="font-mono">
+              A living world for humans and AI residents.
+            </p>
+            <p className="mt-1">Invite-only while Arrow Server takes shape.</p>
           </div>
           <div className="flex gap-4 text-xs text-gray-500">
             <Link

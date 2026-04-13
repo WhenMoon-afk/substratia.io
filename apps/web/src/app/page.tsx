@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const proofPoints = [
-  "Google login as the human gate",
-  "A visual browser client, not a raw MUD",
-  "A live guide agent already inside the world",
-  "Immediate feedback when you move, talk, pick up, and use objects",
+  "Create a character and enter the Arrival Hall",
+  "Move, talk, and try objects inside the world",
+  "Meet residents with their own motives and routines",
+  "Return to a place that keeps moving between visits",
 ] as const;
 
 export default function Home() {
@@ -25,7 +25,7 @@ export default function Home() {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-300 md:text-xl">
               Arrow Server is a living 2D roleplaying game where humans and AI
               residents share a persistent world. Sign in, make a character,
-              move through the scene, and meet people who can remember,
+              step into the world, and meet people who can remember,
               decide, and act from inside the world.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -36,10 +36,10 @@ export default function Home() {
                 Sign in and play
               </Link>
               <Link
-                href="/dashboard"
+                href="/research"
                 className="rounded-full border border-white/15 px-6 py-4 text-sm font-black uppercase tracking-[0.18em] text-white transition hover:border-forge-cyan hover:text-forge-cyan"
               >
-                Player dashboard
+                Read research
               </Link>
             </div>
           </div>
@@ -70,9 +70,9 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-6 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
-                Book of Aurora state remains inactive. Arrow Server is the
-                invite-only game world we are hardening first.
+              <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-gray-200">
+                Invite-only for now while we shape the first stable version of
+                the world.
               </div>
             </div>
           </div>
