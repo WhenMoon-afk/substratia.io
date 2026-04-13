@@ -4,9 +4,11 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 test -f apps/web/src/app/play/arrow/page.tsx
+test -f apps/web/src/app/play/arroww/page.tsx
 test -f apps/web/src/app/play/harborlight/page.tsx
 grep -q 'https://rp.substratia.io' apps/web/src/app/play/arrow/page.tsx
 grep -q '<iframe' apps/web/src/app/play/arrow/page.tsx
+grep -q 'redirect("/play/arrow")' apps/web/src/app/play/arroww/page.tsx
 grep -q 'redirect("/play/arrow")' apps/web/src/app/play/harborlight/page.tsx
 grep -q '/play(.*)' apps/web/src/proxy.ts
 grep -q '/play/arrow' apps/web/src/app/page.tsx

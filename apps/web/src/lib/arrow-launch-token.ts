@@ -2,7 +2,7 @@ import { createHmac, randomBytes } from "node:crypto";
 
 const LAUNCH_TOKEN_PREFIX = "arrow-launch";
 const LAUNCH_TOKEN_VERSION = "v1";
-const DEFAULT_TTL_SECONDS = 120;
+const DEFAULT_TTL_SECONDS = 900;
 
 type MintArrowLaunchTokenOptions = {
   secret?: string;

@@ -9,6 +9,7 @@ grep -q 'createHmac' apps/web/src/lib/arrow-launch-token.ts
 grep -q 'randomBytes' apps/web/src/lib/arrow-launch-token.ts
 grep -q 'LAUNCH_TOKEN_PREFIX = "arrow-launch"' apps/web/src/lib/arrow-launch-token.ts
 grep -q 'LAUNCH_TOKEN_VERSION = "v1"' apps/web/src/lib/arrow-launch-token.ts
+grep -q 'DEFAULT_TTL_SECONDS = 900' apps/web/src/lib/arrow-launch-token.ts
 grep -q 'digest("base64url")' apps/web/src/lib/arrow-launch-token.ts
 
 grep -q 'mintArrowLaunchToken' apps/web/src/app/play/arrow/page.tsx
