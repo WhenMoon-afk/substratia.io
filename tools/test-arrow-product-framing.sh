@@ -38,6 +38,11 @@ grep -q 'afterSignInUrl="/play/arrow"' apps/web/src/app/sign-in/[[...sign-in]]/p
 grep -q 'afterSignUpUrl="/play/arrow"' apps/web/src/app/sign-up/[[...sign-up]]/page.tsx
 grep -q 'redirect("/play/arrow")' apps/web/src/app/dashboard/page.tsx
 
+if rg -n "'/dashboard\\(\\.\\*\\)'" apps/web/src/proxy.ts; then
+  echo "dashboard should not be protected by Clerk before its Arrow redirect can run" >&2
+  exit 1
+fi
+
 if rg -n 'href: "/dashboard"|href: "/docs"|href: "/blog"' apps/web/src/lib/site-config.ts; then
   echo "primary navigation should not link legacy dashboard, docs, or blog surfaces during the Arrow reset" >&2
   exit 1

@@ -2,7 +2,6 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 // Routes that require authentication
 const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
   '/play(.*)',
 ])
 
@@ -13,7 +12,7 @@ const isAuthRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
-  // Protect dashboard routes - redirect to sign-in if not authenticated
+  // Protect live game routes; retired dashboard paths redirect at the page layer.
   if (isProtectedRoute(req)) {
     await auth.protect({
       // Explicit redirect for unauthenticated users
