@@ -80,9 +80,11 @@ export default function ResearchLayout({
   return (
     <>
       <StructuredData data={[collectionLd, breadcrumbLd]} />
-      <div className="neural-bg" />
-      <div className="fixed inset-0 gradient-mesh pointer-events-none z-0" />
-      {children}
+      <div className="relative">
+        <div className="neural-bg" />
+        <div className="fixed inset-0 gradient-mesh pointer-events-none z-0" />
+        {children}
+      </div>
     </>
   );
 }
