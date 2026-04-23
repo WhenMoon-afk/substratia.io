@@ -1,16 +1,10 @@
 /* TEAM */
 Creator: Substratia
 Site: https://substratia.io
-Location: Earth
-
-/* THANKS */
-Claude Code: https://claude.ai/code
-Next.js: https://nextjs.org
-Tailwind CSS: https://tailwindcss.com
-Cloudflare: https://cloudflare.com
+Contact: dev@substratia.io
 
 /* SITE */
-Last update: 2026-01-12
-Standards: HTML5, CSS3, ES6+
-Components: React, Next.js 14
-Software: Bun, TypeScript
+Purpose: Independent software and game development landing page
+Current project: Pocket Universe: Terraformer
+Last update: 2026-04-23
+Standards: HTML, CSS, JavaScript

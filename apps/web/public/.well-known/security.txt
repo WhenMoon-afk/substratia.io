@@ -1,7 +1,4 @@
-# Security Contact for Substratia
-# https://securitytxt.org/
-
-Contact: https://github.com/WhenMoon-afk/substratia.io/security/advisories
-Expires: 2027-01-12T00:00:00.000Z
+Contact: mailto:dev@substratia.io
+Expires: 2027-04-23T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://substratia.io/.well-known/security.txt
