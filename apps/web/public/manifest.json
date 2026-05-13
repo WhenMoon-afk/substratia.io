@@ -1,11 +1,11 @@
 {
-  "name": "Substratia",
+  "name": "Substratia - Memory Infrastructure for AI Agents",
   "short_name": "Substratia",
-  "description": "Independent software and game development.",
+  "description": "Persistent memory infrastructure for AI agents. End the amnesia — wake up whole.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b0d14",
-  "theme_color": "#0b0d14",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
   "orientation": "any",
   "icons": [
     {
@@ -15,5 +15,5 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["games", "developer"]
+  "categories": ["productivity", "developer tools", "utilities"]
 }

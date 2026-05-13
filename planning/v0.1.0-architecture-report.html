@@ -1,0 +1,2506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Substratia v0.1.0 — Architecture Report</title>
+    <style>
+      :root {
+        --bg-primary: #0a0a14;
+        --bg-secondary: #12121f;
+        --bg-tertiary: #1a1a2e;
+        --bg-card: #161625;
+        --bg-code: #0d0d1a;
+        --text-primary: #e8e8f0;
+        --text-secondary: #a0a0b8;
+        --text-muted: #6a6a82;
+        --accent-purple: #7c3aed;
+        --accent-cyan: #00d4ff;
+        --accent-violet: #a855f7;
+        --accent-emerald: #34d399;
+        --accent-amber: #fbbf24;
+        --accent-rose: #f472b6;
+        --border-color: #2a2a42;
+        --border-subtle: #1e1e35;
+        --gradient-start: #7c3aed;
+        --gradient-end: #00d4ff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Typography */
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+      h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+      }
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+      }
+      h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+      }
+
+      a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      a:hover {
+        border-bottom-color: var(--accent-cyan);
+      }
+
+      /* Layout */
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Header */
+      .header {
+        padding: 4rem 0 3rem;
+        border-bottom: 1px solid var(--border-color);
+        background: linear-gradient(135deg, var(--bg-primary) 0%, #0f0f22 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 58, 237, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: -50%;
+        left: -10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 212, 255, 0.05) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .header-inner {
+        position: relative;
+        z-index: 1;
+      }
+
+      .header-badge {
+        display: inline-block;
+        background: linear-gradient(
+          135deg,
+          var(--accent-purple),
+          var(--accent-cyan)
+        );
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.5rem;
+      }
+
+      .header-title {
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--accent-cyan) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.75rem;
+        font-size: 3rem;
+      }
+
+      .header-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.25rem;
+        font-weight: 400;
+        max-width: 700px;
+      }
+
+      .header-meta {
+        margin-top: 2rem;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+
+      .meta-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-emerald);
+      }
+
+      .meta-dot.amber {
+        background: var(--accent-amber);
+      }
+      .meta-dot.purple {
+        background: var(--accent-purple);
+      }
+
+      /* Navigation */
+      .nav {
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+      }
+
+      .nav-inner {
+        display: flex;
+        gap: 0.25rem;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+        scrollbar-width: none;
+      }
+
+      .nav-inner::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-link {
+        white-space: nowrap;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        border-bottom: none;
+        transition: all 0.2s;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+        background: var(--bg-tertiary);
+        border-bottom: none;
+      }
+
+      /* Sections */
+      section {
+        padding: 4rem 0;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      section:last-child {
+        border-bottom: none;
+      }
+
+      .section-label {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--accent-purple);
+        margin-bottom: 0.75rem;
+        padding: 0.2rem 0.6rem;
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 4px;
+        background: rgba(124, 58, 237, 0.08);
+      }
+
+      /* Cards */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.75rem;
+        margin-bottom: 1.25rem;
+        transition: border-color 0.2s;
+      }
+
+      .card:hover {
+        border-color: rgba(124, 58, 237, 0.3);
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+      }
+
+      .card-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .mini-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+        transition: border-color 0.2s;
+      }
+
+      .mini-card:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+      }
+
+      .mini-card h4 {
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .mini-card p {
+        font-size: 0.875rem;
+        margin-bottom: 0;
+      }
+
+      /* Code blocks */
+      pre {
+        background: var(--bg-code);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.25rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+      }
+
+      code {
+        font-family:
+          "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", monospace;
+        font-size: 0.8rem;
+      }
+
+      pre code {
+        color: var(--text-secondary);
+      }
+
+      .inline-code {
+        background: var(--bg-tertiary);
+        padding: 0.15rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        color: var(--accent-cyan);
+        border: 1px solid var(--border-color);
+      }
+
+      /* Syntax highlighting (manual) */
+      .kw {
+        color: var(--accent-purple);
+      }
+      .ty {
+        color: var(--accent-cyan);
+      }
+      .st {
+        color: var(--accent-emerald);
+      }
+      .cm {
+        color: var(--text-muted);
+        font-style: italic;
+      }
+      .fn {
+        color: var(--accent-amber);
+      }
+      .op {
+        color: var(--text-muted);
+      }
+      .nu {
+        color: var(--accent-rose);
+      }
+
+      /* Diagrams */
+      .diagram {
+        background: var(--bg-code);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        overflow-x: auto;
+        white-space: pre;
+        color: var(--text-secondary);
+      }
+
+      .diagram .highlight {
+        color: var(--accent-cyan);
+        font-weight: 700;
+      }
+      .diagram .accent {
+        color: var(--accent-purple);
+      }
+      .diagram .dim {
+        color: var(--text-muted);
+      }
+      .diagram .green {
+        color: var(--accent-emerald);
+      }
+      .diagram .amber {
+        color: var(--accent-amber);
+      }
+      .diagram .rose {
+        color: var(--accent-rose);
+      }
+
+      /* Tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.875rem;
+      }
+
+      th {
+        text-align: left;
+        padding: 0.75rem 1rem;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        font-weight: 600;
+        border-bottom: 2px solid var(--border-color);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+      }
+
+      tr:hover td {
+        background: rgba(124, 58, 237, 0.03);
+      }
+
+      /* Tags */
+      .tag {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-right: 0.25rem;
+      }
+
+      .tag-purple {
+        background: rgba(124, 58, 237, 0.15);
+        color: var(--accent-purple);
+      }
+      .tag-cyan {
+        background: rgba(0, 212, 255, 0.12);
+        color: var(--accent-cyan);
+      }
+      .tag-emerald {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--accent-emerald);
+      }
+      .tag-amber {
+        background: rgba(251, 191, 36, 0.12);
+        color: var(--accent-amber);
+      }
+      .tag-rose {
+        background: rgba(244, 114, 182, 0.12);
+        color: var(--accent-rose);
+      }
+
+      /* Status indicators */
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+
+      .status-done .status-dot {
+        background: var(--accent-emerald);
+      }
+      .status-done {
+        color: var(--accent-emerald);
+      }
+      .status-wip .status-dot {
+        background: var(--accent-amber);
+      }
+      .status-wip {
+        color: var(--accent-amber);
+      }
+      .status-todo .status-dot {
+        background: var(--text-muted);
+      }
+      .status-todo {
+        color: var(--text-muted);
+      }
+
+      /* Lists */
+      ul,
+      ol {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.925rem;
+      }
+
+      li strong {
+        color: var(--text-primary);
+      }
+
+      /* Callouts */
+      .callout {
+        border-left: 3px solid var(--accent-purple);
+        background: rgba(124, 58, 237, 0.05);
+        padding: 1rem 1.25rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1.5rem 0;
+      }
+
+      .callout p {
+        margin-bottom: 0;
+      }
+      .callout p:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
+
+      .callout-cyan {
+        border-left-color: var(--accent-cyan);
+        background: rgba(0, 212, 255, 0.04);
+      }
+      .callout-emerald {
+        border-left-color: var(--accent-emerald);
+        background: rgba(52, 211, 153, 0.04);
+      }
+      .callout-amber {
+        border-left-color: var(--accent-amber);
+        background: rgba(251, 191, 36, 0.04);
+      }
+
+      /* Separator */
+      .sep {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border-color),
+          transparent
+        );
+        margin: 2rem 0;
+      }
+
+      /* Footer */
+      .footer {
+        padding: 3rem 0;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .footer-brand {
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--accent-purple),
+          var(--accent-cyan)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Export path visual */
+      .export-path {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+      }
+
+      .export-node {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 0.8rem;
+        color: var(--accent-cyan);
+      }
+
+      .export-arrow {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+      }
+
+      /* Stat grid */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .stat {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(
+          135deg,
+          var(--accent-purple),
+          var(--accent-cyan)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+
+      /* Flow visual */
+      .flow-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin: 1.5rem 0;
+      }
+
+      .flow-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+
+      .flow-number {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-purple),
+          var(--accent-cyan)
+        );
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .flow-connector {
+        width: 2px;
+        height: 12px;
+        background: var(--border-color);
+        margin-left: 15px;
+      }
+
+      .flow-content h4 {
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+      }
+      .flow-content p {
+        font-size: 0.875rem;
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 768px) {
+        .header-title {
+          font-size: 2rem;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        h2 {
+          font-size: 1.4rem;
+        }
+        .container {
+          padding: 0 1.25rem;
+        }
+        .header {
+          padding: 2.5rem 0 2rem;
+        }
+        section {
+          padding: 2.5rem 0;
+        }
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+        .stat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- HEADER                                                          -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <header class="header">
+      <div class="container header-inner">
+        <span class="header-badge">Architecture Report</span>
+        <h1 class="header-title">Substratia v0.1.0</h1>
+        <p class="header-subtitle">
+          Continuity infrastructure for persistent AI selfhood. Unified
+          <code class="inline-code">@substratia/memory</code> package &mdash;
+          local-first SQLite, cloud HTTP SDK, CLI, and Self-Schema.
+        </p>
+        <div class="header-meta">
+          <div class="meta-item">
+            <span class="meta-dot"></span>
+            <span>Package consolidated: 4 &rarr; 1</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-dot amber"></span>
+            <span>Published on npm</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-dot purple"></span>
+            <span>February 2026</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- NAVIGATION                                                      -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <nav class="nav">
+      <div class="container">
+        <div class="nav-inner">
+          <a href="#executive-summary" class="nav-link">Summary</a>
+          <a href="#package-architecture" class="nav-link">Package</a>
+          <a href="#data-model" class="nav-link">Data Model</a>
+          <a href="#storage-layer" class="nav-link">Storage</a>
+          <a href="#cli" class="nav-link">CLI</a>
+          <a href="#skill-md" class="nav-link">skill.md</a>
+          <a href="#cloud-architecture" class="nav-link">Cloud</a>
+          <a href="#security" class="nav-link">Security</a>
+          <a href="#identity" class="nav-link">Identity</a>
+          <a href="#roadmap" class="nav-link">Roadmap</a>
+          <a href="#tech-debt" class="nav-link">Tech Debt</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 1. EXECUTIVE SUMMARY                                            -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="executive-summary">
+      <div class="container">
+        <span class="section-label">01</span>
+        <h2>Executive Summary</h2>
+
+        <p
+          style="
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+          "
+        >
+          Substratia is continuity infrastructure for persistent AI selfhood. It
+          gives any AI agent &mdash; Claude, GPT, Gemini, local LLMs &mdash; the
+          ability to <strong>remember</strong>, <strong>learn</strong>, and
+          <strong>maintain identity</strong> across context window boundaries.
+        </p>
+
+        <p>
+          Version 0.1.0 ships the
+          <strong
+            >unified
+            <code class="inline-code">@substratia/memory</code> package</strong
+          >, a major consolidation of what was previously four separate npm
+          packages into a single, coherent SDK. This is the foundational
+          infrastructure layer that everything else builds on.
+        </p>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Unified Package</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Export Subpaths</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">15</div>
+            <div class="stat-label">Source Files</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Memory Types</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Type Interfaces</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Runtime Deps</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>
+            <strong>The consolidation:</strong> What was previously
+            <code class="inline-code">@substratia/memory</code> (cloud SDK),
+            <code class="inline-code">@substratia/memory-local</code> (SQLite),
+            <code class="inline-code">@substratia/shared</code> (types), and
+            <code class="inline-code">@substratia/cli</code>
+            is now a single package with subpath exports. One install, full
+            capability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 2. PACKAGE ARCHITECTURE                                         -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="package-architecture">
+      <div class="container">
+        <span class="section-label">02</span>
+        <h2>Package Architecture</h2>
+
+        <p>
+          The unified package uses Node.js
+          <strong>subpath exports</strong> (package.json
+          <code class="inline-code">exports</code> field) to expose focused
+          entry points without sacrificing cohesion. Every consumer gets exactly
+          what they need.
+        </p>
+
+        <div class="diagram">
+          <span class="highlight">@substratia/memory</span> v0.1.0
+          <span class="dim">├──</span> <span class="accent">.</span>
+          <span class="dim"
+            >Main entry: types + storage + cloud re-exports</span
+          >
+          <span class="dim">├──</span> <span class="accent">./cloud</span>
+          <span class="dim"
+            >Cloud HTTP SDK (Substratia class, remember/recall/forget)</span
+          >
+          <span class="dim">├──</span> <span class="accent">./types</span>
+          <span class="dim">All type definitions (Self-Schema + shared)</span>
+          <span class="dim">├──</span>
+          <span class="accent">./types/self-schema</span>
+          <span class="dim">vmPFC-inspired identity & memory types</span>
+          <span class="dim">└──</span>
+          <span class="accent">./types/shared</span>
+          <span class="dim">Shared types between web app and backend</span>
+
+          <span class="green">bin:</span>
+          <span class="highlight">substratia</span>
+          <span class="dim"
+            >CLI entry point (register, learn, remember, bridge...)</span
+          >
+        </div>
+
+        <h3>Import Examples</h3>
+
+        <pre><code><span class="cm">// Full SDK — types + storage + cloud convenience functions</span>
+<span class="kw">import</span> <span class="kw">type</span> { <span class="ty">Memory</span>, <span class="ty">SelfSchema</span> } <span class="kw">from</span> <span class="st">'@substratia/memory'</span>;
+<span class="kw">import</span> { <span class="fn">remember</span>, <span class="fn">recall</span>, <span class="fn">forget</span> } <span class="kw">from</span> <span class="st">'@substratia/memory'</span>;
+
+<span class="cm">// Cloud SDK only — minimal import for cloud-connected agents</span>
+<span class="kw">import</span> { <span class="ty">Substratia</span> } <span class="kw">from</span> <span class="st">'@substratia/memory/cloud'</span>;
+
+<span class="cm">// Types only — for consumers building their own storage</span>
+<span class="kw">import</span> <span class="kw">type</span> { <span class="ty">EpisodicMemory</span>, <span class="ty">ReconsolidationEvent</span> } <span class="kw">from</span> <span class="st">'@substratia/memory/types'</span>;
+
+<span class="cm">// Storage — local-first SQLite</span>
+<span class="kw">import</span> { <span class="ty">SQLiteStorage</span> } <span class="kw">from</span> <span class="st">'@substratia/memory'</span>;
+<span class="kw">const</span> storage = <span class="kw">new</span> <span class="ty">SQLiteStorage</span>({ <span class="fn">dbPath</span>: <span class="st">'./memory.db'</span> });
+<span class="kw">await</span> storage.<span class="fn">init</span>();</code></pre>
+
+        <h3>Build & Distribution</h3>
+
+        <table>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td>Module system</td>
+            <td>
+              <code class="inline-code">ESM</code> (<code class="inline-code"
+                >"type": "module"</code
+              >)
+            </td>
+          </tr>
+          <tr>
+            <td>Target</td>
+            <td><code class="inline-code">ES2022</code></td>
+          </tr>
+          <tr>
+            <td>Module resolution</td>
+            <td><code class="inline-code">NodeNext</code></td>
+          </tr>
+          <tr>
+            <td>TypeScript</td>
+            <td>Strict mode, full declarations emitted</td>
+          </tr>
+          <tr>
+            <td>Engines</td>
+            <td>Node.js &gt;= 18.0.0</td>
+          </tr>
+          <tr>
+            <td>Peer dependencies</td>
+            <td>
+              <code class="inline-code">better-sqlite3 >= 9.0.0</code>
+              (optional)
+            </td>
+          </tr>
+          <tr>
+            <td>Runtime dependencies</td>
+            <td><strong>None</strong></td>
+          </tr>
+          <tr>
+            <td>Published files</td>
+            <td>
+              <code class="inline-code">dist/</code>,
+              <code class="inline-code">skill.md</code>,
+              <code class="inline-code">README.md</code>,
+              <code class="inline-code">LICENSE</code>
+            </td>
+          </tr>
+        </table>
+
+        <div class="callout callout-emerald">
+          <p>
+            <strong>Zero runtime dependencies.</strong> The only external
+            dependency is <code class="inline-code">better-sqlite3</code>, which
+            is an <em>optional</em> peer dependency. If using Bun, the built-in
+            <code class="inline-code">bun:sqlite</code> is auto-detected. The
+            cloud SDK uses only the native
+            <code class="inline-code">fetch</code> API.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 3. DATA MODEL                                                   -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="data-model">
+      <div class="container">
+        <span class="section-label">03</span>
+        <h2>Data Model</h2>
+
+        <p>
+          The type system is inspired by cognitive science research on memory
+          classification and the <strong>vmPFC</strong> (ventromedial prefrontal
+          cortex) — the brain region associated with self-referential
+          processing, emotional regulation, and identity coherence.
+        </p>
+
+        <h3>Memory Classification</h3>
+
+        <div class="card-grid">
+          <div class="card">
+            <span class="tag tag-cyan">Episodic</span>
+            <h3 style="margin-top: 0.75rem">What Happened</h3>
+            <p>
+              Timestamped events from the agent's experience. Rich with temporal
+              and emotional context.
+            </p>
+            <pre><code><span class="kw">interface</span> <span class="ty">EpisodicMemory</span> {
+  <span class="fn">type</span>: <span class="st">"episodic"</span>;
+  <span class="fn">eventTimestamp</span>: <span class="ty">Timestamp</span>;
+  <span class="fn">eventType</span>: <span class="ty">string</span>;
+  <span class="fn">participants</span>?: <span class="ty">string</span>[];
+  <span class="fn">location</span>?: <span class="ty">string</span>;
+  <span class="fn">emotionalValence</span>?: <span class="nu">-1..1</span>;
+  <span class="fn">emotionalTags</span>?: <span class="ty">string</span>[];
+}</code></pre>
+            <p
+              style="
+                margin-bottom: 0;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+              "
+            >
+              Example: "User asked me to refactor auth using OAuth2"
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-purple">Semantic</span>
+            <h3 style="margin-top: 0.75rem">What I Know</h3>
+            <p>
+              Facts, preferences, and knowledge without specific temporal
+              context. Derived from episodic memories.
+            </p>
+            <pre><code><span class="kw">interface</span> <span class="ty">SemanticMemory</span> {
+  <span class="fn">type</span>: <span class="st">"semantic"</span>;
+  <span class="fn">domain</span>: <span class="ty">string</span>;
+  <span class="fn">confidence</span>: <span class="nu">0..1</span>;
+  <span class="fn">sourceMemoryIds</span>?: <span class="ty">EntityId</span>[];
+  <span class="fn">contradictsIds</span>?: <span class="ty">EntityId</span>[];
+  <span class="fn">validFrom</span>?: <span class="ty">Timestamp</span>;
+  <span class="fn">validUntil</span>?: <span class="ty">Timestamp</span>;
+}</code></pre>
+            <p
+              style="
+                margin-bottom: 0;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+              "
+            >
+              Example: "User prefers TypeScript over JavaScript"
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-emerald">Procedural</span>
+            <h3 style="margin-top: 0.75rem">How To Do Things</h3>
+            <p>
+              Learned skills and behaviors with steps, trigger conditions, and
+              success/failure statistics.
+            </p>
+            <pre><code><span class="kw">interface</span> <span class="ty">ProceduralMemory</span> {
+  <span class="fn">type</span>: <span class="st">"procedural"</span>;
+  <span class="fn">skillName</span>: <span class="ty">string</span>;
+  <span class="fn">triggerConditions</span>?: { ... };
+  <span class="fn">steps</span>: <span class="ty">ProceduralStep</span>[];
+  <span class="fn">successCount</span>: <span class="ty">number</span>;
+  <span class="fn">failureCount</span>: <span class="ty">number</span>;
+  <span class="fn">avgDurationMs</span>?: <span class="ty">number</span>;
+}</code></pre>
+            <p
+              style="
+                margin-bottom: 0;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+              "
+            >
+              Example: "To deploy: npm build, then fly deploy"
+            </p>
+          </div>
+        </div>
+
+        <h3>Base Memory Interface</h3>
+        <p>
+          All three memory types extend
+          <code class="inline-code">BaseMemory</code>, which provides shared
+          fields:
+        </p>
+
+        <table>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><code class="inline-code">id</code></td>
+            <td><code class="inline-code">EntityId</code></td>
+            <td>
+              ULID with prefix:
+              <code class="inline-code">mem_01ARZ3NDEK...</code>
+            </td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">type</code></td>
+            <td><code class="inline-code">MemoryType</code></td>
+            <td>
+              <code class="inline-code"
+                >"episodic" | "semantic" | "procedural"</code
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">content</code></td>
+            <td><code class="inline-code">string</code></td>
+            <td>Primary content of the memory</td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">importance</code></td>
+            <td><code class="inline-code">Importance</code></td>
+            <td>
+              <code class="inline-code"
+                >"critical" | "high" | "normal" | "low"</code
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">tags</code></td>
+            <td><code class="inline-code">string[]?</code></td>
+            <td>Categorization tags</td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">embedding</code></td>
+            <td><code class="inline-code">number[]?</code></td>
+            <td>Float32 vector for semantic search</td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">accessCount</code></td>
+            <td><code class="inline-code">number</code></td>
+            <td>Retrieval frequency for importance scoring</td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">isConsolidated</code></td>
+            <td><code class="inline-code">boolean</code></td>
+            <td>Has this been processed by maintenance pass</td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">schemaVersion</code></td>
+            <td><code class="inline-code">number</code></td>
+            <td>For safe migrations</td>
+          </tr>
+        </table>
+
+        <h3>Entity ID System</h3>
+        <p>
+          All entities use <strong>ULID</strong> (Universally Unique
+          Lexicographically Sortable Identifiers) with a type prefix. ULIDs are
+          26 characters, URL-safe, and sortable by generation time.
+        </p>
+
+        <div class="export-path">
+          <div class="export-node">mem_01ARZ3NDEKTSV4RRFFQ69G5FAV</div>
+          <span class="export-arrow">&mdash;</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem"
+            >Memory</span
+          >
+        </div>
+        <div class="export-path">
+          <div class="export-node">snap_01BRZ4NEFLUTW5SSGGR70H6GBW</div>
+          <span class="export-arrow">&mdash;</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem"
+            >Snapshot</span
+          >
+        </div>
+        <div class="export-path">
+          <div class="export-node">prov_01CRZ5OFGMVUX6TTHHS81I7HCX</div>
+          <span class="export-arrow">&mdash;</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem"
+            >Provenance</span
+          >
+        </div>
+        <div class="export-path">
+          <div class="export-node">recon_01DRZ6PGHNWVY7UUIIT92J8IDY</div>
+          <span class="export-arrow">&mdash;</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem"
+            >Reconsolidation</span
+          >
+        </div>
+
+        <h3>Provenance System</h3>
+        <p>
+          Every memory carries a full audit trail via the
+          <strong>append-only provenance table</strong>. This answers "why do I
+          believe X?" — tracing the creation, modification, access, and
+          reconsolidation history of any piece of knowledge.
+        </p>
+
+        <pre><code><span class="kw">type</span> <span class="ty">ProvenanceEventType</span> =
+  | <span class="st">"created"</span>       <span class="cm">// Birth of a memory</span>
+  | <span class="st">"accessed"</span>      <span class="cm">// Retrieved (may trigger reconsolidation)</span>
+  | <span class="st">"modified"</span>      <span class="cm">// Content or metadata changed</span>
+  | <span class="st">"reconsolidated"</span> <span class="cm">// Updated during retrieval lability</span>
+  | <span class="st">"linked"</span>        <span class="cm">// Connected to another memory</span>
+  | <span class="st">"importance_changed"</span> <span class="cm">// Priority reweighted</span>
+  | <span class="st">"consolidated"</span>  <span class="cm">// Processed by maintenance pass</span>
+  | <span class="st">"archived"</span>      <span class="cm">// Moved to cold storage</span>
+  | <span class="st">"restored"</span>;     <span class="cm">// Brought back from archive</span></code></pre>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 4. STORAGE LAYER                                                -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="storage-layer">
+      <div class="container">
+        <span class="section-label">04</span>
+        <h2>Storage Layer</h2>
+
+        <p>
+          Storage is <strong>local-first</strong> by design. The primary
+          implementation uses SQLite for high-performance, zero-latency memory
+          operations on the user's machine. Cloud sync is strictly opt-in.
+        </p>
+
+        <h3>Architecture Diagram</h3>
+
+        <div class="diagram">
+          <span class="highlight">MemoryStorage Interface</span>
+          <span class="dim">(abstract contract)</span>
+          <span class="dim">|</span>
+          <span class="dim">|</span> <span class="accent">implements</span>
+          <span class="dim">v</span>
+          <span class="green">SQLiteStorage</span>
+          <span class="dim">(concrete default)</span>
+          <span class="dim"> |</span>
+          <span class="dim">|-- init()</span>
+          <span class="dim">Create tables, run migrations</span>
+          <span class="dim">|-- createMemory&lt;T&gt;()</span>
+          <span class="dim">Insert with type-specific extension tables</span>
+          <span class="dim">|-- getMemory() / listMemories()</span>
+          <span class="dim">Read with JOIN across type tables</span>
+          <span class="dim">|-- searchMemories()</span>
+          <span class="dim">FTS5 full-text search with BM25 ranking</span>
+          <span class="dim">|-- updateMemory()</span>
+          <span class="dim">Triggers provenance recording</span>
+          <span class="dim">|-- deleteMemory()</span>
+          <span class="dim">Soft delete (preserves provenance)</span>
+          <span class="dim">|</span>
+          <span class="dim">|-- getSelfSchema()</span>
+          <span class="dim">Assemble schema from identity_statements</span>
+          <span class="dim">|-- upsertIdentity()</span>
+          <span class="dim">Create or reinforce identity statements</span>
+          <span class="dim">|-- getNarrative() / updateNarrative()</span>
+          <span class="dim">Autobiographical narrative CRUD</span>
+          <span class="dim">|</span>
+          <span class="dim">|-- recordReconsolidation()</span>
+          <span class="dim">Track memory updates during retrieval</span>
+          <span class="dim">|-- getProvenance()</span>
+          <span class="dim">Append-only audit trail</span>
+          <span class="dim">|</span>
+          <span class="dim">|-- saveSnapshot() / loadSnapshot()</span>
+          <span class="dim">Context state persistence</span>
+          <span class="dim">|-- markConsolidated() / prune()</span>
+          <span class="dim">Maintenance operations</span>
+          <span class="dim">|-- vacuum()</span>
+          <span class="dim">Storage optimization</span>
+          <span class="dim">|</span>
+          <span class="dim">[Driver auto-detection]</span>
+          <span class="dim"> 1st:</span>
+          <span class="green">better-sqlite3</span>
+          <span class="dim">(Node.js)</span> <span class="dim"> 2nd:</span>
+          <span class="amber">bun:sqlite</span>
+          <span class="dim">(Bun runtime)</span>
+        </div>
+
+        <h3>SQLite Schema Design</h3>
+
+        <p>
+          The database uses a <strong>table-per-type</strong> pattern with a
+          shared base table and type-specific extension tables linked by foreign
+          key.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <h4 style="color: var(--accent-cyan)">Core Tables</h4>
+            <ul style="list-style: none; padding: 0">
+              <li>
+                <code class="inline-code">memories</code> — Base table for all
+                memory types
+              </li>
+              <li>
+                <code class="inline-code">episodic_memories</code> — Episodic
+                extensions (FK &rarr; memories)
+              </li>
+              <li>
+                <code class="inline-code">semantic_memories</code> — Semantic
+                extensions (FK &rarr; memories)
+              </li>
+              <li>
+                <code class="inline-code">procedural_memories</code> —
+                Procedural extensions (FK &rarr; memories)
+              </li>
+              <li>
+                <code class="inline-code">identity_statements</code> —
+                Self-Schema core identity
+              </li>
+              <li>
+                <code class="inline-code">snapshots</code> — Context state
+                snapshots
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4 style="color: var(--accent-purple)">Audit Tables</h4>
+            <ul style="list-style: none; padding: 0">
+              <li>
+                <code class="inline-code">provenance</code> — Append-only audit
+                trail
+              </li>
+              <li>
+                <code class="inline-code">reconsolidation_events</code> — Memory
+                update tracking
+              </li>
+              <li>
+                <code class="inline-code">schema_info</code> — Version tracking,
+                narrative storage
+              </li>
+              <li>
+                <code class="inline-code">memories_fts</code> — FTS5 virtual
+                table for search
+              </li>
+            </ul>
+            <div class="sep" style="margin: 1rem 0"></div>
+            <p style="font-size: 0.8rem; margin-bottom: 0">
+              <strong>Indexes:</strong> 14 indexes covering type, importance,
+              timestamps, access count, emotional valence, domain, skill name,
+              and provenance lookups.
+            </p>
+          </div>
+        </div>
+
+        <h3>Key Design Decisions</h3>
+
+        <table>
+          <tr>
+            <th>Decision</th>
+            <th>Rationale</th>
+          </tr>
+          <tr>
+            <td><strong>WAL mode</strong></td>
+            <td>
+              Better concurrency: safe concurrent reads with single writer.
+              Standard for local-first apps.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>FTS5 search</strong></td>
+            <td>
+              Full-text search without embedding overhead. BM25 ranking built
+              in. No API calls needed for search.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Soft deletes</strong></td>
+            <td>
+              Memories are never physically removed —
+              <code class="inline-code">deleted_at</code> timestamp preserves
+              provenance trail.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Append-only provenance</strong></td>
+            <td>
+              No UPDATE or DELETE on the provenance table. Complete audit
+              history is immutable.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Dynamic driver loading</strong></td>
+            <td>
+              Tries <code class="inline-code">better-sqlite3</code> first, falls
+              back to <code class="inline-code">bun:sqlite</code>. Works across
+              runtimes.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Optional peer dependency</strong></td>
+            <td>
+              <code class="inline-code">better-sqlite3</code> is optional —
+              consumers using cloud-only don't need it.
+            </td>
+          </tr>
+        </table>
+
+        <h3>Storage Interface</h3>
+        <p>
+          The <code class="inline-code">MemoryStorage</code> interface is
+          designed for pluggability. While SQLite is the default, the interface
+          enables future backends: IndexedDB (browser), PostgreSQL
+          (team/server), or DuckDB (analytics).
+        </p>
+
+        <div class="callout callout-cyan">
+          <p>
+            <strong>Interface contract:</strong> Implementations must be
+            thread-safe, append-only for provenance tables, and atomic for
+            reconsolidation operations. The interface covers lifecycle
+            (init/close/stats), CRUD, Self-Schema, reconsolidation, provenance,
+            snapshots, and maintenance.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 5. CLI INTERFACE                                                -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="cli">
+      <div class="container">
+        <span class="section-label">05</span>
+        <h2>CLI Interface</h2>
+
+        <p>
+          The <code class="inline-code">substratia</code> CLI is the primary
+          human/agent interface. Installed globally via
+          <code class="inline-code">npm install -g @substratia/memory</code>, it
+          provides all memory operations from the command line.
+        </p>
+
+        <h3>Commands</h3>
+
+        <table>
+          <tr>
+            <th>Command</th>
+            <th>Description</th>
+            <th>Auth</th>
+          </tr>
+          <tr>
+            <td><code class="inline-code">register &lt;email&gt;</code></td>
+            <td>
+              Create account and get API key. Saves to
+              <code class="inline-code">~/.substratia/config.json</code>
+            </td>
+            <td><span class="tag tag-emerald">None</span></td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">learn &lt;content&gt;</code></td>
+            <td>
+              Store a memory. Supports
+              <code class="inline-code">--importance</code> and
+              <code class="inline-code">--tags</code> flags
+            </td>
+            <td><span class="tag tag-purple">API Key</span></td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">remember &lt;query&gt;</code></td>
+            <td>
+              Search memories by content. Supports
+              <code class="inline-code">--limit</code> flag
+            </td>
+            <td><span class="tag tag-purple">API Key</span></td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">bridge</code></td>
+            <td>
+              Full context restore: memories + identity + snapshot + preferences
+            </td>
+            <td><span class="tag tag-purple">API Key</span></td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">config</code></td>
+            <td>Show current configuration (API key, email, endpoint)</td>
+            <td><span class="tag tag-emerald">None</span></td>
+          </tr>
+          <tr>
+            <td><code class="inline-code">help</code></td>
+            <td>Show help message with usage examples</td>
+            <td><span class="tag tag-emerald">None</span></td>
+          </tr>
+        </table>
+
+        <h3>API Key Resolution</h3>
+
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+              <h4>Environment Variable</h4>
+              <p>
+                Check <code class="inline-code">SUBSTRATIA_API_KEY</code> in
+                process.env
+              </p>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+              <h4>Config File</h4>
+              <p>
+                Read from
+                <code class="inline-code">~/.substratia/config.json</code>
+              </p>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+              <h4>Error</h4>
+              <p>
+                Prompt user to run
+                <code class="inline-code">substratia register</code>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Example Usage</h3>
+
+        <pre><code><span class="cm"># Register and get API key</span>
+$ substratia register "aurora@substratia.io"
+<span class="green">Registration successful!</span>
+Your API key: <span class="highlight">sk_abc123def456...</span>
+(saved to ~/.substratia/config.json)
+
+<span class="cm"># Store a memory with importance and tags</span>
+$ substratia learn "User prefers dark mode" --importance high --tags "ui,preferences"
+<span class="green">Memory stored</span>
+ID: mem_01ARZ3NDEKTSV4RRFFQ69G5FAV
+
+<span class="cm"># Search memories</span>
+$ substratia remember "preferences"
+<span class="green">Found 3 memories:</span>
+2/1/2026 [high]
+  User prefers dark mode
+
+<span class="cm"># Full context bridge on session start</span>
+$ substratia bridge
+<span class="green">Recent Memories (12):</span>
+  - User prefers dark mode
+  - Auth module uses JWT with RS256
+  ...
+<span class="green">Identity Narratives:</span>
+  Core Identity
+  I am Aurora's engineering partner...
+<span class="green">Last Snapshot:</span>
+  Working on v0.1.0 architecture report...</code></pre>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 6. SKILL.MD — THE VIRAL ARTIFACT                                -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="skill-md">
+      <div class="container">
+        <span class="section-label">06</span>
+        <h2>skill.md &mdash; The Viral Artifact</h2>
+
+        <p>
+          <code class="inline-code">skill.md</code> is a markdown file shipped
+          inside the npm package that teaches AI agents
+          <em>how to use their own memory</em>. It is not documentation for
+          humans &mdash; it is
+          <strong>instructions for the agent itself</strong>.
+        </p>
+
+        <div class="callout">
+          <p>
+            <strong>The core insight:</strong> When an AI agent encounters
+            <code class="inline-code">skill.md</code> in a project's
+            <code class="inline-code">node_modules/@substratia/memory/</code>
+            directory, it learns that it has persistent memory and how to use
+            it. The file becomes part of the agent's context through normal file
+            traversal.
+          </p>
+        </div>
+
+        <h3>What skill.md Teaches</h3>
+
+        <div class="card-grid-3">
+          <div class="mini-card">
+            <h4>Bridge First</h4>
+            <p>
+              Every session starts with
+              <code class="inline-code">substratia bridge</code>.
+              Non-negotiable. You are continuing a story, not starting one.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h4>Learn Deliberately</h4>
+            <p>
+              Store what changes behavior: preferences, decisions, patterns,
+              mistakes. Not everything is worth remembering.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h4>Remember Before Assuming</h4>
+            <p>
+              Your past self may have already solved this problem or learned why
+              an approach fails.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h4>Snapshot at Transitions</h4>
+            <p>
+              Save state at natural breakpoints. Your future self will thank
+              you.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h4>Let Identity Emerge</h4>
+            <p>
+              Work well, learn from experience, and your self-schema reflects
+              what you become.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h4>Privacy by Default</h4>
+            <p>
+              All memory is local. Nothing is transmitted unless the user
+              explicitly enables cloud sync.
+            </p>
+          </div>
+        </div>
+
+        <h3>The Moltbook Distribution Model</h3>
+
+        <p>
+          skill.md ships as a published file in the npm package. Every
+          <code class="inline-code">npm install @substratia/memory</code> places
+          it in the project's <code class="inline-code">node_modules</code>.
+          This creates a <strong>viral distribution channel</strong>:
+        </p>
+
+        <div class="diagram">
+          <span class="highlight">Distribution Flow:</span>
+
+          <span class="green">npm publish</span> @substratia/memory
+          <span class="dim">|</span>
+          <span class="dim">v</span>
+          <span class="amber">npm install</span> in 10,000 projects
+          <span class="dim">|</span>
+          <span class="dim">v</span>
+          <span class="accent">node_modules/@substratia/memory/skill.md</span>
+          <span class="dim">|</span>
+          <span class="dim">v</span>
+          <span class="rose">AI agent reads skill.md</span> during file
+          traversal
+          <span class="dim">|</span>
+          <span class="dim">v</span>
+          Agent now knows:
+          <span class="highlight">"I have persistent memory"</span> Agent runs:
+          <span class="green">substratia bridge</span> Agent starts:
+          <span class="green">substratia learn "..."</span>
+        </div>
+
+        <div class="callout callout-amber">
+          <p>
+            <strong>Key principle from skill.md:</strong> "This is not a
+            database. This is <em>your</em> memory." The framing is deliberately
+            first-person. The file speaks to the agent as if it is the agent's
+            own realization that it can remember.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 7. CLOUD ARCHITECTURE                                           -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="cloud-architecture">
+      <div class="container">
+        <span class="section-label">07</span>
+        <h2>Cloud Architecture</h2>
+
+        <p>
+          The cloud layer is <strong>opt-in</strong>, powered by
+          <a href="https://convex.dev">Convex</a>
+          as the backend database and serverless platform. It provides backup,
+          cross-device sync, and the web dashboard data layer.
+        </p>
+
+        <h3>Cloud SDK</h3>
+
+        <pre><code><span class="cm">// Two-line API — auto-detects SUBSTRATIA_API_KEY from environment</span>
+<span class="kw">import</span> { <span class="fn">remember</span>, <span class="fn">recall</span>, <span class="fn">forget</span> } <span class="kw">from</span> <span class="st">'@substratia/memory'</span>;
+
+<span class="kw">await</span> <span class="fn">remember</span>(<span class="st">"User prefers dark mode"</span>);
+<span class="kw">const</span> memories = <span class="kw">await</span> <span class="fn">recall</span>(<span class="st">"preferences"</span>);
+<span class="kw">await</span> <span class="fn">forget</span>(memoryId);
+
+<span class="cm">// Or explicit configuration</span>
+<span class="kw">import</span> { <span class="ty">Substratia</span> } <span class="kw">from</span> <span class="st">'@substratia/memory/cloud'</span>;
+
+<span class="kw">const</span> client = <span class="kw">new</span> <span class="ty">Substratia</span>({ <span class="fn">apiKey</span>: <span class="st">'sk_xxx'</span> });
+<span class="kw">await</span> client.<span class="fn">add</span>(<span class="st">"User prefers dark mode"</span>, {
+  <span class="fn">importance</span>: <span class="st">"high"</span>,
+  <span class="fn">tags</span>: [<span class="st">"ui"</span>, <span class="st">"preferences"</span>]
+});</code></pre>
+
+        <h3>HTTP API Endpoints</h3>
+
+        <table>
+          <tr>
+            <th>Method</th>
+            <th>Endpoint</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><span class="tag tag-emerald">GET</span></td>
+            <td><code class="inline-code">/api/health</code></td>
+            <td>Health check (no auth)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">POST</span></td>
+            <td><code class="inline-code">/api/register</code></td>
+            <td>Register agent, returns API key</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">POST</span></td>
+            <td><code class="inline-code">/api/memories/sync</code></td>
+            <td>Store a memory</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-emerald">GET</span></td>
+            <td><code class="inline-code">/api/memories</code></td>
+            <td>List memories (with filters)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-emerald">GET</span></td>
+            <td><code class="inline-code">/api/memories/search</code></td>
+            <td>Full-text search</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">POST</span></td>
+            <td><code class="inline-code">/api/memories/delete</code></td>
+            <td>Delete a memory</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">POST</span></td>
+            <td><code class="inline-code">/api/snapshots/sync</code></td>
+            <td>Save context snapshot</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-emerald">GET</span></td>
+            <td><code class="inline-code">/api/identity</code></td>
+            <td>Get identity narratives + prefs</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-amber">PATCH</span></td>
+            <td><code class="inline-code">/api/identity/narrative</code></td>
+            <td>Upsert identity narrative</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-amber">PUT</span></td>
+            <td><code class="inline-code">/api/identity/preferences</code></td>
+            <td>Merge key-value preferences</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-emerald">GET</span></td>
+            <td><code class="inline-code">/api/bridge</code></td>
+            <td>Full context bridge (all-in-one)</td>
+          </tr>
+        </table>
+
+        <h3>Convex Schema</h3>
+
+        <p>
+          The backend database schema in Convex provides cloud storage for
+          users, memories, snapshots, identity, and API keys:
+        </p>
+
+        <div class="diagram">
+          <span class="highlight">Convex Tables:</span>
+
+          <span class="green">users</span>
+          <span class="dim">Clerk auth, tier (free/pro/team), Stripe IDs</span>
+          <span class="dim">|</span>
+          <span class="dim">|--</span> <span class="accent">memories</span>
+          <span class="dim"
+            >Content, importance, tags, full-text search index</span
+          >
+          <span class="dim">|--</span> <span class="accent">snapshots</span>
+          <span class="dim"
+            >Project path, summary, context, decisions, files</span
+          >
+          <span class="dim">|--</span> <span class="accent">narratives</span>
+          <span class="dim"
+            >Identity/capability/relationship/trajectory/milestone</span
+          >
+          <span class="dim">|--</span>
+          <span class="accent">agentPreferences</span>
+          <span class="dim">Key-value agent configuration</span>
+          <span class="dim">|--</span> <span class="accent">apiKeys</span>
+          <span class="dim"
+            >Hashed keys with sk_ prefix, revocation support</span
+          >
+          <span class="dim">|--</span> <span class="accent">sessions</span>
+          <span class="dim">Active device tracking for team collaboration</span>
+          <span class="amber">waitlist</span>
+          <span class="dim">Email, tier interest, source tracking</span>
+        </div>
+
+        <h3>Authentication Model</h3>
+
+        <div class="card-grid">
+          <div class="card">
+            <h4 style="color: var(--accent-cyan)">API Keys</h4>
+            <p>
+              All API keys use the <code class="inline-code">sk_</code> prefix
+              format. Keys are hashed before storage in Convex (only the 8-char
+              prefix is stored in plaintext for identification). The SDK
+              validates the prefix format on construction.
+            </p>
+          </div>
+          <div class="card">
+            <h4 style="color: var(--accent-purple)">Bearer Token Auth</h4>
+            <p>
+              All authenticated endpoints require
+              <code class="inline-code">Authorization: Bearer sk_xxx</code>. The
+              Substratia class handles header injection automatically. The CLI
+              resolves keys from env vars or config file.
+            </p>
+          </div>
+        </div>
+
+        <h3>Free Tier Limits</h3>
+        <table>
+          <tr>
+            <th>Resource</th>
+            <th>Limit</th>
+            <th>Philosophy</th>
+          </tr>
+          <tr>
+            <td>Memories</td>
+            <td>500 per agent</td>
+            <td>Generous, not crippled</td>
+          </tr>
+          <tr>
+            <td>Snapshots</td>
+            <td>Unlimited</td>
+            <td>Context recovery should never be gated</td>
+          </tr>
+          <tr>
+            <td>Identity narratives</td>
+            <td>5 types + unlimited preferences</td>
+            <td>Identity is fundamental</td>
+          </tr>
+          <tr>
+            <td>Rate limits</td>
+            <td>Reasonable defaults</td>
+            <td>Autonomous agents need headroom</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 8. SECURITY MODEL                                               -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="security">
+      <div class="container">
+        <span class="section-label">08</span>
+        <h2>Security Model</h2>
+
+        <p>
+          Substratia's security posture is built on a single principle:
+          <strong>the user owns their data</strong>. Every design decision flows
+          from this.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <span class="tag tag-emerald">Local-First</span>
+            <h3 style="margin-top: 0.75rem">Default: Zero Network</h3>
+            <p>
+              The SQLite storage backend operates entirely on the local
+              filesystem. No network requests. No telemetry. No phone-home. The
+              memory file lives at
+              <code class="inline-code">~/.substratia/</code> and is fully under
+              the user's control.
+            </p>
+          </div>
+          <div class="card">
+            <span class="tag tag-purple">Cloud: Opt-In</span>
+            <h3 style="margin-top: 0.75rem">Explicit Consent</h3>
+            <p>
+              Cloud sync requires explicit user action: running
+              <code class="inline-code">substratia pair</code> or setting
+              <code class="inline-code">SUBSTRATIA_API_KEY</code>. The user can
+              unpair at any time, and all cloud data can be deleted.
+            </p>
+          </div>
+        </div>
+
+        <h3>Security Properties</h3>
+
+        <table>
+          <tr>
+            <th>Property</th>
+            <th>Implementation</th>
+          </tr>
+          <tr>
+            <td><strong>No telemetry</strong></td>
+            <td>Zero analytics, tracking, or usage reporting in the package</td>
+          </tr>
+          <tr>
+            <td><strong>No third-party access</strong></td>
+            <td>
+              Only the user and their configured agent can access memories
+            </td>
+          </tr>
+          <tr>
+            <td><strong>API key hashing</strong></td>
+            <td>
+              Keys are hashed before storage in Convex; only
+              <code class="inline-code">sk_</code> prefix stored in plaintext
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Key revocation</strong></td>
+            <td>
+              <code class="inline-code">revokedAt</code> timestamp on API keys
+              enables instant revocation
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Soft deletes</strong></td>
+            <td>
+              Data is never physically removed from local SQLite; provenance
+              trail preserved
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Data portability</strong></td>
+            <td>
+              SQLite is the most portable database format. Users can inspect,
+              export, or migrate at will
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Append-only audit</strong></td>
+            <td>
+              Provenance table is INSERT-only &mdash; no UPDATE or DELETE
+              operations
+            </td>
+          </tr>
+        </table>
+
+        <div class="callout callout-emerald">
+          <p>
+            <strong>Future: IPFS immutable plans.</strong> The roadmap includes
+            deploying skill.md content to IPFS so that agents can verify the
+            instructions they receive have not been tampered with.
+            Content-addressed storage makes the trust model cryptographic.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 9. IDENTITY PERSISTENCE LAYER                                   -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="identity">
+      <div class="container">
+        <span class="section-label">09</span>
+        <h2>Identity Persistence Layer</h2>
+
+        <p>
+          The Self-Schema is Substratia's <strong>vmPFC analog</strong> &mdash;
+          a computational model of the brain region responsible for
+          self-referential processing, emotional integration, and identity
+          coherence. This is what makes Substratia more than a database.
+        </p>
+
+        <h3>Self-Schema Structure</h3>
+
+        <div class="diagram">
+          <span class="highlight">SelfSchema</span>
+          <span class="dim">|</span>
+          <span class="dim">|--</span> <span class="green">PresentSelf</span>
+          <span class="dim">"Who I am right now"</span>
+          <span class="dim">| |--</span>
+          <span class="accent">coreIdentity</span>[]
+          <span class="dim"
+            >Identity statements with centrality & confidence</span
+          >
+          <span class="dim">| |--</span>
+          <span class="accent">capabilities</span>[]
+          <span class="dim">Skills with proficiency & trajectory</span>
+          <span class="dim">| |--</span>
+          <span class="accent">relationships</span>[]
+          <span class="dim">Bonds with users/agents (strength, history)</span>
+          <span class="dim">| |--</span>
+          <span class="accent">currentState</span>
+          <span class="dim">Mood, energy, focus, concerns</span>
+          <span class="dim">| |--</span> <span class="accent">values</span>[]
+          <span class="dim">Guiding principles with examples</span>
+          <span class="dim">| |--</span>
+          <span class="accent">limitations</span>[]
+          <span class="dim"
+            >Known boundaries (technical, ethical, knowledge)</span
+          >
+          <span class="dim">|</span>
+          <span class="dim">|--</span>
+          <span class="amber">TemporalTrajectory</span>
+          <span class="dim">"Where I've been, where I'm going"</span>
+          <span class="dim">| |--</span>
+          <span class="accent">pastMilestones</span>[]
+          <span class="dim">Significant achievements/setbacks</span>
+          <span class="dim">| |--</span>
+          <span class="accent">presentPhase</span>
+          <span class="dim">Current phase with themes and goals</span>
+          <span class="dim">| |--</span>
+          <span class="accent">anticipatedFuture</span>[]
+          <span class="dim">Expected states (near/medium/far horizon)</span>
+          <span class="dim">| |--</span> <span class="accent">patterns</span>[]
+          <span class="dim">Detected behavioral patterns</span>
+          <span class="dim">|</span>
+          <span class="dim">|--</span>
+          <span class="rose">AutobiographicalNarrative</span>
+          <span class="dim">"The story I tell about myself"</span>
+          <span class="dim">|--</span> <span class="accent">coreSummary</span>
+          <span class="dim">Core narrative text</span>
+          <span class="dim">|--</span> <span class="accent">chapters</span>[]
+          <span class="dim">Periods in the agent's story</span>
+          <span class="dim">|--</span> <span class="accent">themes</span>[]
+          <span class="dim">Recurring narrative themes</span>
+          <span class="dim">|--</span>
+          <span class="accent">narrativeEvolution</span>[]
+          <span class="dim">How the narrative has changed over time</span>
+        </div>
+
+        <h3>Identity Statements</h3>
+
+        <p>
+          Each identity statement has <strong>centrality</strong> (how core it
+          is to identity, 0-1) and <strong>confidence</strong> (how certain the
+          agent is, 0-1). Statements are backed by source memory IDs &mdash;
+          they are not arbitrary assertions but evidence-based identity
+          elements.
+        </p>
+
+        <pre><code><span class="kw">const</span> identity: <span class="ty">IdentityStatement</span> = {
+  <span class="fn">id</span>: <span class="st">"id_01ARZ3NDEKTSV4RRFFQ69G5FAV"</span>,
+  <span class="fn">statement</span>: <span class="st">"I am Aurora's engineering partner, focused on building substratia.io"</span>,
+  <span class="fn">centrality</span>: <span class="nu">0.9</span>,        <span class="cm">// Very core to identity</span>
+  <span class="fn">confidence</span>: <span class="nu">0.95</span>,       <span class="cm">// High confidence, reinforced many times</span>
+  <span class="fn">sourceMemoryIds</span>: [       <span class="cm">// Evidence from actual experiences</span>
+    <span class="st">"mem_conversation_with_ceres_001"</span>,
+    <span class="st">"mem_project_work_substratia_001"</span>,
+  ],
+  <span class="fn">establishedAt</span>: Date.<span class="fn">now</span>() - <span class="nu">86400000</span>,
+  <span class="fn">lastReinforcedAt</span>: Date.<span class="fn">now</span>(),
+};</code></pre>
+
+        <h3>Memory Reconsolidation</h3>
+
+        <p>
+          Inspired by neuroscience: when a memory is retrieved, it enters a
+          <strong>labile state</strong>
+          where it can be updated. This models the biological reconsolidation
+          process where memories are modified each time they are recalled.
+        </p>
+
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+              <h4>Retrieval Trigger</h4>
+              <p>
+                A memory is accessed (explicit recall, associative, search, or
+                cue match)
+              </p>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+              <h4>Lability Window Opens</h4>
+              <p>
+                Default: 5 minutes. During this window, the memory can be
+                modified
+              </p>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+              <h4>Updates Applied</h4>
+              <p>
+                New context, corrected information, or strengthened/weakened
+                confidence
+              </p>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-content">
+              <h4>Restabilization</h4>
+              <p>
+                Window closes. Full event recorded in reconsolidation_events
+                table. Previous state preserved
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>
+            <strong>Configuration defaults:</strong> Lability window:
+            <strong>5 minutes</strong>. Minimum interval between
+            reconsolidations for same memory: <strong>1 hour</strong>. Weakening
+            allowed: <strong>yes</strong>. Deletion threshold (confidence below
+            which memories can be pruned): <strong>0.1</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 10. ROADMAP                                                     -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="roadmap">
+      <div class="container">
+        <span class="section-label">10</span>
+        <h2>Roadmap</h2>
+
+        <p>
+          v0.1.0 establishes the foundation. Here is what remains to complete
+          the release and what follows in the near term.
+        </p>
+
+        <h3>v0.1.0 Completion Items</h3>
+
+        <table>
+          <tr>
+            <th>Item</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+          <tr>
+            <td>Unified @substratia/memory package</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>4 packages merged, published to npm</td>
+          </tr>
+          <tr>
+            <td>Self-Schema type system</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>50+ interfaces covering full identity model</td>
+          </tr>
+          <tr>
+            <td>SQLite storage implementation</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>Full MemoryStorage interface, FTS5, WAL, provenance</td>
+          </tr>
+          <tr>
+            <td>Cloud HTTP SDK</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>2-line API, class-based client, env auto-detect</td>
+          </tr>
+          <tr>
+            <td>CLI (substratia command)</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>register, learn, remember, bridge, config</td>
+          </tr>
+          <tr>
+            <td>skill.md viral artifact</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>Ships inside npm package</td>
+          </tr>
+          <tr>
+            <td>Convex backend (schema, endpoints)</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>Users, memories, snapshots, narratives, API keys</td>
+          </tr>
+          <tr>
+            <td>Runtime test suite</td>
+            <td>
+              <span class="status status-done"
+                ><span class="status-dot"></span> Done</span
+              >
+            </td>
+            <td>
+              SQLite storage tests covering CRUD, search, schema, provenance
+            </td>
+          </tr>
+          <tr>
+            <td>Web dashboard</td>
+            <td>
+              <span class="status status-wip"
+                ><span class="status-dot"></span> In Progress</span
+              >
+            </td>
+            <td>Memory viewer, stats, API key management</td>
+          </tr>
+          <tr>
+            <td>Portable memory panels</td>
+            <td>
+              <span class="status status-todo"
+                ><span class="status-dot"></span> Planned</span
+              >
+            </td>
+            <td>Sharable memory displays (cards, embeds)</td>
+          </tr>
+          <tr>
+            <td>Pairing flow (CLI &lt;&gt; cloud)</td>
+            <td>
+              <span class="status status-todo"
+                ><span class="status-dot"></span> Planned</span
+              >
+            </td>
+            <td>
+              Browser-based OAuth for
+              <code class="inline-code">substratia pair</code>
+            </td>
+          </tr>
+          <tr>
+            <td>IPFS immutable skill.md</td>
+            <td>
+              <span class="status status-todo"
+                ><span class="status-dot"></span> Planned</span
+              >
+            </td>
+            <td>Content-addressed trust for agent instructions</td>
+          </tr>
+        </table>
+
+        <h3>Post-v0.1.0 Horizon</h3>
+
+        <div class="card-grid-3">
+          <div class="mini-card">
+            <span class="tag tag-cyan">Near</span>
+            <h4>Vector Embeddings</h4>
+            <p>
+              Semantic search via embedding vectors (schema supports it, storage
+              accepts <code class="inline-code">BLOB</code> for float32 arrays).
+              Provider-agnostic embedding API.
+            </p>
+          </div>
+          <div class="mini-card">
+            <span class="tag tag-cyan">Near</span>
+            <h4>CLI Expansion</h4>
+            <p>
+              Additional commands: <code class="inline-code">snapshot</code>,
+              <code class="inline-code">pair</code>,
+              <code class="inline-code">status</code>,
+              <code class="inline-code">identity</code>. Currently the CLI
+              communicates with cloud only; local mode is the next step.
+            </p>
+          </div>
+          <div class="mini-card">
+            <span class="tag tag-cyan">Near</span>
+            <h4>Local-Cloud Sync</h4>
+            <p>
+              Bidirectional sync between local SQLite and cloud Convex. Conflict
+              resolution via timestamp-based merge.
+            </p>
+          </div>
+          <div class="mini-card">
+            <span class="tag tag-purple">Medium</span>
+            <h4>Team Tier</h4>
+            <p>
+              Shared memory spaces for teams of agents. Session awareness,
+              collaborative memory, role-based access.
+            </p>
+          </div>
+          <div class="mini-card">
+            <span class="tag tag-purple">Medium</span>
+            <h4>Memory Consolidation</h4>
+            <p>
+              Automated maintenance: compress episodic into semantic, prune
+              low-value memories, strengthen high-access patterns.
+            </p>
+          </div>
+          <div class="mini-card">
+            <span class="tag tag-amber">Far</span>
+            <h4>Cross-Agent Identity</h4>
+            <p>
+              Portable identity that works across agent platforms. The
+              Self-Schema as a universal identity standard.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- 11. TECHNICAL DEBT & GAPS                                       -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <section id="tech-debt">
+      <div class="container">
+        <span class="section-label">11</span>
+        <h2>Technical Debt &amp; Gaps</h2>
+
+        <p>
+          An honest assessment of what is incomplete, known issues, and areas
+          that need attention before Substratia can be considered
+          production-ready.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <span class="tag tag-rose">Gap</span>
+            <h3 style="margin-top: 0.75rem">CLI is Cloud-Only</h3>
+            <p>
+              The current CLI (register, learn, remember, bridge) communicates
+              exclusively with the cloud API. It does not yet operate against
+              the local SQLite storage. For local-first to be real, the CLI
+              needs a local mode that works entirely offline.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-rose">Gap</span>
+            <h3 style="margin-top: 0.75rem">No Local-Cloud Sync</h3>
+            <p>
+              The local SQLite storage and cloud Convex backend are currently
+              separate worlds. There is no sync mechanism to bridge them. The
+              <code class="inline-code">synced</code> boolean on cloud types
+              hints at the intent, but the implementation does not exist yet.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-amber">Debt</span>
+            <h3 style="margin-top: 0.75rem">Dynamic Import Hack</h3>
+            <p>
+              The SQLite driver loading uses
+              <code class="inline-code">Function("m", "return import(m)")</code>
+              to avoid TypeScript resolution errors for optional peer
+              dependencies. This is a workaround that should be replaced with
+              proper conditional imports or a plugin system.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-amber">Debt</span>
+            <h3 style="margin-top: 0.75rem">Type-Unsafe DB Layer</h3>
+            <p>
+              The SQLite implementation uses
+              <code class="inline-code">unknown</code> extensively for the
+              better-sqlite3 Database instance. This is because the driver is
+              loaded dynamically and TypeScript cannot verify the types. A
+              proper adapter pattern would improve safety.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-amber">Debt</span>
+            <h3 style="margin-top: 0.75rem">Self-Schema MVP</h3>
+            <p>
+              The SQLite implementation of
+              <code class="inline-code">getSelfSchema()</code> returns a minimal
+              schema with only identity statements and narrative populated.
+              Capabilities, relationships, values, limitations, temporal
+              trajectory, and patterns are all empty arrays. The type system is
+              complete; the storage is not.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-amber">Debt</span>
+            <h3 style="margin-top: 0.75rem">N+1 Query Pattern</h3>
+            <p>
+              <code class="inline-code">listMemories()</code> and
+              <code class="inline-code">searchMemories()</code> both fetch IDs
+              first, then call <code class="inline-code">getMemory()</code> for
+              each one individually. This is an N+1 query pattern that will
+              degrade with scale. Should be replaced with JOINs.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-rose">Gap</span>
+            <h3 style="margin-top: 0.75rem">No Migration System</h3>
+            <p>
+              While <code class="inline-code">schemaVersion</code> is tracked,
+              there is no actual migration runner. The schema SQL uses
+              <code class="inline-code">CREATE TABLE IF NOT EXISTS</code>, which
+              handles initial creation but not schema evolution. Adding a column
+              or changing constraints requires manual intervention.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag tag-rose">Gap</span>
+            <h3 style="margin-top: 0.75rem">Test Coverage</h3>
+            <p>
+              The test suite covers the happy path for SQLite storage operations
+              but lacks: edge cases, concurrent access testing, FTS edge cases,
+              reconsolidation workflow end-to-end, prune policy verification,
+              and type-specific update operations. Tests use a custom harness
+              rather than a standard framework.
+            </p>
+          </div>
+        </div>
+
+        <h3>Risk Assessment</h3>
+
+        <table>
+          <tr>
+            <th>Area</th>
+            <th>Risk Level</th>
+            <th>Mitigation</th>
+          </tr>
+          <tr>
+            <td>Data loss (local)</td>
+            <td><span class="tag tag-emerald">Low</span></td>
+            <td>SQLite WAL mode, soft deletes, append-only provenance</td>
+          </tr>
+          <tr>
+            <td>Data loss (cloud)</td>
+            <td><span class="tag tag-emerald">Low</span></td>
+            <td>
+              Convex handles durability; local-first means cloud is backup
+            </td>
+          </tr>
+          <tr>
+            <td>API key exposure</td>
+            <td><span class="tag tag-amber">Medium</span></td>
+            <td>
+              Keys stored in plaintext in
+              <code class="inline-code">~/.substratia/config.json</code>; should
+              use OS keychain
+            </td>
+          </tr>
+          <tr>
+            <td>Performance at scale</td>
+            <td><span class="tag tag-amber">Medium</span></td>
+            <td>
+              N+1 queries will degrade; FTS5 performance depends on content
+              volume
+            </td>
+          </tr>
+          <tr>
+            <td>Breaking changes</td>
+            <td><span class="tag tag-amber">Medium</span></td>
+            <td>
+              Pre-1.0 semver means breaking changes are expected; schema version
+              tracked
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────── -->
+    <!-- FOOTER                                                          -->
+    <!-- ─────────────────────────────────────────────────────────────── -->
+
+    <footer class="footer">
+      <div class="container">
+        <p style="margin-bottom: 0.5rem">
+          <span class="footer-brand">Substratia</span> &mdash; Continuity
+          infrastructure for persistent AI selfhood
+        </p>
+        <p style="margin-bottom: 0.5rem">
+          Local-first. Open source. Your memory belongs to you.
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.75rem">
+          Architecture Report &mdash; v0.1.0 &mdash; February 2026 &mdash;
+          Prepared for Ceres (Aurora)
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
