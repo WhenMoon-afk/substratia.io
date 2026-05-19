@@ -334,7 +334,7 @@ claude mcp add <server-name> -- npx -y <package-name>
             <code className="text-gray-300">{`claude mcp add github -- npx -y @modelcontextprotocol/server-github
 
 # Requires GITHUB_TOKEN environment variable
-export GITHUB_TOKEN=ghp_your_token_here`}</code>
+export GITHUB_TOKEN=<github-token>`}</code>
           </pre>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
             <li>
@@ -585,7 +585,7 @@ export BRAVE_API_KEY=your_key_here`}</code>
             <code className="text-gray-300">{`claude mcp add slack -- npx -y @modelcontextprotocol/server-slack
 
 # Requires SLACK_BOT_TOKEN and SLACK_TEAM_ID
-export SLACK_BOT_TOKEN=xoxb-your-token
+export SLACK_BOT_TOKEN=<slack-bot-token>
 export SLACK_TEAM_ID=T0123456789`}</code>
           </pre>
           <ul className="list-disc pl-6 text-gray-300 mb-4 space-y-2">
