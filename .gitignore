@@ -28,7 +28,6 @@ web-build/
 # misc
 .DS_Store
 *.pem
-/var/snapshot-server/
 
 # debug
 npm-debug.log*
