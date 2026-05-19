@@ -28,6 +28,7 @@ web-build/
 # misc
 .DS_Store
 *.pem
+var/
 
 # debug
 npm-debug.log*
