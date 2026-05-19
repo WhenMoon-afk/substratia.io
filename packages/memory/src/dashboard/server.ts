@@ -12,7 +12,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "http";
 import { homedir } from "os";
 import { join } from "path";
 import { existsSync } from "fs";
-import { exec } from "child_process";
+import { execFile } from "child_process";
 
 import { DASHBOARD_HTML } from "./ui.js";
 
@@ -74,7 +74,6 @@ export async function startDashboard(
     res.writeHead(status, {
       "Content-Type": "application/json",
       "Content-Length": Buffer.byteLength(body),
-      "Access-Control-Allow-Origin": "*",
     });
     res.end(body);
   }
@@ -99,6 +98,27 @@ export async function startDashboard(
     return { pathname: parsed.pathname, params: parsed.searchParams };
   }
 
+  function rejectCrossOriginRequest(
+    req: IncomingMessage,
+    res: ServerResponse,
+  ): boolean {
+    const origin = req.headers.origin;
+    if (!origin) {
+      return false;
+    }
+
+    const allowedOrigins = new Set([
+      `http://localhost:${port}`,
+      `http://127.0.0.1:${port}`,
+    ]);
+    if (allowedOrigins.has(origin)) {
+      return false;
+    }
+
+    json(res, { error: "Cross-origin dashboard API access is not allowed" }, 403);
+    return true;
+  }
+
   // ── Request handler ────────────────────────────────────────────────────────
 
   async function handleRequest(
@@ -109,6 +129,10 @@ export async function startDashboard(
     const { pathname, params } = parseUrl(req);
 
     try {
+      if (pathname.startsWith("/api/") && rejectCrossOriginRequest(req, res)) {
+        return;
+      }
+
       // ── Serve dashboard HTML ────────────────────────────────────────────
       if (method === "GET" && pathname === "/") {
         html(res, DASHBOARD_HTML);
@@ -192,11 +216,7 @@ export async function startDashboard(
 
       // ── CORS preflight ─────────────────────────────────────────────────
       if (method === "OPTIONS") {
-        res.writeHead(204, {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type",
-        });
+        res.writeHead(204);
         res.end();
         return;
       }
@@ -209,7 +229,7 @@ export async function startDashboard(
         `[dashboard] Error handling ${method} ${pathname}:`,
         message,
       );
-      error(res, 500, message);
+      error(res, 500, "Internal server error");
     }
   }
 
@@ -257,15 +277,21 @@ export async function startDashboard(
  */
 function openBrowser(url: string): void {
   const platform = process.platform;
-  let cmd: string;
+  let command: string;
+  let args: string[];
+
   if (platform === "darwin") {
-    cmd = `open "${url}"`;
+    command = "open";
+    args = [url];
   } else if (platform === "win32") {
-    cmd = `start "" "${url}"`;
+    command = "cmd";
+    args = ["/c", "start", "", url];
   } else {
-    cmd = `xdg-open "${url}"`;
+    command = "xdg-open";
+    args = [url];
   }
-  exec(cmd, (err) => {
+
+  execFile(command, args, (err) => {
     if (err) {
       // Silently fail -- not critical
       console.log(

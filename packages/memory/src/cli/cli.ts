@@ -117,7 +117,9 @@ async function register(email: string): Promise<void> {
     saveConfig({ apiKey: result.apiKey, email });
 
     console.log(`${colors.green}Registration successful!${colors.reset}\n`);
-    console.log(`Your API key: ${colors.cyan}${result.apiKey}${colors.reset}`);
+    console.log(
+      `API key saved: ${colors.cyan}${result.keyPrefix}...${colors.reset}`,
+    );
     console.log(`${colors.dim}(saved to ${CONFIG_FILE})${colors.reset}\n`);
     console.log(`Quick start:`);
     console.log(`  substratia learn "Something important to remember"`);
@@ -304,17 +306,15 @@ async function bridge(): Promise<void> {
 
 function showConfig(): void {
   const config = loadConfig();
-  const envKey = process.env.SUBSTRATIA_API_KEY;
+  const hasEnvKey = Boolean(process.env.SUBSTRATIA_API_KEY);
 
   console.log(`\n${colors.cyan}Substratia Configuration${colors.reset}\n`);
 
   console.log(`Config file: ${CONFIG_FILE}`);
   console.log(
-    `API Key (config): ${config.apiKey ? `${config.apiKey.slice(0, 12)}...` : "(not set)"}`,
+    `API Key (config): ${config.apiKey ? "configured" : "(not set)"}`,
   );
-  console.log(
-    `API Key (env): ${envKey ? `${envKey.slice(0, 12)}...` : "(not set)"}`,
-  );
+  console.log(`API Key (env): ${hasEnvKey ? "configured" : "(not set)"}`);
   console.log(`Email: ${config.email || "(not set)"}`);
   console.log(`API URL: ${BASE_URL}`);
   console.log("");

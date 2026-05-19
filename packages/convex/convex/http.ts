@@ -118,34 +118,19 @@ http.route({
     }
 
     try {
-      // Create or find user by email
-      const user = await ctx.runMutation(internal.users.createByEmail, {
-        email: email.toLowerCase().trim(),
-        name: name || undefined,
-      });
+      // Create an isolated API-only user. The submitted email is intentionally
+      // not used as server-side identity because this endpoint is unauthenticated.
+      const user = await ctx.runMutation(
+        internal.users.createApiRegistrationUser,
+        {
+          name: name || undefined,
+        },
+      );
 
       if (!user) {
         return new Response(
           JSON.stringify({ error: "Failed to create user" }),
           { status: 500, headers: { "Content-Type": "application/json" } },
-        );
-      }
-
-      // Check if user already has API keys (returning user)
-      const existingKeys = await ctx.runQuery(
-        internal.apiKeysInternal.listByUser,
-        { userId: user._id },
-      );
-
-      if (existingKeys && existingKeys.length > 0) {
-        // User already registered — don't create duplicate keys
-        return new Response(
-          JSON.stringify({
-            error:
-              "Email already registered. Use your existing API key, or create a new one from the dashboard.",
-            keyPrefix: existingKeys[0].keyPrefix,
-          }),
-          { status: 409, headers: { "Content-Type": "application/json" } },
         );
       }
 

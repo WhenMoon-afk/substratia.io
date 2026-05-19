@@ -1,6 +1,14 @@
 import { v } from "convex/values";
 import { mutation, query, internalMutation } from "./_generated/server";
 
+function generateOpaqueId(): string {
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join(
+    "",
+  );
+}
+
 // Get or create user from Clerk auth
 export const getOrCreate = mutation({
   args: {},
@@ -113,27 +121,18 @@ export const updateStripeSubscription = internalMutation({
   },
 });
 
-// Create user by email (internal only - for API registration without Clerk)
-export const createByEmail = internalMutation({
+// Create an API-only user for unauthenticated CLI registration.
+// Do not bind this flow to the supplied email address; email ownership is not
+// verified here, so using it as identity would let callers mint victim keys.
+export const createApiRegistrationUser = internalMutation({
   args: {
-    email: v.string(),
     name: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    // Check if user already exists
-    const existing = await ctx.db
-      .query("users")
-      .withIndex("by_email", (q) => q.eq("email", args.email))
-      .first();
-
-    if (existing) {
-      return existing;
-    }
-
-    // Create new user with a placeholder clerkId (api-registered users)
+    const opaqueId = generateOpaqueId();
     const userId = await ctx.db.insert("users", {
-      clerkId: `api_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`,
-      email: args.email,
+      clerkId: `api_${opaqueId}`,
+      email: `api_${opaqueId}@local.substratia.invalid`,
       name: args.name,
       tier: "free",
       createdAt: Date.now(),

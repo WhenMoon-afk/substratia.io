@@ -182,9 +182,7 @@ async function main() {
   console.log("\n🧪 Substratia Cloud API Test Suite\n");
   console.log(`API URL: ${API_URL}`);
   console.log(`Web URL: ${WEB_URL}`);
-  console.log(
-    `API Key: ${apiKey ? apiKey.slice(0, 8) + "..." : "Not provided"}`,
-  );
+  console.log(`API Key: ${apiKey ? "Provided" : "Not provided"}`);
   console.log("");
 
   // Basic tests (no auth required)
