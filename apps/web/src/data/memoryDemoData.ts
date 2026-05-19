@@ -15,7 +15,7 @@ export interface ChatMessage {
 export const REALISTIC_MEMORIES: Memory[] = [
   {
     id: "mem_1",
-    content: "Use Bun instead of npm - this project uses bun.lock",
+    content: "Use pnpm instead of npm - this project uses pnpm-lock.yaml",
     context: "Project setup",
     importance: 9,
     timesUsed: 12,
@@ -43,7 +43,7 @@ export const REALISTIC_MEMORIES: Memory[] = [
   },
   {
     id: "mem_5",
-    content: "Always run 'bun test' before committing",
+    content: "Always run 'pnpm test' before committing",
     context: "Workflow",
     importance: 8,
     timesUsed: 31,
@@ -61,10 +61,10 @@ export const WITHOUT_MEMORY_EXCHANGE: ChatMessage[] = [
     role: "claude",
     text: "Got it. I'll use npm to install the testing library\u2014",
   },
-  { role: "user", text: "No, use Bun. This project uses bun.lock" },
+  { role: "user", text: "No, use pnpm. This project uses pnpm-lock.yaml" },
   {
     role: "claude",
-    text: "Right, Bun it is. I'll add some helpful comments\u2014",
+    text: "Right, pnpm it is. I'll add some helpful comments\u2014",
   },
   { role: "user", text: "Please don't add comments to unchanged code" },
   {
@@ -78,7 +78,7 @@ export const WITHOUT_MEMORY_EXCHANGE: ChatMessage[] = [
 export const WITH_MEMORY_EXCHANGE: ChatMessage[] = [
   {
     role: "claude",
-    text: "I'll create the test in `__tests__/` using Bun, no comments on unchanged code. Testing the httpOnly cookie auth flow.",
+    text: "I'll create the test in `__tests__/` using pnpm, no comments on unchanged code. Testing the httpOnly cookie auth flow.",
   },
   { role: "user", text: "Perfect." },
 ];

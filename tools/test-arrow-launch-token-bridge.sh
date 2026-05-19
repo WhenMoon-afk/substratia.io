@@ -25,7 +25,7 @@ if rg -n 'temporary invite token|Use only the token shared|RP_ENGINE_TOKEN|emie\
 fi
 
 expected='arrow-launch:v1:1800000120:nonce-123:8tG6UQopTAJWJwkezbHVaBKgF6X1DmzogDNI288WyPM'
-actual=$(bun -e "import { mintArrowLaunchToken } from './apps/web/src/lib/arrow-launch-token.ts'; process.stdout.write(mintArrowLaunchToken({ secret: 'test-launch-secret', nonce: 'nonce-123', now: new Date(1800000000000), ttlSeconds: 120 }) || '');")
+actual=$(pnpm exec tsx -e "import { mintArrowLaunchToken } from './apps/web/src/lib/arrow-launch-token.ts'; process.stdout.write(mintArrowLaunchToken({ secret: 'test-launch-secret', nonce: 'nonce-123', now: new Date(1800000000000), ttlSeconds: 120 }) || '');")
 test "$actual" = "$expected"
 
 echo "PASS: Arrow launch token bridge wiring"

@@ -20,7 +20,7 @@ const cliQuickStart: QuickStartStep[] = [
     title: "Install the CLI",
     description: "Get the Substratia CLI with a single command.",
     code: `curl -fsSL https://substratia.io/install | bash`,
-    note: "Requires Node.js 18+ or Bun. Works via npx.",
+    note: "Requires Node.js 18+. Bun is supported as a fallback.",
   },
   {
     number: 2,

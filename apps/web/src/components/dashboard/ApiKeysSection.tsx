@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { ApiKey, ApiKeyId } from "@/types/dashboard";
 
 interface ApiKeysSectionProps {
@@ -23,18 +23,17 @@ export default function ApiKeysSection({
   const [isCreating, setIsCreating] = useState(false);
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
 
-  // Auto-fill default key name for first-time users
-  useEffect(() => {
-    if (apiKeys !== undefined && apiKeys.length === 0 && !newKeyName) {
-      setNewKeyName("default");
-    }
-  }, [apiKeys, newKeyName]);
+  const effectiveNewKeyName =
+    apiKeys !== undefined && apiKeys.length === 0 && !newKeyName
+      ? "default"
+      : newKeyName;
 
   const handleCreateKey = async () => {
-    if (!newKeyName.trim()) return;
+    const keyName = effectiveNewKeyName.trim();
+    if (!keyName) return;
     setIsCreating(true);
     try {
-      const result = await onCreateKey(newKeyName.trim());
+      const result = await onCreateKey(keyName);
       setNewKeyValue(result.key);
       setNewKeyName("");
     } catch {
@@ -197,20 +196,22 @@ export default function ApiKeysSection({
               <input
                 type="text"
                 placeholder="Key name (e.g., 'work-laptop', 'home-desktop')"
-                value={newKeyName}
+                value={effectiveNewKeyName}
                 onChange={(e) => setNewKeyName(e.target.value)}
                 className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-hidden"
                 onKeyDown={(e) => e.key === "Enter" && handleCreateKey()}
               />
-              {apiKeys && apiKeys.length === 0 && newKeyName === "default" && (
+              {apiKeys &&
+                apiKeys.length === 0 &&
+                effectiveNewKeyName === "default" && (
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">
                   Edit or press Create
                 </span>
-              )}
+                )}
             </div>
             <button
               onClick={handleCreateKey}
-              disabled={isCreating || !newKeyName.trim()}
+              disabled={isCreating || !effectiveNewKeyName.trim()}
               className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
             >
               {isCreating ? "Creating..." : "Create Key"}

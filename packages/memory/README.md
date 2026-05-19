@@ -19,19 +19,17 @@ Unified memory infrastructure for AI agents — local-first SQLite, cloud HTTP S
 
 ```bash
 npm install @substratia/memory
-# or
-bun add @substratia/memory
 ```
 
 ### SQLite Driver
 
 The local storage requires a SQLite driver. Choose one:
 
-- **Bun** (recommended): Built-in `bun:sqlite`, no extra install needed
-- **Node.js**: Install `better-sqlite3`:
+- **Node.js** (recommended): Install `better-sqlite3`:
   ```bash
   npm install better-sqlite3
   ```
+- **Bun**: Built-in `bun:sqlite`, no extra install needed
 
 ## CLI
 

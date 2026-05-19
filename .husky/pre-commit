@@ -1,10 +1,10 @@
 # Lint
 echo "Running lint..."
-bun run lint || exit 1
+pnpm lint || exit 1
 
 # Build check
 echo "Running build check..."
-bun run build || exit 1
+pnpm build || exit 1
 
 # Block secrets (exclude .env.example and hook itself from check)
 echo "Checking for secrets..."

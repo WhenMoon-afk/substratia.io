@@ -62,7 +62,7 @@ detect_platform() {
     echo -e "Detected platform: ${GREEN}${PLATFORM}${NC}"
 }
 
-# Check if Bun is installed (preferred)
+# Check if Bun is installed (fallback)
 check_bun() {
     if command -v bun &> /dev/null; then
         echo -e "${GREEN}✓${NC} Bun is installed"
@@ -72,7 +72,7 @@ check_bun() {
     fi
 }
 
-# Check if Node.js is installed (fallback)
+# Check if Node.js is installed (preferred)
 check_node() {
     if command -v node &> /dev/null; then
         NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
@@ -94,24 +94,24 @@ install_via_package_manager() {
     echo "Installing Substratia CLI..."
     echo ""
 
-    if check_bun; then
-        echo "Using Bun..."
-        bun install -g @substratia/memory 2>/dev/null || {
-            echo -e "${CYAN}Note: Global package not yet published. Using npx method.${NC}"
-            install_wrapper_script
-        }
-    elif check_node; then
+    if check_node; then
         echo "Using npm..."
         npm install -g @substratia/memory 2>/dev/null || {
             echo -e "${CYAN}Note: Global package not yet published. Using npx method.${NC}"
             install_wrapper_script
         }
+    elif check_bun; then
+        echo "Using Bun fallback..."
+        bun install -g @substratia/memory 2>/dev/null || {
+            echo -e "${CYAN}Note: Global package not yet published. Using wrapper method.${NC}"
+            install_wrapper_script
+        }
     else
-        echo -e "${RED}Error: Neither Bun nor Node.js 18+ is installed.${NC}"
+        echo -e "${RED}Error: Neither Node.js 18+ nor Bun is installed.${NC}"
         echo ""
         echo "Please install one of:"
+        echo "  - Node.js: https://nodejs.org (v18 or later, recommended)"
         echo "  - Bun:     curl -fsSL https://bun.sh/install | bash"
-        echo "  - Node.js: https://nodejs.org (v18 or later)"
         echo ""
         exit 1
     fi
@@ -129,12 +129,12 @@ install_wrapper_script() {
 # Substratia CLI wrapper
 # Runs the CLI via npx to always get the latest version
 
-if command -v bunx &> /dev/null; then
-    exec bunx @substratia/memory "$@"
-elif command -v npx &> /dev/null; then
+if command -v npx &> /dev/null; then
     exec npx @substratia/memory "$@"
+elif command -v bunx &> /dev/null; then
+    exec bunx @substratia/memory "$@"
 else
-    echo "Error: Neither bunx nor npx found. Please install Bun or Node.js."
+    echo "Error: Neither npx nor bunx found. Please install Node.js or Bun."
     exit 1
 fi
 WRAPPER

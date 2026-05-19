@@ -22,20 +22,20 @@ substratia/
 
 ```bash
 # Install all dependencies
-bun install
+pnpm install
 
 # Run web app (localhost:3000)
-bun run dev:web
+pnpm dev:web
 
 # Run mobile app
-bun run dev:mobile
+pnpm dev:mobile
 # Press 'a' for Android emulator
 
 # Run Convex dev server
-cd packages/convex && bun run dev
+pnpm dev:convex
 
 # Build all
-bun run build
+pnpm build
 ```
 
 ## Tech Stack

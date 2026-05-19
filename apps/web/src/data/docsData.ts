@@ -23,12 +23,11 @@ export const sections: Section[] = [
       },
       {
         title: "Install",
-        code: `# Requires Node.js 18+ or Bun
+        code: `# Requires Node.js 18+; Bun is supported as a fallback
 curl -fsSL https://substratia.io/install | bash
 
-# Or via npm/bun directly:
-npm install -g @substratia/memory
-# or: bun install -g @substratia/memory`,
+# Or via npm directly:
+npm install -g @substratia/memory`,
       },
       {
         title: "Register & Start",

@@ -12,5 +12,5 @@ Cloudflare: https://cloudflare.com
 /* SITE */
 Last update: 2026-01-12
 Standards: HTML5, CSS3, ES6+
-Components: React, Next.js 14
-Software: Bun, TypeScript
+Components: React, Next.js 16
+Software: Node.js, pnpm, TypeScript

@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # Maintain dependencies for npm (bun uses same lockfile format)
+  # Maintain pnpm workspace dependencies
   - package-ecosystem: "npm"
     directory: "/"
     schedule:

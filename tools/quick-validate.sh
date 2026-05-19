@@ -18,7 +18,7 @@ echo ""
 # Check if server is running
 if ! curl -s --head "$BASE_URL" >/dev/null 2>&1; then
   echo "❌ Server not responding at $BASE_URL"
-  echo "   Start with: bun run dev:web"
+  echo "   Start with: pnpm dev:web"
   exit 1
 fi
 

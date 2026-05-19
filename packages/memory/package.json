@@ -48,7 +48,7 @@
     "build": "tsc",
     "prepublishOnly": "npm run build",
     "typecheck": "tsc --noEmit",
-    "test": "bun run src/__tests__/sqlite.test.ts"
+    "test": "tsx src/__tests__/sqlite.test.ts"
   },
   "keywords": [
     "ai",
@@ -75,6 +75,10 @@
   "homepage": "https://substratia.io",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.21.0"
   },
   "peerDependencies": {
     "better-sqlite3": ">=9.0.0"
